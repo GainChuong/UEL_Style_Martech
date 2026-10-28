@@ -94,6 +94,32 @@
 
       <!-- TAB 1: SEO AUDIT & METRICS -->
       <section id="tab-seo-audit" class="admin-tab-content active">
+        <!-- Interactive SEO Tester Bar -->
+        <div class="panel-card" style="margin-bottom: 24px; border: 1.5px solid var(--brand-blue); background: #f0f4fc;">
+          <div class="panel-header" style="background: transparent; border-bottom: 1px solid #d0dff5;">
+            <div class="panel-title" style="color: var(--brand-blue);">
+              <i class="fa-solid fa-vial-circle-check"></i> Bộ Công Cụ Kiểm Tra SEO Trực Tiếp (Live Inspector)
+            </div>
+            <span class="badge-status success"><i class="fa-solid fa-circle-dot"></i> HOẠT ĐỘNG THỰC TẾ</span>
+          </div>
+          <div class="panel-body">
+            <p style="font-size: 0.88rem; color: #334155; margin-bottom: 12px;">
+              Công cụ này trực tiếp phân tích mã nguồn HTML thực tế (DOM parser), tự động bóc tách từng thẻ, kiểm tra độ dài và tính điểm SEO theo thuật toán xếp hạng của Google:
+            </p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button class="btn-refresh" style="background: var(--brand-blue); color: white; font-weight: 700;" onclick="runLiveAudit()">
+                <i class="fa-solid fa-magnifying-glass"></i> Quét lại Landing Page thực tế (index.html)
+              </button>
+              <button class="btn-refresh" style="border-color: #ef4444; color: #dc2626;" onclick="testBadSeoScenario()">
+                <i class="fa-solid fa-triangle-exclamation"></i> Thử nghiệm tình huống trang SEO KÉM (Xem điểm sụt giảm)
+              </button>
+              <button class="btn-refresh" style="border-color: #10b981; color: #15803d;" onclick="testPerfectSeoScenario()">
+                <i class="fa-solid fa-star"></i> Thử nghiệm trang ĐẠT CHUẨN 100/100
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- Top KPI Cards -->
         <div class="kpi-grid">
           <div class="kpi-card">

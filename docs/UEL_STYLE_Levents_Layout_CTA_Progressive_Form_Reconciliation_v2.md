@@ -544,7 +544,7 @@ type Product = {
 - [ ] CTA đều hoạt động; không có nút giả.
 - [ ] Giá, sản phẩm, hình ảnh và link được kiểm tra theo UEL Store trước khi publish.
 - [ ] Không tự nhận bestseller, hết hàng, ưu đãi, testimonial nếu chưa xác minh.
-- [ ] CTA liên hệ trỏ về https://www.facebook.com/uelstyle.
+- [ ] CTA liên hệ trỏ về https://www.facebook.com/kyofficial.vn và kênh TikTok https://www.tiktok.com/@uel.style.official.
 - [ ] CTA `Đăng ký nhận tin` dẫn đến form hoạt động trên desktop/mobile; click có tracking placement.
 - [ ] Lần đầu thấy form ngắn; lần sau **chỉ khi xác minh danh tính hợp lệ** mới thấy form bổ sung thông tin.
 - [ ] Submit tạo/ghi vào CRM theo khóa định danh chuẩn hóa, có xử lý bản ghi trùng, idempotency và log đối soát.
@@ -1084,7 +1084,8 @@ Không nghiệm thu production nếu **thiếu bất kỳ điều kiện cốt l
 ## 23. Nguồn tham khảo
 
 - **Levents trang chủ:** https://www.levents.asia/ — cấu trúc campaign hero, New Arrival, Best Seller, Styling, Our Collection, Feedback và footer (đối chiếu 28/10/2026).
-- **UEL STYLE Facebook:** https://www.facebook.com/uelstyle — đích liên hệ/CTA.
+- **UEL STYLE Facebook Fanpage:** https://www.facebook.com/kyofficial.vn — đích liên hệ/CTA tư vấn & đặt hàng.
+- **UEL STYLE TikTok:** https://www.tiktok.com/@uel.style.official — kênh video outfit, lookbook & community campus.
 - **UEL Store:** https://uelstore.sapopage.com/ — nguồn danh mục, giá, hình ảnh và URL sản phẩm cần kiểm tra.
 - **Nhận diện của trường UEL:** https://www.uel.edu.vn/nhan-dien-thuong-hieu-uel — chỉ dùng tham chiếu khi có phần liên quan logo **trường UEL**, không thay logo UEL STYLE.
 

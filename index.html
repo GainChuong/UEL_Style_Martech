@@ -36,6 +36,28 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/style.css">
 
+  <!-- GOOGLE ANALYTICS 4 (GA4) INTEGRATION -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2CJQDPFG9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-K2CJQDPFG9', {
+      send_page_view: true
+    });
+  </script>
+
+  <!-- EMAILJS CLIENT SDK (GỬI EMAIL/OTP THẬT QUA GMAIL: gameyuno123@gmail.com) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    window.EMAILJS_SERVICE_ID = "service_viwrf1c";
+    window.EMAILJS_TEMPLATE_ID = "template_otp"; // Hoặc Template ID của bạn trong EmailJS
+    window.EMAILJS_PUBLIC_KEY = ""; // Public Key lấy tại EmailJS -> Account -> API Keys
+    if (window.emailjs && window.EMAILJS_PUBLIC_KEY) {
+      emailjs.init(window.EMAILJS_PUBLIC_KEY);
+    }
+  </script>
+
   <!-- Structured Data JSON-LD for SEO -->
   <script type="application/ld+json">
   {
@@ -55,7 +77,8 @@
       "addressCountry": "VN"
     },
     "sameAs": [
-      "https://www.facebook.com/uelstyle"
+      "https://www.facebook.com/kyofficial.vn",
+      "https://www.tiktok.com/@uel.style.official"
     ],
     "priceRange": "150.000đ - 450.000đ"
   }
@@ -139,8 +162,11 @@
       <a href="#dang-ky" class="btn-primary full-width" onclick="closeDrawer(); trackLeadCTAClick('mobile_drawer', 'Đăng ký ngay')">
         <i class="fa-solid fa-paper-plane"></i> Đăng ký nhận tin & Ưu đãi
       </a>
-      <a href="https://www.facebook.com/uelstyle" target="_blank" rel="noopener noreferrer" class="btn-fb-outline full-width">
+      <a href="https://www.facebook.com/kyofficial.vn" target="_blank" rel="noopener noreferrer" class="btn-fb-outline full-width">
         <i class="fa-brands fa-facebook"></i> Nhắn UEL STYLE Fanpage
+      </a>
+      <a href="https://www.tiktok.com/@uel.style.official" target="_blank" rel="noopener noreferrer" class="btn-tiktok-outline full-width">
+        <i class="fa-brands fa-tiktok"></i> Ghé TikTok @uel.style.official
       </a>
     </div>
   </div>
@@ -182,225 +208,231 @@
       </div>
     </section>
 
-    <!-- SECTION 2: NEW ARRIVALS (4 Cards Desktop / 2 Mobile) -->
+    <!-- SECTION 2: NEW ARRIVALS (Sản phẩm mới theo đúng tài nguyên cung cấp) -->
     <section class="catalog-section" id="new-arrivals" aria-labelledby="heading-new-arrivals">
       <div class="layout-container">
         <div class="section-header-flex">
           <div>
-            <span class="section-eyebrow">JUST DROPPED</span>
-            <h2 class="section-title" id="heading-new-arrivals">NEW ARRIVALS</h2>
+            <span class="section-eyebrow">DẠO NÀY UEL STYLE CÓ GÌ MỚI VẬY TA?</span>
+            <h2 class="section-title" id="heading-new-arrivals">NEW ARRIVALS &bull; CAMPUS DROPS</h2>
           </div>
           <a href="#categories" class="view-all-link">Xem tất cả bộ sưu tập <i class="fa-solid fa-arrow-right-long"></i></a>
         </div>
 
         <div class="product-grid" id="new-arrivals-grid">
-          <!-- Card 1 -->
-          <article class="product-card" data-product-id="UEL-NA-01">
+          <!-- Card 1: Áo Sơ Mi Sọc UEL (Lookbook Mẫu Mặc) -->
+          <article class="product-card" data-product-id="UEL-SM-01">
             <div class="product-image-box">
-              <span class="badge-tag new">NEW</span>
-              <img src="images/collection_1/image.png" alt="Áo Polo UEL Signature Phối Cổ Signature" class="product-img primary" loading="lazy">
-              <img src="images/collection_1/image copy.png" alt="Chi tiết Áo Polo UEL Signature" class="product-img secondary" loading="lazy">
+              <span class="badge-tag new">NEW DROP</span>
+              <img src="images/collection_1/ao_so_mi_soc_cam_pose1.png" alt="Áo Sơ Mi Sọc UEL Màu Cam Năng Động" class="product-img primary" loading="lazy">
+              <img src="images/collection_1/ao_so_mi_soc_cam_pose2.png" alt="Chi tiết Áo Sơ Mi Sọc UEL Thêu Logo Ngực" class="product-img secondary" loading="lazy">
               <div class="card-overlay-actions">
-                <button class="quick-view-btn" onclick="openProductModal('Áo Polo UEL Signature Phối Cổ Signature', '260.000đ', 'images/collection_1/image.png', 'Chất liệu cá sấu cotton 4 chiều mềm mịn, bo dệt co giãn chuẩn form tôn dáng năng động.')">
+                <button class="quick-view-btn" onclick="openProductModal('Áo Sơ Mi Sọc UEL Thanh Lịch', '250.000đ', 'images/collection_1/ao_so_mi_soc_cam_pose1.png', '4 màu sắc trẻ trung: Xanh dương, Cam, Đỏ hồng, Xanh lá. Size: M, L, XL. Dễ diện khi đi học, thuyết trình hay tham gia các hoạt động tại trường.')">
                   <i class="fa-regular fa-eye"></i> Xem nhanh
                 </button>
-                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_new_01', 'Nhận voucher 10%')">
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_somi_01', 'Nhận voucher giảm 10% Áo Sơ Mi')">
                   <i class="fa-solid fa-tag"></i> Giảm 10%
                 </a>
               </div>
             </div>
             <div class="product-info">
-              <span class="product-category">Polo Collection</span>
-              <h3 class="product-name"><a href="#dang-ky">Áo Polo UEL Signature Phối Cổ Sang Trọng</a></h3>
+              <span class="product-category">Áo Sơ Mi UEL &bull; 4 Màu</span>
+              <h3 class="product-name"><a href="#dang-ky">Áo Sơ Mi Sọc UEL (Xanh dương / Cam / Đỏ hồng / Xanh lá)</a></h3>
               <div class="product-price-row">
-                <span class="price-current">260.000đ</span>
-                <span class="price-origin">290.000đ</span>
+                <span class="price-current">250.000đ</span>
+                <span class="price-origin">280.000đ</span>
               </div>
+              <p class="product-meta-desc">Size: M | L | XL &bull; Vải sọc mềm mịn thoáng mát</p>
             </div>
           </article>
 
-          <!-- Card 2 -->
-          <article class="product-card" data-product-id="UEL-NA-02">
+          <!-- Card 2: Bảng 4 Màu Áo Sơ Mi Sọc UEL -->
+          <article class="product-card" data-product-id="UEL-SM-02">
             <div class="product-image-box">
-              <span class="badge-tag new">NEW</span>
-              <img src="images/collection_1/image copy 2.png" alt="Áo Thun UEL STYLE Iconic Tee Oversize" class="product-img primary" loading="lazy">
-              <img src="images/collection_1/image copy 3.png" alt="Chi tiết Áo Thun UEL Iconic" class="product-img secondary" loading="lazy">
+              <span class="badge-tag new">BẢNG 4 MÀU</span>
+              <img src="images/collection_1/ao_so_mi_soc_4_mau.png" alt="Bảng 4 màu Áo Sơ Mi Sọc UEL Xinh Yêu" class="product-img primary" loading="lazy">
+              <img src="images/collection_1/ao_so_mi_soc_balo_sgs.png" alt="Áo Sơ Mi Sọc UEL Mix Balo SGS" class="product-img secondary" loading="lazy">
               <div class="card-overlay-actions">
-                <button class="quick-view-btn" onclick="openProductModal('Áo Thun UEL STYLE Iconic Tee Oversize', '230.000đ', 'images/collection_1/image copy 2.png', 'Vải 100% Cotton 250gsm dày dặn, thấm hút mồ hôi, hình in lụa cao cấp bền màu vượt trội.')">
+                <button class="quick-view-btn" onclick="openProductModal('Áo Sơ Mi Sọc UEL - Bảng 4 Màu Quá Trời Xinh', '250.000đ', 'images/collection_1/ao_so_mi_soc_4_mau.png', 'Màu sắc: Xanh dương | Cam | Đỏ hồng | Xanh lá. Size: M | L | XL. Thiết kế thanh lịch, trẻ trung chuẩn phong cách sinh viên Kinh tế - Luật.')">
                   <i class="fa-regular fa-eye"></i> Xem nhanh
                 </button>
-                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_new_02', 'Nhận voucher 10%')">
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_somi_02', 'Nhận voucher giảm 10% Sơ Mi')">
                   <i class="fa-solid fa-tag"></i> Giảm 10%
                 </a>
               </div>
             </div>
             <div class="product-info">
-              <span class="product-category">T-Shirt Collection</span>
-              <h3 class="product-name"><a href="#dang-ky">Áo Thun UEL STYLE Iconic Tee Dáng Suông</a></h3>
-              <div class="product-price-row">
-                <span class="price-current">230.000đ</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 3 -->
-          <article class="product-card" data-product-id="UEL-NA-03">
-            <div class="product-image-box">
-              <span class="badge-tag limited">HOT DROP</span>
-              <img src="images/collection_2/image.png" alt="Áo Varsity Jacket UEL Kỷ Niệm" class="product-img primary" loading="lazy">
-              <img src="images/collection_2/image copy.png" alt="Chi tiết Varsity Jacket UEL" class="product-img secondary" loading="lazy">
-              <div class="card-overlay-actions">
-                <button class="quick-view-btn" onclick="openProductModal('Áo Varsity Jacket UEL Kỷ Niệm', '420.000đ', 'images/collection_2/image.png', 'Áo khoác bóng chày chất nỉ chân cua cao cấp, tay phối da PU sắc nét, thêu đắp nổi tinh xảo.')">
-                  <i class="fa-regular fa-eye"></i> Xem nhanh
-                </button>
-                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_new_03', 'Nhận voucher 10%')">
-                  <i class="fa-solid fa-tag"></i> Giảm 10%
-                </a>
-              </div>
-            </div>
-            <div class="product-info">
-              <span class="product-category">Outerwear / Campus</span>
-              <h3 class="product-name"><a href="#dang-ky">Áo Varsity Jacket UEL Kỷ Niệm Sang Trọng</a></h3>
-              <div class="product-price-row">
-                <span class="price-current">420.000đ</span>
-                <span class="price-origin">480.000đ</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 4 -->
-          <article class="product-card" data-product-id="UEL-NA-04">
-            <div class="product-image-box">
-              <span class="badge-tag new">COLLAB</span>
-              <img src="images/SGS_collab/image.png" alt="Áo Thun UEL x SGS Special Edition" class="product-img primary" loading="lazy">
-              <img src="images/SGS_collab/image copy.png" alt="Chi tiết SGS Collab Tee" class="product-img secondary" loading="lazy">
-              <div class="card-overlay-actions">
-                <button class="quick-view-btn" onclick="openProductModal('Áo Thun UEL x SGS Special Edition', '250.000đ', 'images/SGS_collab/image.png', 'Bản collab đặc biệt cùng CLB/Hội nhóm thể hiện tinh thần bứt phá và văn hóa trẻ UEL.')">
-                  <i class="fa-regular fa-eye"></i> Xem nhanh
-                </button>
-                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_new_04', 'Nhận voucher 10%')">
-                  <i class="fa-solid fa-tag"></i> Giảm 10%
-                </a>
-              </div>
-            </div>
-            <div class="product-info">
-              <span class="product-category">Special Edition</span>
-              <h3 class="product-name"><a href="#dang-ky">Áo Thun UEL x SGS Edition Giới Hạn</a></h3>
+              <span class="product-category">Áo Sơ Mi &bull; Bảng Màu Xinh Yêu</span>
+              <h3 class="product-name"><a href="#dang-ky">Áo Sơ Mi Quá Trời Màu Xinh Yêu Luôn!</a></h3>
               <div class="product-price-row">
                 <span class="price-current">250.000đ</span>
               </div>
+              <p class="product-meta-desc">Dễ phối quần jeans, quần tây hoặc quần thể thao</p>
+            </div>
+          </article>
+
+          <!-- Card 3: Quần Thể Thao UEL (Poster Thể Chất) -->
+          <article class="product-card" data-product-id="UEL-QTT-01">
+            <div class="product-image-box">
+              <span class="badge-tag limited">HOT DROP</span>
+              <img src="images/collection_2/quan_the_thao_uel_poster.png" alt="Quần Thể Thao UEL Năng Động Trẻ Trung" class="product-img primary" loading="lazy">
+              <img src="images/collection_2/quan_the_thao_uel_4_mau.png" alt="Chi tiết 4 màu Quần Thể Thao UEL Xịn Xò" class="product-img secondary" loading="lazy">
+              <div class="card-overlay-actions">
+                <button class="quick-view-btn" onclick="openProductModal('Quần Thể Thao UEL Năng Động', '199.000đ', 'images/collection_2/quan_the_thao_uel_poster.png', 'Thiết kế năng động, thoải mái, phù hợp cho những giờ học thể chất và các hoạt động vận động. Màu sắc: Xám | Xanh dương | Xám đậm | Đen. Size: M, L, XL, XXL, 3XL, 4XL (từ 45kg đến 100kg).')">
+                  <i class="fa-regular fa-eye"></i> Xem nhanh
+                </button>
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_quan_01', 'Nhận voucher 10% Quần Thể Thao')">
+                  <i class="fa-solid fa-tag"></i> Giảm 10%
+                </a>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">Quần Thể Thao &bull; Học Thể Chất</span>
+              <h3 class="product-name"><a href="#dang-ky">Quần Thể Thao UEL Năng Động - Tự Hào UELer</a></h3>
+              <div class="product-price-row">
+                <span class="price-current">199.000đ</span>
+              </div>
+              <p class="product-meta-desc">Size: M &rarr; 4XL (45kg - 100kg) &bull; Túi khóa zip kéo</p>
+            </div>
+          </article>
+
+          <!-- Card 4: Quần Thể Thao UEL (Bảng 4 Màu Xịn Xò) -->
+          <article class="product-card" data-product-id="UEL-QTT-02">
+            <div class="product-image-box">
+              <span class="badge-tag limited">ĐỦ 4 MÀU</span>
+              <img src="images/collection_2/quan_the_thao_uel_4_mau.png" alt="Còn Có Quần Thể Thao UEL Xịn Xò Nữa Nè" class="product-img primary" loading="lazy">
+              <img src="images/collection_2/quan_the_thao_uel_poster.png" alt="Quần Thể Thao UEL Thêu Logo Sắc Nét" class="product-img secondary" loading="lazy">
+              <div class="card-overlay-actions">
+                <button class="quick-view-btn" onclick="openProductModal('Quần Thể Thao UEL Xịn Xò Nữa Nè!', '199.000đ', 'images/collection_2/quan_the_thao_uel_4_mau.png', 'Màu sắc: Xám | Xanh dương | Xám đậm | Đen. Đủ size từ M đến 4XL. Chất thun co giãn 4 chiều, lưng thun có dây rút cao cấp.')">
+                  <i class="fa-regular fa-eye"></i> Xem nhanh
+                </button>
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_quan_02', 'Nhận voucher 10% Quần')">
+                  <i class="fa-solid fa-tag"></i> Giảm 10%
+                </a>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">Sportswear &bull; 4 Màu Cơ Bản</span>
+              <h3 class="product-name"><a href="#dang-ky">Quần Thể Thao UEL (Xám / Xanh dương / Xám đậm / Đen)</a></h3>
+              <div class="product-price-row">
+                <span class="price-current">199.000đ</span>
+              </div>
+              <p class="product-meta-desc">Form dáng suông thể thao khỏe khoắn & tôn dáng</p>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 3: BEST SELLERS (Được UELers yêu thích nhất) -->
+    <!-- SECTION 3: BEST SELLERS - BỘ SƯU TẬP COLLAB UEL STYLE x SAIGON SWAGGER -->
     <section class="catalog-section section-cream" id="best-sellers" aria-labelledby="heading-best-sellers">
       <div class="layout-container">
         <div class="section-header-flex">
           <div>
-            <span class="section-eyebrow">MOST LOVED</span>
-            <h2 class="section-title" id="heading-best-sellers">BEST SELLERS &bull; UELERS' PICKS</h2>
+            <span class="section-eyebrow">[UEL STYLE x SGS] GRAND OPENING &bull; GIA HẠN ƯU ĐÃI</span>
+            <h2 class="section-title" id="heading-best-sellers">BỘ SƯU TẬP TÚI BA GANG THỜI HIỆN ĐẠI</h2>
           </div>
-          <span class="section-tagline">Được hàng nghìn sinh viên UEL tin chọn mỗi kỳ drop</span>
+          <span class="section-tagline">“Học hành chăm chỉ, tay xách nách mang — Mua túi ba gang, mang đi mà đựng” 🎒✨</span>
         </div>
 
         <div class="product-grid" id="best-sellers-grid">
-          <!-- Card 5 -->
-          <article class="product-card" data-product-id="UEL-BS-01">
+          <!-- Card 5: Balo SGS Basic & Túi Ba Gang -->
+          <article class="product-card" data-product-id="UEL-SGS-01">
             <div class="product-image-box">
-              <span class="badge-tag best-seller"><i class="fa-solid fa-fire"></i> BEST SELLER</span>
-              <img src="images/SGS_collab/image copy 2.png" alt="Áo Thun Daily Streetwear Phối Màu Trẻ Trung" class="product-img primary" loading="lazy">
-              <img src="images/SGS_collab/image copy 3.png" alt="Chi tiết Áo Streetwear" class="product-img secondary" loading="lazy">
+              <span class="badge-tag best-seller"><i class="fa-solid fa-fire"></i> GIẢM 10%</span>
+              <img src="images/SGS_collab/sgs_ke_trung_bay_booth.png" alt="Booth Trưng Bày SGS Tại UEL Style" class="product-img primary" loading="lazy">
+              <img src="images/SGS_collab/sgs_tui_deo_cheo_balo.png" alt="Balo Basic SGS Form Cứng Cáp" class="product-img secondary" loading="lazy">
               <div class="card-overlay-actions">
-                <button class="quick-view-btn" onclick="openProductModal('Áo Thun Daily Streetwear Phối Màu Trẻ Trung', '240.000đ', 'images/SGS_collab/image copy 2.png', 'Thiết kế form boxy hiện đại tôn dáng sinh viên, dễ phối quần jeans hay short dạo phố.')">
+                <button class="quick-view-btn" onclick="openProductModal('Balo Basic SGS x UEL Style', 'Ưu đãi Giảm 10%', 'images/SGS_collab/sgs_ke_trung_bay_booth.png', 'Form dáng cứng cáp, cân trọn laptop 15.6 inch và giáo trình dày cộp. Chống nước cao cấp, quai đệm êm ái cho những ngày chạy deadline.')">
                   <i class="fa-regular fa-eye"></i> Xem nhanh
                 </button>
-                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_bs_01', 'Nhận voucher 10%')">
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_sgs_01', 'Nhận voucher giảm 10% Balo SGS')">
                   <i class="fa-solid fa-tag"></i> Giảm 10%
                 </a>
               </div>
             </div>
             <div class="product-info">
-              <span class="product-category">Daily Essentials</span>
-              <h3 class="product-name"><a href="#dang-ky">Áo Thun Daily Streetwear Phối Màu Trẻ Trung</a></h3>
+              <span class="product-category">Balo SGS &bull; Campus Collection</span>
+              <h3 class="product-name"><a href="#dang-ky">Balo Basic SGS — Cân Trọn Laptop & Giáo Trình</a></h3>
               <div class="product-price-row">
-                <span class="price-current">240.000đ</span>
+                <span class="price-current">Giảm 10% Tất Cả Balo</span>
               </div>
+              <p class="product-meta-desc">Trải nghiệm trực tiếp tại Booth SGS &bull; Cơ sở ĐH Kinh tế - Luật</p>
             </div>
           </article>
 
-          <!-- Card 6 -->
-          <article class="product-card" data-product-id="UEL-BS-02">
+          <!-- Card 6: Túi Tote Canvas Mini SGS -->
+          <article class="product-card" data-product-id="UEL-SGS-02">
             <div class="product-image-box">
-              <span class="badge-tag best-seller"><i class="fa-solid fa-fire"></i> BEST SELLER</span>
-              <img src="images/collection_1/image copy 3.png" alt="Áo Polo UEL Dệt Bo Tay Vintage" class="product-img primary" loading="lazy">
-              <img src="images/collection_1/image.png" alt="Chi tiết Polo Bo Tay" class="product-img secondary" loading="lazy">
+              <span class="badge-tag best-seller"><i class="fa-solid fa-fire"></i> GIẢM 10%</span>
+              <img src="images/SGS_collab/sgs_tui_tote_canvas_mini.png" alt="Túi Tote SGS Rộng Rãi Thanh Lịch" class="product-img primary" loading="lazy">
+              <img src="images/SGS_collab/sgs_ke_trung_bay_booth.png" alt="Chi tiết Túi Tote Canvas SGS" class="product-img secondary" loading="lazy">
               <div class="card-overlay-actions">
-                <button class="quick-view-btn" onclick="openProductModal('Áo Polo UEL Dệt Bo Tay Vintage', '265.000đ', 'images/collection_1/image copy 3.png', 'Thích hợp cho cả những buổi thuyết trình lịch sự lẫn hoạt động ngoại khóa năng động.')">
+                <button class="quick-view-btn" onclick="openProductModal('Túi Tote SGS x UEL Style', 'Ưu đãi Giảm 10%', 'images/SGS_collab/sgs_tui_tote_canvas_mini.png', 'Rộng rãi, thanh lịch, dễ dàng mix-match với mọi outfit từ áo sơ mi sọc đến quần thể thao năng động.')">
                   <i class="fa-regular fa-eye"></i> Xem nhanh
                 </button>
-                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_bs_02', 'Nhận voucher 10%')">
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_sgs_02', 'Nhận voucher giảm 10% Túi Tote')">
                   <i class="fa-solid fa-tag"></i> Giảm 10%
                 </a>
               </div>
             </div>
             <div class="product-info">
-              <span class="product-category">Campus Elegant</span>
-              <h3 class="product-name"><a href="#dang-ky">Áo Polo UEL Dệt Bo Tay Phối Line Tinh Tế</a></h3>
+              <span class="product-category">Túi Tote &bull; Carry In Style</span>
+              <h3 class="product-name"><a href="#dang-ky">Túi Tote SGS — Rộng Rãi & Mix-Match Mọi Outfit</a></h3>
               <div class="product-price-row">
-                <span class="price-current">265.000đ</span>
+                <span class="price-current">Giảm 10% Túi Tote</span>
               </div>
+              <p class="product-meta-desc">Chất liệu vải canvas chuyên dụng & chống bám bẩn</p>
             </div>
           </article>
 
-          <!-- Card 7 -->
-          <article class="product-card" data-product-id="UEL-BS-03">
+          <!-- Card 7: Túi Đeo Chéo SGS Tiện Lợi -->
+          <article class="product-card" data-product-id="UEL-SGS-03">
             <div class="product-image-box">
-              <span class="badge-tag best-seller"><i class="fa-solid fa-fire"></i> TOP RATED</span>
-              <img src="images/collection_2/image copy.png" alt="Túi Tote & Phụ Kiện UEL Dynamic" class="product-img primary" loading="lazy">
-              <img src="images/collection_2/image.png" alt="Chi tiết Tote UEL" class="product-img secondary" loading="lazy">
+              <span class="badge-tag best-seller"><i class="fa-solid fa-fire"></i> GIẢM 10%</span>
+              <img src="images/SGS_collab/sgs_tui_deo_cheo_balo.png" alt="Túi Đeo Chéo SGS Tiện Lợi" class="product-img primary" loading="lazy">
+              <img src="images/SGS_collab/sgs_vi_phu_kien_mockup.png" alt="Chi tiết Túi Đeo Chéo SGS" class="product-img secondary" loading="lazy">
               <div class="card-overlay-actions">
-                <button class="quick-view-btn" onclick="openProductModal('Túi Canvas / Phụ Kiện UEL Dynamic', '150.000đ', 'images/collection_2/image copy.png', 'Túi tote canvas sợi dệt siêu bền chịu lực 10kg, đựng vừa laptop 15.6 inch cho sinh viên.')">
+                <button class="quick-view-btn" onclick="openProductModal('Túi Đeo Chéo SGS x UEL Style', 'Ưu đãi Giảm 10%', 'images/SGS_collab/sgs_tui_deo_cheo_balo.png', 'Nhỏ gọn, tiện lợi cho những ngày ít tiết hay đi cafe chạy deadline cùng bạn bè.')">
                   <i class="fa-regular fa-eye"></i> Xem nhanh
                 </button>
-                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_bs_03', 'Nhận voucher 10%')">
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_sgs_03', 'Nhận voucher giảm 10% Túi Đeo Chéo')">
                   <i class="fa-solid fa-tag"></i> Giảm 10%
                 </a>
               </div>
             </div>
             <div class="product-info">
-              <span class="product-category">Accessories</span>
-              <h3 class="product-name"><a href="#dang-ky">Túi Canvas Tote UEL Dynamic Chịu Lực Tốt</a></h3>
+              <span class="product-category">Túi Đeo Chéo &bull; Daily Carry</span>
+              <h3 class="product-name"><a href="#dang-ky">Túi Đeo Chéo SGS — Nhỏ Gọn Cho Ngày Ít Tiết</a></h3>
               <div class="product-price-row">
-                <span class="price-current">150.000đ</span>
+                <span class="price-current">Giảm 10% Túi Đeo Chéo</span>
               </div>
+              <p class="product-meta-desc">Nhiều ngăn tiện lợi & quai đeo điều chỉnh linh hoạt</p>
             </div>
           </article>
 
-          <!-- Card 8 -->
-          <article class="product-card" data-product-id="UEL-BS-04">
+          <!-- Card 8: Ví & Móc Khóa Phụ Kiện SGS -->
+          <article class="product-card" data-product-id="UEL-SGS-04">
             <div class="product-image-box">
-              <span class="badge-tag best-seller"><i class="fa-solid fa-fire"></i> BEST SELLER</span>
-              <img src="images/collection_1/image copy.png" alt="Combo Campus Starter Pack UEL STYLE" class="product-img primary" loading="lazy">
-              <img src="images/collection_1/image copy 2.png" alt="Combo Pack chi tiết" class="product-img secondary" loading="lazy">
+              <span class="badge-tag best-seller"><i class="fa-solid fa-fire"></i> PHỤ KIỆN HOT</span>
+              <img src="images/SGS_collab/sgs_vi_phu_kien_mockup.png" alt="Ví Cầm Tay & Móc Khóa SGS" class="product-img primary" loading="lazy">
+              <img src="images/SGS_collab/sgs_ke_trung_bay_booth.png" alt="Chi tiết Phụ Kiện SGS" class="product-img secondary" loading="lazy">
               <div class="card-overlay-actions">
-                <button class="quick-view-btn" onclick="openProductModal('Combo Campus Starter Pack UEL STYLE', '450.000đ', 'images/collection_1/image copy.png', 'Gồm 1 Polo + 1 Tee oversize + 1 móc khóa UEL đúc kim loại cao cấp.')">
+                <button class="quick-view-btn" onclick="openProductModal('Ví & Móc Khóa Phụ Kiện SGS', 'Ưu đãi Giảm 10%', 'images/SGS_collab/sgs_vi_phu_kien_mockup.png', 'Ví mini cầm tay, móc khóa UEL Style x SGS độc quyền. Giảm 10% trọn bộ sưu tập Grand Opening.')">
                   <i class="fa-regular fa-eye"></i> Xem nhanh
                 </button>
-                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_bs_04', 'Nhận voucher 10%')">
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_sgs_04', 'Nhận voucher giảm 10% Ví Phụ Kiện')">
                   <i class="fa-solid fa-tag"></i> Giảm 10%
                 </a>
               </div>
             </div>
             <div class="product-info">
-              <span class="product-category">Value Pack</span>
-              <h3 class="product-name"><a href="#dang-ky">Combo Campus Starter Pack (Tee + Polo)</a></h3>
+              <span class="product-category">Ví & Phụ Kiện &bull; Limited Collab</span>
+              <h3 class="product-name"><a href="#dang-ky">Ví Cầm Tay & Phụ Kiện Saigon Swagger</a></h3>
               <div class="product-price-row">
-                <span class="price-current">450.000đ</span>
-                <span class="price-origin">520.000đ</span>
+                <span class="price-current">Giảm 10% Ví & Phụ Kiện</span>
               </div>
+              <p class="product-meta-desc">Items must-have hoàn thiện phong cách UELer</p>
             </div>
           </article>
         </div>
@@ -458,6 +490,7 @@
           <div>
             <span class="section-eyebrow">STYLING IDEAS</span>
             <h2 class="section-title" id="heading-lookbook">UELERS IN STYLE &bull; LOOKBOOK</h2>
+            <p class="lookbook-subtitle">Khám phá clip phối đồ campus & video hậu trường tại TikTok: <a href="https://www.tiktok.com/@uel.style.official" target="_blank" rel="noopener noreferrer" class="lookbook-tiktok-chip"><i class="fa-brands fa-tiktok"></i> @uel.style.official</a></p>
           </div>
           <div class="lookbook-controls">
             <button class="slider-btn prev" id="lookbook-prev-btn" aria-label="Bộ phối trước"><i class="fa-solid fa-chevron-left"></i></button>
@@ -470,52 +503,52 @@
             <!-- Outfit 1 -->
             <div class="lookbook-card">
               <div class="lookbook-img-box">
-                <img src="images/collection_1/image copy.png" alt="Outfit 01: Minimal Academic" loading="lazy">
+                <img src="images/collection_1/ao_so_mi_soc_cam_pose2.png" alt="Outfit 01: Sơ Mi Sọc UEL Thanh Lịch Giảng Đường" loading="lazy">
                 <span class="lookbook-tag">OUTFIT 01</span>
               </div>
               <div class="lookbook-card-info">
-                <h3>Minimal Academic</h3>
-                <p>Polo Signature phối Quần Tây Ống Rộng & Giày Sneaker Trắng thanh lịch đến lớp.</p>
-                <a href="#dang-ky" class="lookbook-cta" onclick="trackLeadCTAClick('lookbook_01', 'Nhận tư vấn phối đồ')">Xem bộ phối & Nhận size &rarr;</a>
+                <h3>Thanh Lịch Đến Giảng Đường</h3>
+                <p>Áo sơ mi sọc cam UEL kết hợp kính gọng mảnh & kiểu tóc tết năng động cho ngày học thuyết trình.</p>
+                <a href="#dang-ky" class="lookbook-cta" onclick="trackLeadCTAClick('lookbook_01', 'Nhận tư vấn phối đồ Sơ Mi')">Xem bộ phối & Nhận size &rarr;</a>
               </div>
             </div>
 
             <!-- Outfit 2 -->
             <div class="lookbook-card">
               <div class="lookbook-img-box">
-                <img src="images/SGS_collab/image copy 3.png" alt="Outfit 02: Street Dynamic" loading="lazy">
+                <img src="images/collection_1/ao_so_mi_soc_balo_sgs.png" alt="Outfit 02: Sơ Mi Sọc UEL Mix Balo SGS Basic" loading="lazy">
                 <span class="lookbook-tag">OUTFIT 02</span>
               </div>
               <div class="lookbook-card-info">
-                <h3>Street Dynamic</h3>
-                <p>Tee UEL x SGS kết hợp Quần Cargo đen và Túi Đeo Chéo đậm chất streetwear.</p>
-                <a href="#dang-ky" class="lookbook-cta" onclick="trackLeadCTAClick('lookbook_02', 'Nhận tư vấn phối đồ')">Xem bộ phối & Nhận size &rarr;</a>
+                <h3>Campus Run Deadline</h3>
+                <p>Áo sơ mi sọc kết hợp Balo Basic Saigon Swagger — "Túi ba gang" cân trọn laptop & giáo trình dày cộp.</p>
+                <a href="#dang-ky" class="lookbook-cta" onclick="trackLeadCTAClick('lookbook_02', 'Nhận tư vấn phối đồ Balo SGS')">Xem bộ phối & Nhận size &rarr;</a>
               </div>
             </div>
 
             <!-- Outfit 3 -->
             <div class="lookbook-card">
               <div class="lookbook-img-box">
-                <img src="images/collection_2/image.png" alt="Outfit 03: Varsity Campus Legend" loading="lazy">
+                <img src="images/collection_2/quan_the_thao_uel_poster.png" alt="Outfit 03: Thể Chất Năng Động Cùng Quần Thể Thao UEL" loading="lazy">
                 <span class="lookbook-tag">OUTFIT 03</span>
               </div>
               <div class="lookbook-card-info">
-                <h3>Campus Legend</h3>
-                <p>Varsity Jacket khoác ngoài áo thun trơn kem, diện trong mùa kỷ niệm hoặc sự kiện lớn.</p>
-                <a href="#dang-ky" class="lookbook-cta" onclick="trackLeadCTAClick('lookbook_03', 'Nhận tư vấn phối đồ')">Xem bộ phối & Nhận size &rarr;</a>
+                <h3>Năng Động Giờ Thể Chất</h3>
+                <p>Quần thể thao thun co giãn 4 chiều phối áo polo UEL cho những giờ học thể dục & sinh hoạt CLB.</p>
+                <a href="#dang-ky" class="lookbook-cta" onclick="trackLeadCTAClick('lookbook_03', 'Nhận tư vấn phối đồ Quần Thể Thao')">Xem bộ phối & Nhận size &rarr;</a>
               </div>
             </div>
 
             <!-- Outfit 4 -->
             <div class="lookbook-card">
               <div class="lookbook-img-box">
-                <img src="images/collection_1/image copy 2.png" alt="Outfit 04: Active Presentation" loading="lazy">
+                <img src="images/SGS_collab/sgs_tui_tote_canvas_mini.png" alt="Outfit 04: Mix-Match Túi Tote SGS Thanh Lịch" loading="lazy">
                 <span class="lookbook-tag">OUTFIT 04</span>
               </div>
               <div class="lookbook-card-info">
-                <h3>Active Presentation</h3>
-                <p>Iconic Tee phối Blazer trẻ trung cho các buổi thuyết trình và cuộc thi học thuật UEL.</p>
-                <a href="#dang-ky" class="lookbook-cta" onclick="trackLeadCTAClick('lookbook_04', 'Nhận tư vấn phối đồ')">Xem bộ phối & Nhận size &rarr;</a>
+                <h3>Carry In Style Hằng Ngày</h3>
+                <p>Túi tote canvas SGS tiện lợi đựng đồ học tập, dạo phố cafe và các hoạt động ngoại khóa sôi nổi.</p>
+                <a href="#dang-ky" class="lookbook-cta" onclick="trackLeadCTAClick('lookbook_04', 'Nhận tư vấn phối đồ Túi Tote')">Xem bộ phối & Nhận size &rarr;</a>
               </div>
             </div>
           </div>
@@ -535,31 +568,31 @@
 
         <div class="categories-grid">
           <div class="category-card" onclick="location.href='#new-arrivals'">
-            <img src="images/collection_1/image.png" alt="T-Shirts & Polos UEL STYLE" loading="lazy">
+            <img src="images/collection_1/ao_so_mi_soc_4_mau.png" alt="Áo Sơ Mi Sọc UEL 4 Màu" loading="lazy">
             <div class="category-card-overlay">
-              <span class="category-count">12+ Mẫu mới</span>
-              <h3>T-SHIRTS & POLOS</h3>
-              <p>Chất liệu thoáng mát, form dáng thanh lịch giảng đường</p>
-              <span class="cat-link">Khám phá ngay &rarr;</span>
-            </div>
-          </div>
-
-          <div class="category-card" onclick="location.href='#best-sellers'">
-            <img src="images/collection_2/image.png" alt="Varsity & Outerwear UEL STYLE" loading="lazy">
-            <div class="category-card-overlay">
-              <span class="category-count">Limited Drop</span>
-              <h3>OUTERWEAR & VARSITY</h3>
-              <p>Áo khoác bóng chày, nỉ chân cua thêu chữ nổi bật</p>
+              <span class="category-count">4 Màu Sắc &bull; 250.000đ</span>
+              <h3>ÁO SƠ MI SỌC UEL</h3>
+              <p>Xanh dương | Cam | Đỏ hồng | Xanh lá &bull; Size M-XL thanh lịch</p>
               <span class="cat-link">Khám phá ngay &rarr;</span>
             </div>
           </div>
 
           <div class="category-card" onclick="location.href='#new-arrivals'">
-            <img src="images/SGS_collab/image.png" alt="Bags & Campus Accessories" loading="lazy">
+            <img src="images/collection_2/quan_the_thao_uel_4_mau.png" alt="Quần Thể Thao UEL 4 Màu" loading="lazy">
             <div class="category-card-overlay">
-              <span class="category-count">Phụ kiện hot</span>
-              <h3>BAGS & ACCESSORIES</h3>
-              <p>Túi tote canvas, nón lưỡi trai, móc khóa kim loại</p>
+              <span class="category-count">199.000đ &bull; Size M-4XL</span>
+              <h3>QUẦN THỂ THAO UEL</h3>
+              <p>Năng động, thoải mái cho giờ học thể chất và vận động</p>
+              <span class="cat-link">Khám phá ngay &rarr;</span>
+            </div>
+          </div>
+
+          <div class="category-card" onclick="location.href='#best-sellers'">
+            <img src="images/SGS_collab/sgs_ke_trung_bay_booth.png" alt="Balo Túi Saigon Swagger Collab" loading="lazy">
+            <div class="category-card-overlay">
+              <span class="category-count">Grand Opening &bull; Giảm 10%</span>
+              <h3>[UEL STYLE x SGS] TÚI BA GANG</h3>
+              <p>Balo basic, túi tote, túi đeo chéo & ví phụ kiện tiện dụng</p>
               <span class="cat-link">Khám phá ngay &rarr;</span>
             </div>
           </div>
@@ -593,7 +626,7 @@
             </div>
           </div>
           <div class="guide-action-buttons">
-            <a href="https://www.facebook.com/uelstyle" target="_blank" rel="noopener noreferrer" class="btn-fb-solid">
+            <a href="https://www.facebook.com/kyofficial.vn" target="_blank" rel="noopener noreferrer" class="btn-fb-solid">
               <i class="fa-brands fa-facebook-messenger"></i> NHẮN TIN FANPAGE UEL STYLE
             </a>
             <a href="#dang-ky" class="btn-outline-gold" onclick="trackLeadCTAClick('how_to_shop', 'Đăng ký nhận ưu đãi mua hàng')">
@@ -747,24 +780,24 @@
                     <label>Bạn quan tâm đến dòng sản phẩm nào? (Chọn nhiều)</label>
                     <div class="checkbox-chips-grid">
                       <label class="chip-item">
-                        <input type="checkbox" name="interests" value="tshirt">
-                        <span>Áo Thun / Polo</span>
+                        <input type="checkbox" name="interests" value="somi_soc">
+                        <span>Áo Sơ Mi Sọc (4 Màu)</span>
                       </label>
                       <label class="chip-item">
-                        <input type="checkbox" name="interests" value="outerwear">
-                        <span>Varsity / Hoodie</span>
+                        <input type="checkbox" name="interests" value="quan_the_thao">
+                        <span>Quần Thể Thao UEL</span>
                       </label>
                       <label class="chip-item">
-                        <input type="checkbox" name="interests" value="accessories">
-                        <span>Túi & Phụ Kiện</span>
+                        <input type="checkbox" name="interests" value="sgs_bags">
+                        <span>Balo & Túi Ba Gang SGS</span>
                       </label>
                       <label class="chip-item">
                         <input type="checkbox" name="interests" value="lookbook">
-                        <span>Lookbook Mới</span>
+                        <span>Lookbook & Outfit Ideas</span>
                       </label>
                       <label class="chip-item">
                         <input type="checkbox" name="interests" value="deals">
-                        <span>Ưu đãi Flash Sale</span>
+                        <span>Ưu đãi Giảm 10% Grand Opening</span>
                       </label>
                     </div>
                   </div>
@@ -849,7 +882,7 @@
             </div>
           </div>
           <div class="modal-action-row">
-            <a href="https://www.facebook.com/uelstyle" target="_blank" rel="noopener noreferrer" class="btn-primary full-width">
+            <a href="https://www.facebook.com/kyofficial.vn" target="_blank" rel="noopener noreferrer" class="btn-primary full-width">
               <i class="fa-brands fa-facebook-messenger"></i> Đặt hàng qua Fanpage UEL STYLE
             </a>
             <a href="#dang-ky" class="btn-outline-gold full-width" onclick="closeProductModal(); trackLeadCTAClick('quick_modal', 'Đăng ký lấy voucher giảm 10%')">
@@ -886,24 +919,24 @@
       </div>
       <div class="search-results-list" id="search-results-list">
         <div class="search-item" onclick="selectSearchItem('#new-arrivals')">
-          <img src="images/collection_1/image.png" alt="Polo">
+          <img src="images/collection_1/ao_so_mi_soc_cam_pose1.png" alt="Áo Sơ Mi Sọc UEL">
           <div>
-            <strong>Áo Polo UEL Signature</strong>
-            <span>260.000đ &bull; New Arrival</span>
+            <strong>Áo Sơ Mi Sọc UEL (4 Màu Sắc)</strong>
+            <span>250.000đ &bull; Size M, L, XL</span>
           </div>
         </div>
         <div class="search-item" onclick="selectSearchItem('#new-arrivals')">
-          <img src="images/collection_1/image copy 2.png" alt="Tee">
+          <img src="images/collection_2/quan_the_thao_uel_poster.png" alt="Quần Thể Thao UEL">
           <div>
-            <strong>Áo Thun UEL STYLE Iconic Tee</strong>
-            <span>230.000đ &bull; New Arrival</span>
+            <strong>Quần Thể Thao UEL Năng Động</strong>
+            <span>199.000đ &bull; Đủ size M - 4XL</span>
           </div>
         </div>
         <div class="search-item" onclick="selectSearchItem('#best-sellers')">
-          <img src="images/collection_2/image.png" alt="Varsity">
+          <img src="images/SGS_collab/sgs_ke_trung_bay_booth.png" alt="Balo Saigon Swagger">
           <div>
-            <strong>Áo Varsity Jacket UEL Kỷ Niệm</strong>
-            <span>420.000đ &bull; Limited Drop</span>
+            <strong>Balo & Túi Ba Gang SGS x UEL Style</strong>
+            <span>Ưu đãi Grand Opening &bull; Giảm 10%</span>
           </div>
         </div>
       </div>
@@ -924,9 +957,9 @@
             <strong>UEL STYLE</strong> — Thương hiệu thời trang & campus merchandise mang bản sắc sinh viên Trường Đại học Kinh tế – Luật (ĐHQG-HCM).
           </p>
           <div class="footer-social-links">
-            <a href="https://www.facebook.com/uelstyle" target="_blank" rel="noopener noreferrer" aria-label="Facebook UEL STYLE"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.facebook.com/kyofficial.vn" target="_blank" rel="noopener noreferrer" aria-label="Facebook UEL STYLE" class="social-fb"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.tiktok.com/@uel.style.official" target="_blank" rel="noopener noreferrer" aria-label="TikTok UEL STYLE" class="social-tiktok"><i class="fa-brands fa-tiktok"></i></a>
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
           </div>
         </div>
 
@@ -958,7 +991,8 @@
           <h4 class="footer-heading">KẾT NỐI VỚI UEL STYLE</h4>
           <p><i class="fa-solid fa-location-dot"></i> 669 QL1K, Linh Xuân, TP. Thủ Đức, TP.HCM</p>
           <p><i class="fa-solid fa-envelope"></i> contact@uelstyle.com</p>
-          <p><i class="fa-brands fa-facebook"></i> fb.com/uelstyle</p>
+          <p><i class="fa-brands fa-facebook"></i> <a href="https://www.facebook.com/kyofficial.vn" target="_blank" rel="noopener noreferrer" class="footer-contact-link">fb.com/kyofficial.vn</a></p>
+          <p><i class="fa-brands fa-tiktok"></i> <a href="https://www.tiktok.com/@uel.style.official" target="_blank" rel="noopener noreferrer" class="footer-contact-link">@uel.style.official</a></p>
           <div class="footer-lead-cta">
             <a href="#dang-ky" class="btn-footer-subscribe" onclick="trackLeadCTAClick('footer', 'Đăng ký nhận tin mới')">
               <i class="fa-solid fa-paper-plane"></i> Đăng ký nhận tin mới
@@ -979,8 +1013,8 @@
     <a href="#dang-ky" class="mobile-lead-btn" onclick="trackLeadCTAClick('mobile_sticky_bar', 'Nhận 10% ngay')">
       <i class="fa-solid fa-gift"></i> Nhận ưu đãi 10%
     </a>
-    <a href="https://www.facebook.com/uelstyle" target="_blank" rel="noopener noreferrer" class="mobile-chat-btn">
-      <i class="fa-brands fa-facebook-messenger"></i> Nhắn Chat
+    <a href="https://www.facebook.com/kyofficial.vn" target="_blank" rel="noopener noreferrer" class="mobile-chat-btn">
+      <i class="fa-brands fa-facebook-messenger"></i> Nhắn Fanpage
     </a>
   </div>
 

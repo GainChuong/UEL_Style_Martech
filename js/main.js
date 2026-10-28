@@ -194,6 +194,11 @@ window.handleInitialFormSubmit = function(event) {
     source_placement: 'lead_section_form'
   };
 
+  // Kích hoạt cổng gửi OTP thực tế (Real Email / Sandbox)
+  if (typeof sendRealEmailOtp === 'function') {
+    sendRealEmailOtp(email, simulatedOTP, name);
+  }
+
   // Chuyển sang màn hình xác minh OTP
   document.getElementById('form-stage-initial').style.display = 'none';
   document.getElementById('form-stage-verify').style.display = 'block';
@@ -206,7 +211,7 @@ window.handleInitialFormSubmit = function(event) {
     method: 'email_otp'
   });
 
-  showToast('Đã gửi mã xác minh 6 số tới ' + email);
+  showToast('Đang gửi mã xác minh 6 số tới ' + email);
 };
 
 /* ==========================================================================
@@ -410,7 +415,7 @@ window.openProductModal = function(title, price, imgUrl, desc) {
   modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
 
-  trackLeadEvent('product_quick_view', { title, price });
+  trackLeadEvent('product_quick_view', { item_name: title, price: price, title: title });
 };
 
 window.closeProductModal = function() {
