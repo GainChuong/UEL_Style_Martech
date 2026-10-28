@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UEL STYLE — Campus Fashion & Lifestyle | Official Storefront</title>
+  <meta name="description" content="Khám phá bộ sưu tập thời trang UEL STYLE đậm chất sinh viên Kinh tế - Luật. Phong cách hiện đại, tối giản, trẻ trung. Đăng ký nhận tin để nhận ưu đãi đặc biệt.">
+  <meta name="keywords" content="UEL STYLE, thời trang UEL, áo thun UEL, hoodie UEL, campus fashion, Levents style, UEL Store">
+  <meta name="author" content="UEL STYLE Brand Team">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="UEL STYLE — Mang Chất UEL. Mặc Theo Chất Riêng.">
+  <meta property="og:description" content="Trang phục và phụ kiện cho những ngày mang đậm tinh thần UEL. Khám phá các thiết kế New Arrivals và Styling Lookbook.">
+  <meta property="og:image" content="images/banner.png">
+  <meta property="og:url" content="https://uelstyle.com/">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="UEL STYLE — Campus Fashion & Lifestyle">
+  <meta name="twitter:description" content="Khám phá bộ sưu tập thời trang UEL STYLE đậm chất sinh viên Kinh tế - Luật.">
+  <meta name="twitter:image" content="images/banner.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/logo.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Structured Data JSON-LD for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ClothingStore",
+    "name": "UEL STYLE",
+    "image": "images/banner.png",
+    "logo": "images/logo.png",
+    "url": "https://uelstyle.com",
+    "telephone": "+84901234567",
+    "description": "Thương hiệu thời trang & campus merchandise sinh viên UEL STYLE",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "669 QL1K, Linh Xuân",
+      "addressLocality": "Thủ Đức",
+      "addressRegion": "Hồ Chí Minh",
+      "addressCountry": "VN"
+    },
+    "sameAs": [
+      "https://www.facebook.com/uelstyle"
+    ],
+    "priceRange": "150.000đ - 450.000đ"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <aside class="announcement-bar" id="announcement-bar" aria-label="Thông báo chiến dịch">
+    <div class="announcement-inner">
+      <span class="badge-sparkle"><i class="fa-solid fa-sparkles"></i> NEW DROP 2026</span>
+      <p>Campus essentials — Khám phá những thiết kế mang dấu ấn UEL STYLE. <a href="#new-arrivals" class="announcement-link">Khám phá ngay &rarr;</a></p>
+      <div class="announcement-actions">
+        <a href="#dang-ky" class="btn-micro-cta" onclick="trackLeadCTAClick('announcement_bar', 'Đăng ký nhận ưu đãi')">Đăng ký nhận ưu đãi</a>
+        <button class="close-announcement" aria-label="Đóng thông báo" onclick="document.getElementById('announcement-bar').style.display='none'">&times;</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Sticky Header Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      <!-- Mobile hamburger -->
+      <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Mở menu điều hướng" aria-expanded="false" aria-controls="mobile-nav-drawer">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Brand Logo Zone -->
+      <a href="index.html" class="brand-logo" id="header-brand-logo" aria-label="UEL STYLE Trang chủ">
+        <img src="images/logo.png" alt="UEL STYLE — Official Brand Logo" class="logo-img" />
+      </a>
+
+      <!-- Desktop Nav Menu -->
+      <nav class="desktop-nav" aria-label="Thanh điều hướng chính">
+        <ul class="nav-links">
+          <li><a href="#new-arrivals" class="nav-link">Sản phẩm mới</a></li>
+          <li><a href="#best-sellers" class="nav-link">Bán chạy</a></li>
+          <li><a href="#campaign-story" class="nav-link">Câu chuyện UEL</a></li>
+          <li><a href="#lookbook" class="nav-link">Lookbook</a></li>
+          <li><a href="#categories" class="nav-link">Bộ sưu tập</a></li>
+          <li><a href="#how-to-shop" class="nav-link">Cách mua hàng</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Utilities & Quick CTA -->
+      <div class="header-actions">
+        <!-- Quick search simulation -->
+        <button class="icon-btn" id="search-modal-trigger" aria-label="Tìm kiếm sản phẩm" title="Tìm kiếm">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <!-- Admin Tool Direct Link -->
+        <a href="admin.html" class="btn-outline-admin" title="Dashboard phân tích SEO & MarTech Metrics">
+          <i class="fa-solid fa-chart-line"></i> <span class="hide-mobile">Admin SEO</span>
+        </a>
+        <!-- Lead CTA Primary in Header -->
+        <a href="#dang-ky" class="btn-header-cta" id="cta-header-register" onclick="trackLeadCTAClick('header', 'Đăng ký nhận tin')">
+          <i class="fa-regular fa-envelope"></i> <span>Đăng ký nhận tin</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Navigation -->
+  <div class="mobile-drawer" id="mobile-nav-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <img src="images/logo.png" alt="UEL STYLE Logo" class="drawer-logo">
+      <button class="drawer-close-btn" id="drawer-close-btn" aria-label="Đóng menu">&times;</button>
+    </div>
+    <ul class="drawer-menu">
+      <li><a href="#new-arrivals" class="drawer-link">Sản phẩm mới (New Arrivals)</a></li>
+      <li><a href="#best-sellers" class="drawer-link">Sản phẩm bán chạy</a></li>
+      <li><a href="#campaign-story" class="drawer-link">Tinh thần UEL STYLE</a></li>
+      <li><a href="#lookbook" class="drawer-link">Lookbook & Outfit Ideas</a></li>
+      <li><a href="#categories" class="drawer-link">Khám phá theo danh mục</a></li>
+      <li><a href="#how-to-shop" class="drawer-link">Hướng dẫn mua sắm</a></li>
+      <li><a href="admin.html" class="drawer-link admin-link"><i class="fa-solid fa-chart-line"></i> Dashboard Admin SEO</a></li>
+    </ul>
+    <div class="drawer-footer">
+      <a href="#dang-ky" class="btn-primary full-width" onclick="closeDrawer(); trackLeadCTAClick('mobile_drawer', 'Đăng ký ngay')">
+        <i class="fa-solid fa-paper-plane"></i> Đăng ký nhận tin & Ưu đãi
+      </a>
+      <a href="https://www.facebook.com/uelstyle" target="_blank" rel="noopener noreferrer" class="btn-fb-outline full-width">
+        <i class="fa-brands fa-facebook"></i> Nhắn UEL STYLE Fanpage
+      </a>
+    </div>
+  </div>
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+
+  <main id="main-content">
+    <!-- SECTION 1: FULL-BLEED CAMPAIGN HERO -->
+    <section class="hero-campaign-section" id="hero-campaign" aria-label="Chiến dịch chính UEL STYLE">
+      <div class="hero-media-wrapper">
+        <img src="images/banner.png" alt="UEL STYLE Campaign Banner - Campus Drop" class="hero-bg-image" fetchpriority="high">
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="hero-content-container">
+        <div class="hero-editorial-badge">
+          <span class="badge-dot"></span> UEL STYLE &bull; OFFICIAL CAMPUS DROP 2026
+        </div>
+        <h1 class="hero-headline">
+          MANG CHẤT UEL.<br>
+          <span class="highlight-gold">MẶC THEO CHẤT RIÊNG.</span>
+        </h1>
+        <p class="hero-subtext">
+          Dòng trang phục và phụ kiện cao cấp tôn vinh dấu ấn tự hào của sinh viên Kinh tế – Luật. Thiết kế hiện đại, chất liệu chuẩn phom, sẵn sàng cùng bạn tạo nên bản sắc độc bản.
+        </p>
+        <div class="hero-cta-group">
+          <a href="#new-arrivals" class="btn-primary-hero" id="hero-cta-explore" onclick="trackLeadCTAClick('hero_primary', 'Khám phá sản phẩm')">
+            <span>KHÁM PHÁ SẢN PHẨM</span>
+            <i class="fa-solid fa-arrow-down-long"></i>
+          </a>
+          <a href="#dang-ky" class="btn-secondary-hero" id="hero-cta-lead" onclick="trackLeadCTAClick('hero_lead', 'Nhận ưu đãi độc quyền')">
+            <i class="fa-solid fa-gift"></i>
+            <span>Nhận ưu đãi độc quyền</span>
+          </a>
+        </div>
+        <div class="hero-stats-strip">
+          <div class="stat-pill"><i class="fa-solid fa-shield-halved"></i> 100% Chính hãng UEL STYLE</div>
+          <div class="stat-pill"><i class="fa-solid fa-rotate-left"></i> Đổi size dễ dàng</div>
+          <div class="stat-pill"><i class="fa-solid fa-bolt"></i> Giao nhanh nội thành Thủ Đức / KTX</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: NEW ARRIVALS (4 Cards Desktop / 2 Mobile) -->
+    <section class="catalog-section" id="new-arrivals" aria-labelledby="heading-new-arrivals">
+      <div class="layout-container">
+        <div class="section-header-flex">
+          <div>
+            <span class="section-eyebrow">JUST DROPPED</span>
+            <h2 class="section-title" id="heading-new-arrivals">NEW ARRIVALS</h2>
+          </div>
+          <a href="#categories" class="view-all-link">Xem tất cả bộ sưu tập <i class="fa-solid fa-arrow-right-long"></i></a>
+        </div>
+
+        <div class="product-grid" id="new-arrivals-grid">
+          <!-- Card 1 -->
+          <article class="product-card" data-product-id="UEL-NA-01">
+            <div class="product-image-box">
+              <span class="badge-tag new">NEW</span>
+              <img src="images/collection_1/image.png" alt="Áo Polo UEL Signature Phối Cổ Signature" class="product-img primary" loading="lazy">
+              <img src="images/collection_1/image copy.png" alt="Chi tiết Áo Polo UEL Signature" class="product-img secondary" loading="lazy">
+              <div class="card-overlay-actions">
+                <button class="quick-view-btn" onclick="openProductModal('Áo Polo UEL Signature Phối Cổ Signature', '260.000đ', 'images/collection_1/image.png', 'Chất liệu cá sấu cotton 4 chiều mềm mịn, bo dệt co giãn chuẩn form tôn dáng năng động.')">
+                  <i class="fa-regular fa-eye"></i> Xem nhanh
+                </button>
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_new_01', 'Nhận voucher 10%')">
+                  <i class="fa-solid fa-tag"></i> Giảm 10%
+                </a>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">Polo Collection</span>
+              <h3 class="product-name"><a href="#dang-ky">Áo Polo UEL Signature Phối Cổ Sang Trọng</a></h3>
+              <div class="product-price-row">
+                <span class="price-current">260.000đ</span>
+                <span class="price-origin">290.000đ</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="product-card" data-product-id="UEL-NA-02">
+            <div class="product-image-box">
+              <span class="badge-tag new">NEW</span>
+              <img src="images/collection_1/image copy 2.png" alt="Áo Thun UEL STYLE Iconic Tee Oversize" class="product-img primary" loading="lazy">
+              <img src="images/collection_1/image copy 3.png" alt="Chi tiết Áo Thun UEL Iconic" class="product-img secondary" loading="lazy">
+              <div class="card-overlay-actions">
+                <button class="quick-view-btn" onclick="openProductModal('Áo Thun UEL STYLE Iconic Tee Oversize', '230.000đ', 'images/collection_1/image copy 2.png', 'Vải 100% Cotton 250gsm dày dặn, thấm hút mồ hôi, hình in lụa cao cấp bền màu vượt trội.')">
+                  <i class="fa-regular fa-eye"></i> Xem nhanh
+                </button>
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_new_02', 'Nhận voucher 10%')">
+                  <i class="fa-solid fa-tag"></i> Giảm 10%
+                </a>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">T-Shirt Collection</span>
+              <h3 class="product-name"><a href="#dang-ky">Áo Thun UEL STYLE Iconic Tee Dáng Suông</a></h3>
+              <div class="product-price-row">
+                <span class="price-current">230.000đ</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="product-card" data-product-id="UEL-NA-03">
+            <div class="product-image-box">
+              <span class="badge-tag limited">HOT DROP</span>
+              <img src="images/collection_2/image.png" alt="Áo Varsity Jacket UEL Kỷ Niệm" class="product-img primary" loading="lazy">
+              <img src="images/collection_2/image copy.png" alt="Chi tiết Varsity Jacket UEL" class="product-img secondary" loading="lazy">
+              <div class="card-overlay-actions">
+                <button class="quick-view-btn" onclick="openProductModal('Áo Varsity Jacket UEL Kỷ Niệm', '420.000đ', 'images/collection_2/image.png', 'Áo khoác bóng chày chất nỉ chân cua cao cấp, tay phối da PU sắc nét, thêu đắp nổi tinh xảo.')">
+                  <i class="fa-regular fa-eye"></i> Xem nhanh
+                </button>
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_new_03', 'Nhận voucher 10%')">
+                  <i class="fa-solid fa-tag"></i> Giảm 10%
+                </a>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">Outerwear / Campus</span>
+              <h3 class="product-name"><a href="#dang-ky">Áo Varsity Jacket UEL Kỷ Niệm Sang Trọng</a></h3>
+              <div class="product-price-row">
+                <span class="price-current">420.000đ</span>
+                <span class="price-origin">480.000đ</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="product-card" data-product-id="UEL-NA-04">
+            <div class="product-image-box">
+              <span class="badge-tag new">COLLAB</span>
+              <img src="images/SGS_collab/image.png" alt="Áo Thun UEL x SGS Special Edition" class="product-img primary" loading="lazy">
+              <img src="images/SGS_collab/image copy.png" alt="Chi tiết SGS Collab Tee" class="product-img secondary" loading="lazy">
+              <div class="card-overlay-actions">
+                <button class="quick-view-btn" onclick="openProductModal('Áo Thun UEL x SGS Special Edition', '250.000đ', 'images/SGS_collab/image.png', 'Bản collab đặc biệt cùng CLB/Hội nhóm thể hiện tinh thần bứt phá và văn hóa trẻ UEL.')">
+                  <i class="fa-regular fa-eye"></i> Xem nhanh
+                </button>
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_new_04', 'Nhận voucher 10%')">
+                  <i class="fa-solid fa-tag"></i> Giảm 10%
+                </a>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">Special Edition</span>
+              <h3 class="product-name"><a href="#dang-ky">Áo Thun UEL x SGS Edition Giới Hạn</a></h3>
+              <div class="product-price-row">
+                <span class="price-current">250.000đ</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: BEST SELLERS (Được UELers yêu thích nhất) -->
+    <section class="catalog-section section-cream" id="best-sellers" aria-labelledby="heading-best-sellers">
+      <div class="layout-container">
+        <div class="section-header-flex">
+          <div>
+            <span class="section-eyebrow">MOST LOVED</span>
+            <h2 class="section-title" id="heading-best-sellers">BEST SELLERS &bull; UELERS' PICKS</h2>
+          </div>
+          <span class="section-tagline">Được hàng nghìn sinh viên UEL tin chọn mỗi kỳ drop</span>
+        </div>
+
+        <div class="product-grid" id="best-sellers-grid">
+          <!-- Card 5 -->
+          <article class="product-card" data-product-id="UEL-BS-01">
+            <div class="product-image-box">
+              <span class="badge-tag best-seller"><i class="fa-solid fa-fire"></i> BEST SELLER</span>
+              <img src="images/SGS_collab/image copy 2.png" alt="Áo Thun Daily Streetwear Phối Màu Trẻ Trung" class="product-img primary" loading="lazy">
+              <img src="images/SGS_collab/image copy 3.png" alt="Chi tiết Áo Streetwear" class="product-img secondary" loading="lazy">
+              <div class="card-overlay-actions">
+                <button class="quick-view-btn" onclick="openProductModal('Áo Thun Daily Streetwear Phối Màu Trẻ Trung', '240.000đ', 'images/SGS_collab/image copy 2.png', 'Thiết kế form boxy hiện đại tôn dáng sinh viên, dễ phối quần jeans hay short dạo phố.')">
+                  <i class="fa-regular fa-eye"></i> Xem nhanh
+                </button>
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_bs_01', 'Nhận voucher 10%')">
+                  <i class="fa-solid fa-tag"></i> Giảm 10%
+                </a>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">Daily Essentials</span>
+              <h3 class="product-name"><a href="#dang-ky">Áo Thun Daily Streetwear Phối Màu Trẻ Trung</a></h3>
+              <div class="product-price-row">
+                <span class="price-current">240.000đ</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 6 -->
+          <article class="product-card" data-product-id="UEL-BS-02">
+            <div class="product-image-box">
+              <span class="badge-tag best-seller"><i class="fa-solid fa-fire"></i> BEST SELLER</span>
+              <img src="images/collection_1/image copy 3.png" alt="Áo Polo UEL Dệt Bo Tay Vintage" class="product-img primary" loading="lazy">
+              <img src="images/collection_1/image.png" alt="Chi tiết Polo Bo Tay" class="product-img secondary" loading="lazy">
+              <div class="card-overlay-actions">
+                <button class="quick-view-btn" onclick="openProductModal('Áo Polo UEL Dệt Bo Tay Vintage', '265.000đ', 'images/collection_1/image copy 3.png', 'Thích hợp cho cả những buổi thuyết trình lịch sự lẫn hoạt động ngoại khóa năng động.')">
+                  <i class="fa-regular fa-eye"></i> Xem nhanh
+                </button>
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_bs_02', 'Nhận voucher 10%')">
+                  <i class="fa-solid fa-tag"></i> Giảm 10%
+                </a>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">Campus Elegant</span>
+              <h3 class="product-name"><a href="#dang-ky">Áo Polo UEL Dệt Bo Tay Phối Line Tinh Tế</a></h3>
+              <div class="product-price-row">
+                <span class="price-current">265.000đ</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 7 -->
+          <article class="product-card" data-product-id="UEL-BS-03">
+            <div class="product-image-box">
+              <span class="badge-tag best-seller"><i class="fa-solid fa-fire"></i> TOP RATED</span>
+              <img src="images/collection_2/image copy.png" alt="Túi Tote & Phụ Kiện UEL Dynamic" class="product-img primary" loading="lazy">
+              <img src="images/collection_2/image.png" alt="Chi tiết Tote UEL" class="product-img secondary" loading="lazy">
+              <div class="card-overlay-actions">
+                <button class="quick-view-btn" onclick="openProductModal('Túi Canvas / Phụ Kiện UEL Dynamic', '150.000đ', 'images/collection_2/image copy.png', 'Túi tote canvas sợi dệt siêu bền chịu lực 10kg, đựng vừa laptop 15.6 inch cho sinh viên.')">
+                  <i class="fa-regular fa-eye"></i> Xem nhanh
+                </button>
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_bs_03', 'Nhận voucher 10%')">
+                  <i class="fa-solid fa-tag"></i> Giảm 10%
+                </a>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">Accessories</span>
+              <h3 class="product-name"><a href="#dang-ky">Túi Canvas Tote UEL Dynamic Chịu Lực Tốt</a></h3>
+              <div class="product-price-row">
+                <span class="price-current">150.000đ</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 8 -->
+          <article class="product-card" data-product-id="UEL-BS-04">
+            <div class="product-image-box">
+              <span class="badge-tag best-seller"><i class="fa-solid fa-fire"></i> BEST SELLER</span>
+              <img src="images/collection_1/image copy.png" alt="Combo Campus Starter Pack UEL STYLE" class="product-img primary" loading="lazy">
+              <img src="images/collection_1/image copy 2.png" alt="Combo Pack chi tiết" class="product-img secondary" loading="lazy">
+              <div class="card-overlay-actions">
+                <button class="quick-view-btn" onclick="openProductModal('Combo Campus Starter Pack UEL STYLE', '450.000đ', 'images/collection_1/image copy.png', 'Gồm 1 Polo + 1 Tee oversize + 1 móc khóa UEL đúc kim loại cao cấp.')">
+                  <i class="fa-regular fa-eye"></i> Xem nhanh
+                </button>
+                <a href="#dang-ky" class="quick-cta-btn" onclick="trackLeadCTAClick('card_bs_04', 'Nhận voucher 10%')">
+                  <i class="fa-solid fa-tag"></i> Giảm 10%
+                </a>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">Value Pack</span>
+              <h3 class="product-name"><a href="#dang-ky">Combo Campus Starter Pack (Tee + Polo)</a></h3>
+              <div class="product-price-row">
+                <span class="price-current">450.000đ</span>
+                <span class="price-origin">520.000đ</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: EDITORIAL CAMPAIGN / BRAND STORY -->
+    <section class="editorial-story-section" id="campaign-story" aria-label="Brand Story">
+      <div class="layout-container">
+        <div class="editorial-grid">
+          <div class="editorial-media">
+            <div class="media-frame">
+              <img src="images/banner.png" alt="UEL STYLE Brand Story - Tự Hào Sinh Viên UEL" class="editorial-img" loading="lazy">
+              <div class="editorial-badge-float">
+                <i class="fa-solid fa-certificate"></i> SINCE 2026
+              </div>
+            </div>
+          </div>
+          <div class="editorial-content">
+            <span class="section-eyebrow">MADE FOR CAMPUS DAYS</span>
+            <h2 class="editorial-heading">TỪ GIẢNG ĐƯỜNG ĐẾN MỌI KHOẢNH KHẮC CỦA BẠN.</h2>
+            <p class="editorial-description">
+              <strong>UEL STYLE</strong> không chỉ đơn thuần là trang phục đại học. Chúng tôi biến niềm tự hào sinh viên Kinh tế - Luật thành phong cách thời trang sống động thường nhật: tối giản, tinh tế, tự tin và tràn đầy năng lượng tuổi trẻ.
+            </p>
+            <div class="editorial-features">
+              <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+                <div>
+                  <h4>Form Dáng Chuẩn Á Đông</h4>
+                  <p>Phom suông oversize thoải mái, vừa vặn cho cả ngày dài học tập và sinh hoạt CLB.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-leaf"></i></div>
+                <div>
+                  <h4>Chất Vải Thân Thiện</h4>
+                  <p>Cotton 100% tự nhiên dệt dày dặn, thoáng khí tối đa trong khí hậu nhiệt đới.</p>
+                </div>
+              </div>
+            </div>
+            <div class="editorial-cta">
+              <a href="#dang-ky" class="btn-primary" onclick="trackLeadCTAClick('brand_story', 'Gia nhập cộng đồng UEL STYLE')">
+                <i class="fa-solid fa-user-plus"></i> Gia nhập cộng đồng UEL STYLE &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: STYLING / LOOKBOOK (Carousel & Mix-match) -->
+    <section class="lookbook-section" id="lookbook" aria-labelledby="heading-lookbook">
+      <div class="layout-container">
+        <div class="section-header-flex">
+          <div>
+            <span class="section-eyebrow">STYLING IDEAS</span>
+            <h2 class="section-title" id="heading-lookbook">UELERS IN STYLE &bull; LOOKBOOK</h2>
+          </div>
+          <div class="lookbook-controls">
+            <button class="slider-btn prev" id="lookbook-prev-btn" aria-label="Bộ phối trước"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="slider-btn next" id="lookbook-next-btn" aria-label="Bộ phối sau"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <div class="lookbook-slider-wrapper">
+          <div class="lookbook-slider" id="lookbook-track">
+            <!-- Outfit 1 -->
+            <div class="lookbook-card">
+              <div class="lookbook-img-box">
+                <img src="images/collection_1/image copy.png" alt="Outfit 01: Minimal Academic" loading="lazy">
+                <span class="lookbook-tag">OUTFIT 01</span>
+              </div>
+              <div class="lookbook-card-info">
+                <h3>Minimal Academic</h3>
+                <p>Polo Signature phối Quần Tây Ống Rộng & Giày Sneaker Trắng thanh lịch đến lớp.</p>
+                <a href="#dang-ky" class="lookbook-cta" onclick="trackLeadCTAClick('lookbook_01', 'Nhận tư vấn phối đồ')">Xem bộ phối & Nhận size &rarr;</a>
+              </div>
+            </div>
+
+            <!-- Outfit 2 -->
+            <div class="lookbook-card">
+              <div class="lookbook-img-box">
+                <img src="images/SGS_collab/image copy 3.png" alt="Outfit 02: Street Dynamic" loading="lazy">
+                <span class="lookbook-tag">OUTFIT 02</span>
+              </div>
+              <div class="lookbook-card-info">
+                <h3>Street Dynamic</h3>
+                <p>Tee UEL x SGS kết hợp Quần Cargo đen và Túi Đeo Chéo đậm chất streetwear.</p>
+                <a href="#dang-ky" class="lookbook-cta" onclick="trackLeadCTAClick('lookbook_02', 'Nhận tư vấn phối đồ')">Xem bộ phối & Nhận size &rarr;</a>
+              </div>
+            </div>
+
+            <!-- Outfit 3 -->
+            <div class="lookbook-card">
+              <div class="lookbook-img-box">
+                <img src="images/collection_2/image.png" alt="Outfit 03: Varsity Campus Legend" loading="lazy">
+                <span class="lookbook-tag">OUTFIT 03</span>
+              </div>
+              <div class="lookbook-card-info">
+                <h3>Campus Legend</h3>
+                <p>Varsity Jacket khoác ngoài áo thun trơn kem, diện trong mùa kỷ niệm hoặc sự kiện lớn.</p>
+                <a href="#dang-ky" class="lookbook-cta" onclick="trackLeadCTAClick('lookbook_03', 'Nhận tư vấn phối đồ')">Xem bộ phối & Nhận size &rarr;</a>
+              </div>
+            </div>
+
+            <!-- Outfit 4 -->
+            <div class="lookbook-card">
+              <div class="lookbook-img-box">
+                <img src="images/collection_1/image copy 2.png" alt="Outfit 04: Active Presentation" loading="lazy">
+                <span class="lookbook-tag">OUTFIT 04</span>
+              </div>
+              <div class="lookbook-card-info">
+                <h3>Active Presentation</h3>
+                <p>Iconic Tee phối Blazer trẻ trung cho các buổi thuyết trình và cuộc thi học thuật UEL.</p>
+                <a href="#dang-ky" class="lookbook-cta" onclick="trackLeadCTAClick('lookbook_04', 'Nhận tư vấn phối đồ')">Xem bộ phối & Nhận size &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: CATEGORIES GRID (Danh mục sản phẩm) -->
+    <section class="categories-section" id="categories" aria-labelledby="heading-categories">
+      <div class="layout-container">
+        <div class="section-header-flex">
+          <div>
+            <span class="section-eyebrow">EXPLORE BY GROUP</span>
+            <h2 class="section-title" id="heading-categories">DANH MỤC THỜI TRANG UEL STYLE</h2>
+          </div>
+        </div>
+
+        <div class="categories-grid">
+          <div class="category-card" onclick="location.href='#new-arrivals'">
+            <img src="images/collection_1/image.png" alt="T-Shirts & Polos UEL STYLE" loading="lazy">
+            <div class="category-card-overlay">
+              <span class="category-count">12+ Mẫu mới</span>
+              <h3>T-SHIRTS & POLOS</h3>
+              <p>Chất liệu thoáng mát, form dáng thanh lịch giảng đường</p>
+              <span class="cat-link">Khám phá ngay &rarr;</span>
+            </div>
+          </div>
+
+          <div class="category-card" onclick="location.href='#best-sellers'">
+            <img src="images/collection_2/image.png" alt="Varsity & Outerwear UEL STYLE" loading="lazy">
+            <div class="category-card-overlay">
+              <span class="category-count">Limited Drop</span>
+              <h3>OUTERWEAR & VARSITY</h3>
+              <p>Áo khoác bóng chày, nỉ chân cua thêu chữ nổi bật</p>
+              <span class="cat-link">Khám phá ngay &rarr;</span>
+            </div>
+          </div>
+
+          <div class="category-card" onclick="location.href='#new-arrivals'">
+            <img src="images/SGS_collab/image.png" alt="Bags & Campus Accessories" loading="lazy">
+            <div class="category-card-overlay">
+              <span class="category-count">Phụ kiện hot</span>
+              <h3>BAGS & ACCESSORIES</h3>
+              <p>Túi tote canvas, nón lưỡi trai, móc khóa kim loại</p>
+              <span class="cat-link">Khám phá ngay &rarr;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: HOW TO SHOP GUIDELINE -->
+    <section class="how-to-shop-section" id="how-to-shop" aria-labelledby="heading-how-to-shop">
+      <div class="layout-container">
+        <div class="shop-guide-card">
+          <div class="guide-header">
+            <span class="section-eyebrow">DỄ DÀNG SỞ HỮU</span>
+            <h2 id="heading-how-to-shop">3 BƯỚC ĐƯA UEL STYLE VỀ TỦ ĐỒ CỦA BẠN</h2>
+          </div>
+          <div class="steps-grid">
+            <div class="step-item">
+              <div class="step-num">01</div>
+              <h3>Chọn Mẫu & Size</h3>
+              <p>Tham khảo bảng size chuẩn hoặc nhắn tư vấn viên để chọn đúng phom tôn dáng nhất.</p>
+            </div>
+            <div class="step-item">
+              <div class="step-num">02</div>
+              <h3>Đăng Ký & Nhắn Tin</h3>
+              <p>Điền form nhận voucher độc quyền hoặc nhắn trực tiếp fanpage UEL STYLE để chốt đơn.</p>
+            </div>
+            <div class="step-item">
+              <div class="step-num">03</div>
+              <h3>Giao Hàng Tận Tay</h3>
+              <p>Giao nhanh KTX ĐHQG, cơ sở UEL Thủ Đức hoặc ship COD toàn quốc kiểm tra trước khi thanh toán.</p>
+            </div>
+          </div>
+          <div class="guide-action-buttons">
+            <a href="https://www.facebook.com/uelstyle" target="_blank" rel="noopener noreferrer" class="btn-fb-solid">
+              <i class="fa-brands fa-facebook-messenger"></i> NHẮN TIN FANPAGE UEL STYLE
+            </a>
+            <a href="#dang-ky" class="btn-outline-gold" onclick="trackLeadCTAClick('how_to_shop', 'Đăng ký nhận ưu đãi mua hàng')">
+              <i class="fa-solid fa-gift"></i> NHẬN VOUCHER ƯU ĐÃI
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: LEAD CAPTURE WITH PROGRESSIVE PROFILING (TRỌNG TÂM CONVERSION & MARTECH) -->
+    <section class="lead-capture-section" id="dang-ky" aria-labelledby="heading-lead-capture">
+      <div class="layout-container">
+        <div class="lead-layout-card">
+          <!-- Visual editorial side -->
+          <div class="lead-editorial-side">
+            <div class="lead-editorial-inner">
+              <img src="images/logo.png" alt="UEL STYLE Brand" class="lead-brand-logo">
+              <span class="lead-badge-vip"><i class="fa-solid fa-crown"></i> UEL STYLE CLUB</span>
+              <h2 class="lead-editorial-title" id="heading-lead-capture">
+                GIA NHẬP CỘNG ĐỒNG<br>
+                <span>NHẬN NGAY ƯU ĐÃI 10%</span>
+              </h2>
+              <p class="lead-editorial-desc">
+                Đăng ký để là người đầu tiên nhận thông tin về các đợt mở bán giới hạn (limited drop), lookbook cảm hứng mới và mã ưu đãi độc quyền dành riêng cho UELers.
+              </p>
+              <ul class="lead-perks">
+                <li><i class="fa-solid fa-circle-check"></i> Voucher 10% áp dụng cho đơn hàng đầu tiên</li>
+                <li><i class="fa-solid fa-circle-check"></i> Ưu tiên đặt trước các mẫu áo khoác kỷ niệm giới hạn</li>
+                <li><i class="fa-solid fa-circle-check"></i> Thiệp mời sự kiện Offline & Styling Workshop</li>
+              </ul>
+              <div class="lead-privacy-note">
+                <i class="fa-solid fa-lock"></i> Chúng tôi cam kết bảo mật thông tin, không spam và bạn có thể hủy đăng ký bất cứ lúc nào chỉ với 1 click.
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Form side: Two-visit Progressive Profiling -->
+          <div class="lead-form-side">
+            <div class="lead-form-card" id="lead-form-container">
+              <!-- STATE 1: INITIAL SHORT FORM (VISIT 1) -->
+              <div id="form-stage-initial" class="form-stage-view active">
+                <div class="form-stage-header">
+                  <span class="stage-step-tag">BƯỚC 1/2: ĐĂNG KÝ NHẬN TIN</span>
+                  <h3>Vào Hội UEL STYLE</h3>
+                  <p>Điền thông tin cơ bản để nhận mã voucher và xác thực qua email.</p>
+                </div>
+
+                <form id="lead-initial-form" novalidate onsubmit="handleInitialFormSubmit(event)">
+                  <div class="form-group">
+                    <label for="lead-name">Họ và tên / Tên gọi của bạn <span class="req">*</span></label>
+                    <div class="input-wrapper">
+                      <i class="fa-regular fa-user field-icon"></i>
+                      <input type="text" id="lead-name" name="display_name" placeholder="Ví dụ: Hoàng Long, Mai Anh..." required autocomplete="name">
+                    </div>
+                    <span class="field-error" id="error-lead-name"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="lead-email">Địa chỉ Email <span class="req">*</span></label>
+                    <div class="input-wrapper">
+                      <i class="fa-regular fa-envelope field-icon"></i>
+                      <input type="email" id="lead-email" name="email" placeholder="you@example.com hoặc MSSV@st.uel.edu.vn" required autocomplete="email">
+                    </div>
+                    <span class="field-error" id="error-lead-email"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="lead-relation">Bạn là ai trong cộng đồng UEL? (Tùy chọn)</label>
+                    <div class="input-wrapper">
+                      <i class="fa-solid fa-graduation-cap field-icon"></i>
+                      <select id="lead-relation" name="relation_to_uel">
+                        <option value="">-- Chọn đối tượng (tùy chọn) --</option>
+                        <option value="student">Sinh viên UEL đang theo học</option>
+                        <option value="alumni">Cựu sinh viên UEL</option>
+                        <option value="faculty">Cán bộ / Giảng viên UEL</option>
+                        <option value="friend">Bạn bè / Khách yêu thích UEL STYLE</option>
+                        <option value="other">Khác</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Consent Checkbox (Non-pre-ticked according to spec) -->
+                  <div class="consent-group">
+                    <label class="checkbox-label" for="marketing-consent">
+                      <input type="checkbox" id="marketing-consent" name="marketing_email_opt_in" value="true">
+                      <span class="checkbox-custom"></span>
+                      <span class="checkbox-text">
+                        Tôi đồng ý nhận email thông báo ưu đãi và ra mắt sản phẩm mới từ <strong>UEL STYLE</strong>. (Tự nguyện, không tích sẵn)
+                      </span>
+                    </label>
+                  </div>
+
+                  <div class="form-privacy-link">
+                    Bằng việc tiếp tục, bạn đồng ý với <a href="#privacy-modal" onclick="openPrivacyModal(event)">Chính sách xử lý dữ liệu cá nhân</a> của UEL STYLE.
+                  </div>
+
+                  <button type="submit" class="btn-submit-lead" id="btn-submit-step1">
+                    <span>TIẾP TỤC XÁC MINH EMAIL & NHẬN QUÀ</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </button>
+                  <p class="micro-guarantee"><i class="fa-solid fa-shield-check"></i> Không cần nhập số điện thoại để nhận email.</p>
+                </form>
+              </div>
+
+              <!-- STATE 2: OTP / MAGIC LINK VERIFICATION SIMULATION -->
+              <div id="form-stage-verify" class="form-stage-view" style="display: none;">
+                <div class="form-stage-header">
+                  <span class="stage-step-tag verify">XÁC MINH ĐỊA CHỈ EMAIL</span>
+                  <h3>Kiểm Tra Hộp Thư Của Bạn</h3>
+                  <p>Mã OTP xác thực 6 số đã được gửi tới: <strong id="verify-target-email">you@example.com</strong></p>
+                </div>
+
+                <div class="otp-simulation-box">
+                  <div class="otp-demo-hint">
+                    <i class="fa-solid fa-circle-info"></i> Hệ thống mô phỏng gửi mã OTP: <strong id="demo-otp-code">789234</strong>
+                  </div>
+                  
+                  <div class="otp-inputs-row">
+                    <input type="text" maxlength="1" class="otp-digit" autofocus>
+                    <input type="text" maxlength="1" class="otp-digit">
+                    <input type="text" maxlength="1" class="otp-digit">
+                    <input type="text" maxlength="1" class="otp-digit">
+                    <input type="text" maxlength="1" class="otp-digit">
+                    <input type="text" maxlength="1" class="otp-digit">
+                  </div>
+                  <span class="field-error" id="error-otp"></span>
+
+                  <button type="button" class="btn-submit-lead" id="btn-confirm-otp" onclick="handleVerifyOtp()">
+                    <i class="fa-solid fa-check-double"></i> XÁC NHẬN MÃ OTP
+                  </button>
+
+                  <div class="otp-resend-row">
+                    <span>Không nhận được mã?</span>
+                    <button type="button" class="resend-link" onclick="handleResendOtp()">Gửi lại mã</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STATE 3: RETURNING VERIFIED USER (VISIT 2 - PROGRESSIVE PROFILING) -->
+              <div id="form-stage-returning" class="form-stage-view" style="display: none;">
+                <div class="form-stage-header">
+                  <span class="stage-step-tag success"><i class="fa-solid fa-circle-check"></i> ĐÃ XÁC MINH THÀNH CÔNG</span>
+                  <h3>Chào Mừng Bạn Quay Lại, <span id="verified-user-name">Bạn</span>!</h3>
+                  <p>Mã voucher của bạn: <span class="voucher-highlight">UELSTYLE10</span> (Đã kích hoạt)</p>
+                  <p class="enrich-prompt">Chọn thêm vài gu thời trang để UEL STYLE gửi tin trúng ý thích nhé:</p>
+                </div>
+
+                <form id="lead-enrichment-form" novalidate onsubmit="handleEnrichmentSubmit(event)">
+                  <div class="form-group">
+                    <label>Bạn quan tâm đến dòng sản phẩm nào? (Chọn nhiều)</label>
+                    <div class="checkbox-chips-grid">
+                      <label class="chip-item">
+                        <input type="checkbox" name="interests" value="tshirt">
+                        <span>Áo Thun / Polo</span>
+                      </label>
+                      <label class="chip-item">
+                        <input type="checkbox" name="interests" value="outerwear">
+                        <span>Varsity / Hoodie</span>
+                      </label>
+                      <label class="chip-item">
+                        <input type="checkbox" name="interests" value="accessories">
+                        <span>Túi & Phụ Kiện</span>
+                      </label>
+                      <label class="chip-item">
+                        <input type="checkbox" name="interests" value="lookbook">
+                        <span>Lookbook Mới</span>
+                      </label>
+                      <label class="chip-item">
+                        <input type="checkbox" name="interests" value="deals">
+                        <span>Ưu đãi Flash Sale</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="style-pref">Phong cách bạn theo đuổi?</label>
+                    <select id="style-pref" name="style_preference" class="form-control">
+                      <option value="">-- Chọn phong cách yêu thích --</option>
+                      <option value="minimal">Minimalist / Thanh lịch đơn giản</option>
+                      <option value="streetwear">Streetwear năng động, cá tính</option>
+                      <option value="campus_casual">Campus Casual trẻ trung, tiện lợi</option>
+                      <option value="prefer_not_to_say">Không muốn trả lời</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="price-range">Mức giá thường chi cho áo quần campus?</label>
+                    <select id="price-range" name="price_range" class="form-control">
+                      <option value="">-- Chọn khoảng giá --</option>
+                      <option value="under_200k">Dưới 200.000đ</option>
+                      <option value="200k_350k">200.000đ - 350.000đ</option>
+                      <option value="above_350k">Trên 350.000đ</option>
+                      <option value="prefer_not_to_say">Không muốn trả lời</option>
+                    </select>
+                  </div>
+
+                  <div class="enrich-actions">
+                    <button type="submit" class="btn-submit-lead primary">
+                      <i class="fa-solid fa-floppy-disk"></i> LƯU SỞ THÍCH CỦA TÔI
+                    </button>
+                    <button type="button" class="btn-skip" onclick="skipEnrichment()">
+                      Để sau, tôi muốn xem đồ trước
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- STATE 4: FINAL SUCCESS SCREEN -->
+              <div id="form-stage-completed" class="form-stage-view" style="display: none;">
+                <div class="completion-box">
+                  <div class="completion-icon"><i class="fa-solid fa-heart"></i></div>
+                  <h3>TUYỆT VỜI! HỒ SƠ ĐÃ ĐỒNG BỘ</h3>
+                  <p id="completion-message">Cảm ơn bạn đã đồng hành cùng UEL STYLE. Dữ liệu đã được lưu trữ an toàn và đối soát trên hệ thống CRM.</p>
+                  <div class="voucher-ticket">
+                    <span class="voucher-label">MÃ GIẢM GIÁ ĐƠN ĐẦU TIÊN (10%)</span>
+                    <strong class="voucher-code" id="display-voucher-code">UELSTYLE10</strong>
+                    <button class="copy-voucher-btn" onclick="copyVoucher()"><i class="fa-regular fa-copy"></i> Sao chép</button>
+                  </div>
+                  <div class="post-success-actions">
+                    <a href="#new-arrivals" class="btn-primary" onclick="resetFormView()"><i class="fa-solid fa-bag-shopping"></i> Mua sắm ngay</a>
+                    <a href="admin.html" class="btn-admin-preview"><i class="fa-solid fa-chart-line"></i> Xem bản ghi trong Admin Dashboard</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- QUICK VIEW MODAL -->
+  <div class="modal-overlay" id="product-quick-modal" aria-hidden="true" role="dialog">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeProductModal()" aria-label="Đóng">&times;</button>
+      <div class="modal-body-grid">
+        <div class="modal-img-wrap">
+          <img src="" id="modal-product-img" alt="Product preview">
+        </div>
+        <div class="modal-details">
+          <span class="badge-tag new">UEL STYLE AUTHENTIC</span>
+          <h3 id="modal-product-title">Tên sản phẩm</h3>
+          <div class="modal-price" id="modal-product-price">250.000đ</div>
+          <p class="modal-desc" id="modal-product-desc">Mô tả sản phẩm</p>
+          <div class="modal-size-row">
+            <span>Size có sẵn:</span>
+            <div class="size-chips">
+              <span class="size-chip">M (1m55-1m65)</span>
+              <span class="size-chip active">L (1m65-1m75)</span>
+              <span class="size-chip">XL (1m75-1m85)</span>
+            </div>
+          </div>
+          <div class="modal-action-row">
+            <a href="https://www.facebook.com/uelstyle" target="_blank" rel="noopener noreferrer" class="btn-primary full-width">
+              <i class="fa-brands fa-facebook-messenger"></i> Đặt hàng qua Fanpage UEL STYLE
+            </a>
+            <a href="#dang-ky" class="btn-outline-gold full-width" onclick="closeProductModal(); trackLeadCTAClick('quick_modal', 'Đăng ký lấy voucher giảm 10%')">
+              <i class="fa-solid fa-gift"></i> Đăng ký lấy voucher 10%
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIVACY POLICY MODAL -->
+  <div class="modal-overlay" id="privacy-modal" aria-hidden="true" role="dialog">
+    <div class="modal-card modal-privacy">
+      <button class="modal-close-btn" onclick="closePrivacyModal()" aria-label="Đóng">&times;</button>
+      <div class="privacy-content">
+        <h2>Chính Sách Xử Lý Dữ Liệu Cá Nhân — UEL STYLE</h2>
+        <p class="policy-ver">Phiên bản: 2026-10-v1 | Áp dụng cho website uelstyle.com</p>
+        <p>1. <strong>Mục đích thu thập:</strong> UEL STYLE chỉ thu thập email, họ tên và các sở thích thời trang tự nguyện nhằm gửi mã ưu đãi, giới thiệu bộ sưu tập và tư vấn size phù hợp.</p>
+        <p>2. <strong>Bảo mật & Tối thiểu hóa dữ liệu:</strong> Chúng tôi không thu thập CCCD, MSSV, tài khoản ngân hàng hoặc dữ liệu nhạy cảm chỉ để nhận tin tức.</p>
+        <p>3. <strong>Xác thực & Đối soát:</strong> Mỗi email đăng ký được xác minh qua mã OTP/link để chống mạo danh và bảo vệ quyền chủ thể dữ liệu.</p>
+        <p>4. <strong>Quyền hủy đăng ký:</strong> Bạn có quyền rút lại đồng ý (opt-out) bất cứ khi nào bằng cách nhấn nút "Hủy nhận tin" ở chân email hoặc gửi yêu cầu tới fanpage UEL STYLE.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH MODAL SIMULATION -->
+  <div class="modal-overlay" id="search-modal" aria-hidden="true">
+    <div class="modal-card modal-search">
+      <button class="modal-close-btn" onclick="closeSearchModal()">&times;</button>
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="live-search-input" placeholder="Tìm áo polo, tee oversize, varsity jacket..." oninput="handleLiveSearch(this.value)">
+      </div>
+      <div class="search-results-list" id="search-results-list">
+        <div class="search-item" onclick="selectSearchItem('#new-arrivals')">
+          <img src="images/collection_1/image.png" alt="Polo">
+          <div>
+            <strong>Áo Polo UEL Signature</strong>
+            <span>260.000đ &bull; New Arrival</span>
+          </div>
+        </div>
+        <div class="search-item" onclick="selectSearchItem('#new-arrivals')">
+          <img src="images/collection_1/image copy 2.png" alt="Tee">
+          <div>
+            <strong>Áo Thun UEL STYLE Iconic Tee</strong>
+            <span>230.000đ &bull; New Arrival</span>
+          </div>
+        </div>
+        <div class="search-item" onclick="selectSearchItem('#best-sellers')">
+          <img src="images/collection_2/image.png" alt="Varsity">
+          <div>
+            <strong>Áo Varsity Jacket UEL Kỷ Niệm</strong>
+            <span>420.000đ &bull; Limited Drop</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-notification" id="toast-notify" role="alert" aria-live="polite"></div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="layout-container">
+      <div class="footer-top-grid">
+        <!-- Col 1: Brand Info -->
+        <div class="footer-col brand-col">
+          <img src="images/logo.png" alt="UEL STYLE" class="footer-logo">
+          <p class="brand-bio">
+            <strong>UEL STYLE</strong> — Thương hiệu thời trang & campus merchandise mang bản sắc sinh viên Trường Đại học Kinh tế – Luật (ĐHQG-HCM).
+          </p>
+          <div class="footer-social-links">
+            <a href="https://www.facebook.com/uelstyle" target="_blank" rel="noopener noreferrer" aria-label="Facebook UEL STYLE"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          </div>
+        </div>
+
+        <!-- Col 2: Navigation -->
+        <div class="footer-col">
+          <h4 class="footer-heading">KHÁM PHÁ</h4>
+          <ul class="footer-links">
+            <li><a href="#new-arrivals">Sản phẩm mới (New Arrivals)</a></li>
+            <li><a href="#best-sellers">Bán chạy nhất (Best Sellers)</a></li>
+            <li><a href="#lookbook">Lookbook & Mix-Match</a></li>
+            <li><a href="#campaign-story">Câu chuyện thương hiệu</a></li>
+            <li><a href="#categories">Các bộ sưu tập</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Customer Care & Policies -->
+        <div class="footer-col">
+          <h4 class="footer-heading">HỖ TRỢ & CHÍNH SÁCH</h4>
+          <ul class="footer-links">
+            <li><a href="#how-to-shop">Hướng dẫn mua sắm</a></li>
+            <li><a href="#privacy-modal" onclick="openPrivacyModal(event)">Chính sách bảo mật dữ liệu</a></li>
+            <li><a href="#how-to-shop">Chính sách đổi size sản phẩm</a></li>
+            <li><a href="admin.html">Công cụ Admin Phân tích SEO</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Quick Contact & Lead CTA -->
+        <div class="footer-col contact-col">
+          <h4 class="footer-heading">KẾT NỐI VỚI UEL STYLE</h4>
+          <p><i class="fa-solid fa-location-dot"></i> 669 QL1K, Linh Xuân, TP. Thủ Đức, TP.HCM</p>
+          <p><i class="fa-solid fa-envelope"></i> contact@uelstyle.com</p>
+          <p><i class="fa-brands fa-facebook"></i> fb.com/uelstyle</p>
+          <div class="footer-lead-cta">
+            <a href="#dang-ky" class="btn-footer-subscribe" onclick="trackLeadCTAClick('footer', 'Đăng ký nhận tin mới')">
+              <i class="fa-solid fa-paper-plane"></i> Đăng ký nhận tin mới
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <p>&copy; 2026 UEL STYLE. Bản quyền thuộc về thương hiệu thời trang UEL STYLE. All rights reserved.</p>
+        <p class="disclaimer">Lưu ý: UEL STYLE là thương hiệu thời trang độc lập lấy cảm hứng từ cộng đồng sinh viên; logo chính thức của trường UEL không bị thay thế.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Sticky Action on Mobile -->
+  <div class="mobile-sticky-bar">
+    <a href="#dang-ky" class="mobile-lead-btn" onclick="trackLeadCTAClick('mobile_sticky_bar', 'Nhận 10% ngay')">
+      <i class="fa-solid fa-gift"></i> Nhận ưu đãi 10%
+    </a>
+    <a href="https://www.facebook.com/uelstyle" target="_blank" rel="noopener noreferrer" class="mobile-chat-btn">
+      <i class="fa-brands fa-facebook-messenger"></i> Nhắn Chat
+    </a>
+  </div>
+
+  <!-- Javascript Logic -->
+  <script src="js/analytics.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

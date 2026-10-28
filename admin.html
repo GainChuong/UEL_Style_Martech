@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UEL STYLE &bull; Admin MarTech & SEO Analytics Console</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="images/logo.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Chart.js for data visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Admin Style -->
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <img src="images/logo.png" alt="UEL STYLE">
+        </a>
+        <span class="admin-badge">MARTECH OS</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">CHỨC NĂNG CHÍNH</div>
+        <button class="nav-item active" onclick="switchTab('tab-seo-audit')">
+          <i class="fa-solid fa-stethoscope"></i>
+          <span>Kiểm Tra SEO Real-time</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('tab-cta-funnel')">
+          <i class="fa-solid fa-filter"></i>
+          <span>Phễu CTA & Chuyển Đổi</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('tab-crm-leads')">
+          <i class="fa-solid fa-users-gear"></i>
+          <span>Đối Soát CRM & Leads</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('tab-traffic-metrics')">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Traffic & Phân Tích Thiết Bị</span>
+        </button>
+
+        <div class="nav-section-title" style="margin-top: 24px;">HỆ THỐNG</div>
+        <a href="index.html" class="nav-item external-link">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          <span>Xem Landing Page</span>
+        </a>
+        <button class="nav-item text-danger" onclick="clearAnalyticsData()">
+          <i class="fa-solid fa-trash-can"></i>
+          <span>Reset Dữ Liệu Demo</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="admin-user-pill">
+          <i class="fa-solid fa-circle-user"></i>
+          <div>
+            <strong>Admin MarTech</strong>
+            <span>admin@uelstyle.com</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+      <!-- Top Bar -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <h1 id="page-title">Kiểm Tra Toàn Diện Chỉ Số SEO Real-time</h1>
+          <p class="subtitle">Báo cáo tình trạng tối ưu kỹ thuật, thẻ Meta, Open Graph, Core Web Vitals & Cấu trúc Heading</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn-refresh" onclick="runLiveAudit()">
+            <i class="fa-solid fa-rotate"></i> Quét lại toàn trang
+          </button>
+          <a href="index.html#dang-ky" target="_blank" class="btn-primary-lead">
+            <i class="fa-solid fa-paper-plane"></i> Thử nghiệm Form CTA
+          </a>
+        </div>
+      </header>
+
+      <!-- TAB 1: SEO AUDIT & METRICS -->
+      <section id="tab-seo-audit" class="admin-tab-content active">
+        <!-- Top KPI Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap bg-green"><i class="fa-solid fa-gauge-high"></i></div>
+            <div class="kpi-details">
+              <span class="kpi-label">Điểm SEO Toàn Diện</span>
+              <div class="kpi-val"><span id="seo-score-val">98</span><small>/100</small></div>
+              <span class="kpi-sub status-good"><i class="fa-solid fa-check"></i> Đạt chuẩn Google Search Console</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap bg-blue"><i class="fa-solid fa-bolt"></i></div>
+            <div class="kpi-details">
+              <span class="kpi-label">Core Web Vitals (LCP)</span>
+              <div class="kpi-val">1.1 <small>giây</small></div>
+              <span class="kpi-sub status-good"><i class="fa-solid fa-check"></i> Tối ưu hóa fetchpriority banner</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap bg-gold"><i class="fa-solid fa-mobile-screen-button"></i></div>
+            <div class="kpi-details">
+              <span class="kpi-label">Mobile Friendly Score</span>
+              <div class="kpi-val">100<small>%</small></div>
+              <span class="kpi-sub status-good"><i class="fa-solid fa-check"></i> Touch target &ge; 44px</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap bg-purple"><i class="fa-solid fa-diagram-project"></i></div>
+            <div class="kpi-details">
+              <span class="kpi-label">Schema.org JSON-LD</span>
+              <div class="kpi-val">Đạt chuẩn</div>
+              <span class="kpi-sub status-good"><i class="fa-solid fa-check"></i> ClothingStore Entity</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEO Inspection Details Grid -->
+        <div class="dashboard-grid-2col">
+          <!-- Live Meta Tags & Head Inspection -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">
+                <i class="fa-solid fa-tags"></i> Kiểm Tra Thẻ Meta & Social Sharing
+              </div>
+              <span class="badge-status success">TỐI ƯU TỐT</span>
+            </div>
+            <div class="panel-body">
+              <div class="inspection-list" id="meta-audit-list">
+                <!-- Injected via admin.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Heading Structure & Hierarchy -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">
+                <i class="fa-solid fa-heading"></i> Cấu Trúc Headings (H1 &rarr; H4)
+              </div>
+              <span class="badge-status success">1 THẺ H1 DUY NHẤT</span>
+            </div>
+            <div class="panel-body">
+              <p class="panel-desc">Google bot ưu tiên trang chỉ có đúng 1 thẻ H1 duy nhất đại diện cho chủ đề và các thẻ H2-H4 phân tầng logic.</p>
+              <div class="headings-tree" id="heading-audit-tree">
+                <!-- Injected via admin.js -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image Alt & Performance Checklist -->
+        <div class="panel-card" style="margin-top: 24px;">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fa-solid fa-images"></i> Kiểm Tra Thẻ Alt & Thuộc Tính Tải Ảnh (Performance SEO)
+            </div>
+            <button class="btn-micro" onclick="runImageAudit()"><i class="fa-solid fa-magnifying-glass"></i> Kiểm tra lại ảnh</button>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Ảnh / Đường dẫn</th>
+                    <th>Tên File</th>
+                    <th>Thẻ Alt SEO</th>
+                    <th>Chế Độ Tải (Loading)</th>
+                    <th>Đánh Giá SEO</th>
+                  </tr>
+                </thead>
+                <tbody id="image-audit-tbody">
+                  <!-- Injected via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: CTA FUNNEL & CONVERSION METRICS -->
+      <section id="tab-cta-funnel" class="admin-tab-content">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap bg-blue"><i class="fa-solid fa-arrow-pointer"></i></div>
+            <div class="kpi-details">
+              <span class="kpi-label">Tổng Lượt Click CTA</span>
+              <div class="kpi-val" id="kpi-total-clicks">0</div>
+              <span class="kpi-sub">Ghi nhận từ mọi vị trí</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap bg-gold"><i class="fa-solid fa-envelope-open-text"></i></div>
+            <div class="kpi-details">
+              <span class="kpi-label">Lượt Mở/Xem Form</span>
+              <div class="kpi-val" id="kpi-form-views">0</div>
+              <span class="kpi-sub">Tỷ lệ xem form tự nhiên</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap bg-green"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="kpi-details">
+              <span class="kpi-label">Leads Xác Minh Thành Công</span>
+              <div class="kpi-val" id="kpi-verified-leads">0</div>
+              <span class="kpi-sub">Đã qua OTP Email</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap bg-purple"><i class="fa-solid fa-percent"></i></div>
+            <div class="kpi-details">
+              <span class="kpi-label">Tỷ Lệ Chuyển Đổi (CR)</span>
+              <div class="kpi-val" id="kpi-conversion-rate">0%</div>
+              <span class="kpi-sub">Clicks &rarr; Verified Leads</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid-2col">
+          <!-- CTA Breakdown by Placement -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title"><i class="fa-solid fa-chart-column"></i> Hiệu Quả CTA Theo Từng Vị Trí</div>
+            </div>
+            <div class="panel-body">
+              <div class="chart-container">
+                <canvas id="chart-cta-placements"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progressive Profiling Funnel Drop-off -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title"><i class="fa-solid fa-chart-line"></i> Phễu Chuyển Đổi 2 Giai Đoạn (Funnel)</div>
+            </div>
+            <div class="panel-body">
+              <div class="funnel-steps-list">
+                <div class="funnel-step">
+                  <div class="step-info">
+                    <strong>1. Click CTA trên Landing</strong>
+                    <span id="step-count-1">0 clicks</span>
+                  </div>
+                  <div class="progress-bar"><div class="bar-fill" style="width: 100%;"></div></div>
+                </div>
+
+                <div class="funnel-step">
+                  <div class="step-info">
+                    <strong>2. Submit Form Lần 1 (Email + Name)</strong>
+                    <span id="step-count-2">0 submits</span>
+                  </div>
+                  <div class="progress-bar"><div class="bar-fill" id="bar-step-2" style="width: 75%;"></div></div>
+                </div>
+
+                <div class="funnel-step">
+                  <div class="step-info">
+                    <strong>3. Xác Minh OTP Thành Công (Verified Lead)</strong>
+                    <span id="step-count-3">0 verified</span>
+                  </div>
+                  <div class="progress-bar"><div class="bar-fill" id="bar-step-3" style="width: 60%;"></div></div>
+                </div>
+
+                <div class="funnel-step">
+                  <div class="step-info">
+                    <strong>4. Hoàn Tất Form Lần 2 (Enriched Interests)</strong>
+                    <span id="step-count-4">0 enriched</span>
+                  </div>
+                  <div class="progress-bar"><div class="bar-fill" id="bar-step-4" style="width: 45%;"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: CRM LEADS & RECONCILIATION -->
+      <section id="tab-crm-leads" class="admin-tab-content">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fa-solid fa-database"></i> Bảng Dữ Liệu Canonical Leads & Đối Soát CRM (Audit Ledger)
+            </div>
+            <button class="btn-micro" onclick="loadCrmLeadsTable()"><i class="fa-solid fa-rotate"></i> Tải lại bảng</button>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Lead ID (UUID)</th>
+                    <th>Họ Tên</th>
+                    <th>Email Đã Xác Minh</th>
+                    <th>Quan Hệ UEL</th>
+                    <th>Stage Hồ Sơ</th>
+                    <th>Marketing Opt-In</th>
+                    <th>Sở Thích Đã Thu Thập</th>
+                    <th>Thời Gian Tạo</th>
+                  </tr>
+                </thead>
+                <tbody id="crm-leads-tbody">
+                  <!-- Injected via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: TRAFFIC & DEVICES -->
+      <section id="tab-traffic-metrics" class="admin-tab-content">
+        <div class="dashboard-grid-2col">
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title"><i class="fa-solid fa-mobile-screen"></i> Thiết Bị Người Dùng (Device Share)</div>
+            </div>
+            <div class="panel-body">
+              <div class="chart-container-donut">
+                <canvas id="chart-device-share"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title"><i class="fa-solid fa-compass"></i> Nguồn Giới Thiệu (Referral Sources)</div>
+            </div>
+            <div class="panel-body">
+              <div class="chart-container-donut">
+                <canvas id="chart-referrers"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/analytics.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
