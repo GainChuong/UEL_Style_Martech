@@ -145,20 +145,29 @@ function trackLeadCTAClick(placement, ctaText) {
 async function sendRealEmailOtp(targetEmail, otpCode, recipientName) {
   console.log(`[OTP Dispatch Engine]: Đang gửi OTP ${otpCode} đến ${targetEmail}...`);
 
-  // 1. Nếu đã cấu hình EmailJS Client-side (miễn phí 200 email/tháng không cần backend)
+  // 1. Nếu đã cấu hình EmailJS Client-side
   if (window.emailjs && window.EMAILJS_PUBLIC_KEY) {
     try {
+      const templateParams = {
+        to_email: targetEmail,
+        email: targetEmail,
+        user_email: targetEmail,
+        to_name: recipientName,
+        name: recipientName,
+        otp_code: otpCode,
+        otp: otpCode,
+        passcode: otpCode,
+        message: `Mã OTP xác thực tài khoản UEL STYLE của bạn là: ${otpCode}. Mã có hiệu lực trong 10 phút.`,
+        brand_name: 'UEL STYLE'
+      };
+
       const response = await window.emailjs.send(
         window.EMAILJS_SERVICE_ID,
         window.EMAILJS_TEMPLATE_ID,
-        {
-          to_email: targetEmail,
-          to_name: recipientName,
-          otp_code: otpCode,
-          brand_name: 'UEL STYLE'
-        }
+        templateParams,
+        window.EMAILJS_PUBLIC_KEY
       );
-      console.log('[EmailJS Success]: Đã gửi OTP vào hộp thư thật!', response);
+      console.log('[EmailJS Success]: Đã kích hoạt gửi OTP vào hộp thư thật!', response);
       return { success: true, provider: 'EmailJS' };
     } catch (err) {
       console.error('[EmailJS Error]: Gửi thất bại', err);

@@ -221,6 +221,14 @@ function calculateAndRenderSeoAudit(doc, sourceName = 'index.html') {
 
       <div class="inspect-item">
         <div class="inspect-info">
+          <strong>Cổng Gửi Email OTP Thật (EmailJS Engine)</strong>
+          <span>Service ID: <code>service_viwrf1c</code> &bull; Template: <code>Uu6BEfj5WpQo-phf1XLyZ</code> (Đã cấu hình Public Key)</span>
+        </div>
+        <span class="inspect-badge badge-success">OTP EMAIL THẬT: SẴN SÀNG</span>
+      </div>
+
+      <div class="inspect-item">
+        <div class="inspect-info">
           <strong>Dữ Liệu Cấu Trúc (Schema.org JSON-LD)</strong>
           <span>${jsonLd ? 'Đã kích hoạt JSON-LD cho cửa hàng & thương hiệu UEL STYLE' : 'Chưa tìm thấy đoạn mã JSON-LD'}</span>
         </div>
