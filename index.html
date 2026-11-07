@@ -51,11 +51,13 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script>
     window.EMAILJS_SERVICE_ID = "service_viwrf1c";
-    window.EMAILJS_TEMPLATE_ID = "Uu6BEfj5WpQo-phf1XLyZ";
+    window.EMAILJS_TEMPLATE_ID = "template_7d3dxmo";
     window.EMAILJS_PUBLIC_KEY = "3sH_RnaGJK3NyJv5i";
     if (window.emailjs && window.EMAILJS_PUBLIC_KEY) {
       emailjs.init(window.EMAILJS_PUBLIC_KEY);
     }
+    // Cấu hình URL Webhook kết nối Database Excel / Google Sheets Online
+    window.EXCEL_DATABASE_URL = localStorage.getItem('uel_excel_db_url') || "https://script.google.com/macros/s/AKfycbxM8ukMjKj3rr8mpiCh-AnnR8sjlG8S0CuBVPEqrw7VOZLX0BA3Kv-YswayQ46JpLcb/exec";
   </script>
 
   <!-- Structured Data JSON-LD for SEO -->
@@ -695,16 +697,18 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="lead-relation">Bạn là ai trong cộng đồng UEL? (Tùy chọn)</label>
+                    <label for="lead-relation">Bạn thuộc nhóm đối tượng nào? (Tùy chọn)</label>
                     <div class="input-wrapper">
-                      <i class="fa-solid fa-graduation-cap field-icon"></i>
+                      <i class="fa-solid fa-users field-icon"></i>
                       <select id="lead-relation" name="relation_to_uel">
-                        <option value="">-- Chọn đối tượng (tùy chọn) --</option>
-                        <option value="student">Sinh viên UEL đang theo học</option>
-                        <option value="alumni">Cựu sinh viên UEL</option>
-                        <option value="faculty">Cán bộ / Giảng viên UEL</option>
-                        <option value="friend">Bạn bè / Khách yêu thích UEL STYLE</option>
-                        <option value="other">Khác</option>
+                        <option value="">-- Chọn nhóm đối tượng khách hàng --</option>
+                        <option value="genz_fashion">Giới trẻ Gen Z / Tín đồ Local Brand & Streetwear</option>
+                        <option value="student_uel">Sinh viên UEL (ĐH Kinh tế - Luật)</option>
+                        <option value="student_other">Sinh viên ĐHQG / Các trường ĐH khác / Học sinh THPT</option>
+                        <option value="young_pro">Cựu sinh viên / Người đi làm trẻ (Young Professional)</option>
+                        <option value="faculty_staff">Cán bộ / Giảng viên nhà trường</option>
+                        <option value="campus_chic_fan">Khách hàng đại chúng / Yêu thích phong cách Campus Chic</option>
+                        <option value="other">Khách hàng khác</option>
                       </select>
                     </div>
                   </div>

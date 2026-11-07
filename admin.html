@@ -18,6 +18,9 @@
   <!-- Chart.js for data visualization -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+  <!-- SheetJS (XLSX) library for real-time Excel Database Export -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
   <!-- Admin Style -->
   <link rel="stylesheet" href="css/admin.css">
 </head>
@@ -321,26 +324,158 @@
 
       <!-- TAB 3: CRM LEADS & RECONCILIATION -->
       <section id="tab-crm-leads" class="admin-tab-content">
+        <!-- Panel Quản Lý & Kết Nối Database Excel / Google Sheets -->
+        <div class="panel-card" style="margin-bottom: 24px; border-left: 4px solid #107c41;">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fa-solid fa-file-excel" style="color: #107c41;"></i> Kết Nối Database Excel / Google Sheets (Tự Động Lưu Form)
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn-micro btn-excel-download" onclick="exportLeadsToExcelFile()">
+                <i class="fa-solid fa-file-excel"></i> Xuất File Excel (.xlsx)
+              </button>
+              <button class="btn-micro btn-excel-sync" onclick="syncAllLeadsToOnlineSheet()">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Đồng Bộ Lên Cloud Sheet
+              </button>
+              <button class="btn-micro" onclick="seedMockMartechLeadsToSheet()" style="background: #8b5cf6; color: white; border: none;">
+                <i class="fa-solid fa-magic"></i> Tạo 10 Leads Mẫu Lên Sheet
+              </button>
+              <button class="btn-micro" onclick="openExcelGuideModal()">
+                <i class="fa-solid fa-circle-question"></i> Hướng Dẫn Cài Đặt (1 Phút)
+              </button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="excel-config-row">
+              <div class="excel-status-box">
+                <span class="status-indicator-dot" id="excel-status-dot"></span>
+                <div style="flex: 1;">
+                  <strong id="excel-status-title">Trạng Thái: Đang kiểm tra...</strong>
+                  <p class="panel-desc" id="excel-status-desc" style="margin-bottom: 0;">Mỗi khi người dùng điền form và xác thực OTP, dữ liệu sẽ tự động ghi nhận theo thời gian thực (real-time) vào bảng tính Excel.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="excel-url-input-group" style="margin-top: 16px;">
+              <label for="excel-webhook-url" style="font-size: 0.82rem; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;">
+                <i class="fa-solid fa-link"></i> Webhook URL Google Apps Script (Kết nối Google Sheet / Excel Online):
+              </label>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <input type="url" id="excel-webhook-url" placeholder="Dán URL Web App của bạn (Ví dụ: https://script.google.com/macros/s/.../exec)" style="flex: 1; min-width: 280px; padding: 10px 14px; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 0.85rem; font-family: monospace;">
+                <button class="btn-micro" onclick="saveExcelWebhookUrl()" style="background: var(--brand-blue); color: white; border: none; padding: 10px 18px; cursor: pointer;">
+                  <i class="fa-solid fa-floppy-disk"></i> Lưu URL Webhook
+                </button>
+                <button class="btn-micro" onclick="testExcelConnection()" style="padding: 10px 14px; cursor: pointer;">
+                  <i class="fa-solid fa-paper-plane"></i> Gửi Bản Ghi Test
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel UTM Taxonomy & Dedicated Campaign Links (Table 2 & Figures 3, 4, 5) -->
+        <div class="panel-card" style="margin-bottom: 24px; border-left: 4px solid #2C529D;">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fa-solid fa-bullhorn" style="color: #2C529D;"></i> Bộ Định Danh Nguồn Chuẩn Hóa (UTM Taxonomy & Touchpoint Links)
+            </div>
+            <span class="badge-status success">4-DIMENSIONS TAXONOMY</span>
+          </div>
+          <div class="panel-body">
+            <p class="panel-desc">Theo chuẩn Table 2 trong báo cáo: Sử dụng link riêng biệt để phân biệt chính xác <strong>Facebook Feed, Stories, Reels, TikTok Bio, Organic Post và Email</strong>:</p>
+            <div class="table-responsive">
+              <table class="data-table" style="font-size: 0.8rem;">
+                <thead>
+                  <tr>
+                    <th>Touchpoint</th>
+                    <th>utm_source</th>
+                    <th>utm_medium</th>
+                    <th>utm_content (Placement & Creative)</th>
+                    <th>Đường Dẫn Test Tương Ứng</th>
+                    <th>Hành Động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong><i class="fa-brands fa-facebook" style="color: #1877f2;"></i> Facebook Feed</strong></td>
+                    <td><code>facebook</code></td>
+                    <td><code>paid_social</code></td>
+                    <td><span class="lead-stage-pill stage-verified">feed_shirt_a &rarr; feed</span></td>
+                    <td><small>index.html?utm_source=facebook&utm_medium=paid_social&utm_campaign=uel_merch_oct26&utm_content=feed_shirt_a</small></td>
+                    <td><a href="index.html?utm_source=facebook&utm_medium=paid_social&utm_campaign=uel_merch_oct26&utm_content=feed_shirt_a" target="_blank" class="btn-micro"><i class="fa-solid fa-arrow-up-right-from-square"></i> Test</a></td>
+                  </tr>
+                  <tr>
+                    <td><strong><i class="fa-brands fa-facebook" style="color: #1877f2;"></i> Facebook Stories</strong></td>
+                    <td><code>facebook</code></td>
+                    <td><code>paid_social</code></td>
+                    <td><span class="lead-stage-pill stage-verified">story_shirt_a &rarr; story</span></td>
+                    <td><small>index.html?utm_source=facebook&utm_medium=paid_social&utm_campaign=uel_merch_oct26&utm_content=story_shirt_a</small></td>
+                    <td><a href="index.html?utm_source=facebook&utm_medium=paid_social&utm_campaign=uel_merch_oct26&utm_content=story_shirt_a" target="_blank" class="btn-micro"><i class="fa-solid fa-arrow-up-right-from-square"></i> Test</a></td>
+                  </tr>
+                  <tr>
+                    <td><strong><i class="fa-brands fa-facebook" style="color: #1877f2;"></i> Facebook Reels</strong></td>
+                    <td><code>facebook</code></td>
+                    <td><code>paid_social</code></td>
+                    <td><span class="lead-stage-pill stage-verified">reels_shirt_a &rarr; reels</span></td>
+                    <td><small>index.html?utm_source=facebook&utm_medium=paid_social&utm_campaign=uel_merch_oct26&utm_content=reels_shirt_a</small></td>
+                    <td><a href="index.html?utm_source=facebook&utm_medium=paid_social&utm_campaign=uel_merch_oct26&utm_content=reels_shirt_a" target="_blank" class="btn-micro"><i class="fa-solid fa-arrow-up-right-from-square"></i> Test</a></td>
+                  </tr>
+                  <tr>
+                    <td><strong><i class="fa-brands fa-tiktok"></i> TikTok Bio Link</strong></td>
+                    <td><code>tiktok</code></td>
+                    <td><code>organic_social</code></td>
+                    <td><span class="lead-stage-pill stage-enriched">profile_uel_a &rarr; profile</span></td>
+                    <td><small>index.html?utm_source=tiktok&utm_medium=organic_social&utm_campaign=campus_chic_2026&utm_content=profile_uel_a</small></td>
+                    <td><a href="index.html?utm_source=tiktok&utm_medium=organic_social&utm_campaign=campus_chic_2026&utm_content=profile_uel_a" target="_blank" class="btn-micro"><i class="fa-solid fa-arrow-up-right-from-square"></i> Test</a></td>
+                  </tr>
+                  <tr>
+                    <td><strong><i class="fa-brands fa-facebook" style="color: #1877f2;"></i> Facebook Organic Post</strong></td>
+                    <td><code>facebook</code></td>
+                    <td><code>organic_social</code></td>
+                    <td><span class="lead-stage-pill stage-enriched">post_campus_a &rarr; post</span></td>
+                    <td><small>index.html?utm_source=facebook&utm_medium=organic_social&utm_campaign=uel_merch_oct26&utm_content=post_campus_a</small></td>
+                    <td><a href="index.html?utm_source=facebook&utm_medium=organic_social&utm_campaign=uel_merch_oct26&utm_content=post_campus_a" target="_blank" class="btn-micro"><i class="fa-solid fa-arrow-up-right-from-square"></i> Test</a></td>
+                  </tr>
+                  <tr>
+                    <td><strong><i class="fa-solid fa-envelope" style="color: #ea4335;"></i> Promotional Email</strong></td>
+                    <td><code>email</code></td>
+                    <td><code>email</code></td>
+                    <td><span class="lead-stage-pill stage-verified">voucher_wave1 &rarr; email</span></td>
+                    <td><small>index.html?utm_source=email&utm_medium=email&utm_campaign=voucher_wave1&utm_content=voucher_wave1</small></td>
+                    <td><a href="index.html?utm_source=email&utm_medium=email&utm_campaign=voucher_wave1&utm_content=voucher_wave1" target="_blank" class="btn-micro"><i class="fa-solid fa-arrow-up-right-from-square"></i> Test</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bảng Dữ Liệu Canonical Leads -->
         <div class="panel-card">
           <div class="panel-header">
             <div class="panel-title">
               <i class="fa-solid fa-database"></i> Bảng Dữ Liệu Canonical Leads & Đối Soát CRM (Audit Ledger)
             </div>
-            <button class="btn-micro" onclick="loadCrmLeadsTable()"><i class="fa-solid fa-rotate"></i> Tải lại bảng</button>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn-micro" onclick="seedMockMartechLeadsToSheet()" style="background: #8b5cf6; color: white; border: none;"><i class="fa-solid fa-wand-magic-sparkles"></i> Nạp 10 Leads Mẫu Lên Sheet</button>
+              <button class="btn-micro" onclick="exportLeadsToExcelFile()"><i class="fa-solid fa-download"></i> Tải .XLSX</button>
+              <button class="btn-micro" onclick="loadCrmLeadsTable()"><i class="fa-solid fa-rotate"></i> Tải lại bảng</button>
+            </div>
           </div>
           <div class="panel-body">
             <div class="table-responsive">
               <table class="data-table">
                 <thead>
                   <tr>
-                    <th>Lead ID (UUID)</th>
+                    <th>Mã Lead (UUID)</th>
                     <th>Họ Tên</th>
-                    <th>Email Đã Xác Minh</th>
-                    <th>Quan Hệ UEL</th>
-                    <th>Stage Hồ Sơ</th>
-                    <th>Marketing Opt-In</th>
-                    <th>Sở Thích Đã Thu Thập</th>
-                    <th>Thời Gian Tạo</th>
+                    <th>Email Khách Hàng</th>
+                    <th>Nhóm Đối Tượng (Segment)</th>
+                    <th>First-Touch Attribution</th>
+                    <th>Last-Touch Attribution</th>
+                    <th>Giai Đoạn & OTP</th>
+                    <th>Sở Thích</th>
+                    <th>Thời Gian Gửi</th>
                   </tr>
                 </thead>
                 <tbody id="crm-leads-tbody">
@@ -379,6 +514,142 @@
         </div>
       </section>
     </main>
+  </div>
+
+  <!-- Modal Hướng Dẫn Kết Nối Google Sheets / Excel Online Database -->
+  <div id="excel-guide-modal" class="admin-modal-backdrop" style="display: none;">
+    <div class="admin-modal-content">
+      <div class="admin-modal-header">
+        <div class="admin-modal-title">
+          <i class="fa-solid fa-file-excel" style="color: #107c41;"></i> Hướng Dẫn Kết Nối Database Excel / Google Sheets
+        </div>
+        <button class="admin-modal-close" onclick="closeExcelGuideModal()">&times;</button>
+      </div>
+      <div class="admin-modal-body">
+        <p style="margin-bottom: 16px;">Để form trên Landing Page tự động lưu thông tin khách hàng vào file Excel / Google Sheets theo thời gian thực (hoàn toàn miễn phí 100%), bạn thực hiện 3 bước sau:</p>
+        
+        <div class="guide-step">
+          <strong>Bước 1: Tạo Google Sheet mới</strong>
+          <p>Mở trình duyệt vào <a href="https://sheets.new" target="_blank" style="color: var(--brand-blue); font-weight: 600;">sheets.new</a> để tạo một bảng tính mới (đặt tên ví dụ: <code>UEL_STYLE_Leads_Database</code>).</p>
+        </div>
+
+        <div class="guide-step">
+          <strong>Bước 2: Mở Apps Script & Dán mã xử lý tự động</strong>
+          <p>Trên thanh menu của Google Sheet, bấm <strong>Tiện ích mở rộng (Extensions)</strong> &rarr; chọn <strong>Apps Script</strong>. Xóa mã mặc định và dán đoạn mã bên dưới vào:</p>
+          <div class="code-snippet-box">
+            <button class="btn-copy-code" onclick="copyAppsScriptCode()"><i class="fa-solid fa-copy"></i> Sao chép mã</button>
+            <pre><code id="apps-script-code-text">// Mã Google Apps Script lưu Form UEL STYLE vào Google Sheet / Excel
+// Chuẩn hóa 22 cột theo Table 2 & Table 3 Báo Cáo MarTech (Đa đối tượng & First/Last Touch)
+function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var data = JSON.parse(e.postData.contents);
+    
+    var headers = [
+      "Mã Lead (lead_id)",
+      "Họ và Tên",
+      "Email Khách Hàng",
+      "Nhóm Đối Tượng (Customer Segment)",
+      "Giai Đoạn Hồ Sơ (profile_status)",
+      "Xác Thực OTP (otp_status)",
+      "Đồng Ý Marketing (consent_marketing)",
+      "Sở Thích Sản Phẩm (interests)",
+      "Gu Phong Cách (style_preference)",
+      "Mức Giá Mong Muốn (price_range)",
+      "First-Touch Platform",
+      "First-Touch Medium",
+      "First-Touch Placement (feed/story/reels/profile/post)",
+      "First-Touch Campaign & Creative",
+      "Last-Touch Platform",
+      "Last-Touch Medium",
+      "Last-Touch Placement",
+      "Last-Touch Campaign & Creative",
+      "Phương Thức Nguồn (source_method)",
+      "Độ Tin Cậy Nguồn (confidence)",
+      "Session ID",
+      "Thời Gian Đăng Ký (submitted_at)"
+    ];
+    
+    // Tạo hàng tiêu đề màu xanh UEL STYLE nếu sheet còn trống
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(headers);
+      sheet.getRange(1, 1, 1, headers.length).setFontWeight("bold").setBackground("#2C529D").setFontColor("#FFFFFF");
+    }
+    
+    var email = (data.normalized_email || data.email || "").toString().trim().toLowerCase();
+    var rows = sheet.getDataRange().getValues();
+    var rowIndex = -1;
+    for (var i = 1; i < rows.length; i++) {
+      if (rows[i][2] && rows[i][2].toString().trim().toLowerCase() === email) {
+        rowIndex = i + 1;
+        break;
+      }
+    }
+    
+    var rowData = [
+      data.lead_id || ("lead-" + new Date().getTime()),
+      data.display_name || "",
+      email,
+      data.customer_segment || data.relation_to_uel || "Khách hàng đại chúng",
+      data.profile_status || data.profile_stage || "Stage 1: Đã xác thực OTP",
+      data.otp_status || data.email_verified_at || "VERIFIED (Đã xác thực)",
+      data.consent_marketing || data.marketing_email_opt_in || "CÓ (Đồng ý)",
+      Array.isArray(data.interests) ? data.interests.join(", ") : (data.interests || "Chưa cung cấp"),
+      data.style_preference || "Năng động, Streetwear",
+      data.price_range || "200k_350k",
+      data.first_touch_platform || "facebook",
+      data.first_touch_medium || "paid_social",
+      data.first_touch_placement || "feed",
+      data.first_touch_creative || data.first_touch_campaign || "feed_shirt_a",
+      data.last_touch_platform || data.first_touch_platform || "facebook",
+      data.last_touch_medium || data.first_touch_medium || "paid_social",
+      data.last_touch_placement || data.first_touch_placement || "feed",
+      data.last_touch_creative || data.first_touch_creative || "feed_shirt_a",
+      data.source_method || "utm_manual",
+      data.source_confidence || "high",
+      data.session_id || data.anonymous_session_id || ("sess_" + Math.random().toString(36).substr(2, 8)),
+      data.submitted_at || new Date().toLocaleString("vi-VN")
+    ];
+    
+    if (rowIndex > 0) {
+      sheet.getRange(rowIndex, 1, 1, rowData.length).setValues([rowData]);
+    } else {
+      sheet.appendRow(rowData);
+    }
+    return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Đã lưu bản ghi chuẩn MarTech vào Google Sheet!" })).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Database is active" })).setMimeType(ContentService.MimeType.JSON);
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="guide-step">
+          <strong>Bước 3: Triển khai ứng dụng Web & Lấy link</strong>
+          <p>Bấm nút <strong>Triển khai (Deploy)</strong> ở góc trên bên phải &rarr; chọn <strong>Tùy chọn triển khai mới (New deployment)</strong> &rarr; Bấm vào icon bánh răng chọn <strong>Ứng dụng web (Web app)</strong>:</p>
+          <ul style="margin: 6px 0 0 20px; font-size: 0.82rem;">
+            <li>Phần <strong>Thực thi dưới dạng (Execute as)</strong>: Chọn <em>Tôi (Email của bạn)</em></li>
+            <li>Phần <strong>Ai có quyền truy cập (Who has access)</strong>: Chọn <strong>Bất kỳ ai (Anyone)</strong> (để form web có thể gửi dữ liệu)</li>
+          </ul>
+          <p style="margin-top: 6px;">Bấm <strong>Triển khai</strong>, cấp quyền nếu được hỏi, và <strong>Sao chép URL ứng dụng web</strong> (có dạng <code>https://script.google.com/macros/s/.../exec</code>) dán vào ô Webhook URL trên Admin này.</p>
+        </div>
+      </div>
+      <div class="admin-modal-footer">
+        <button class="btn-micro" onclick="copyAppsScriptCode()" style="background: var(--brand-blue); color: white; border: none; padding: 8px 16px;">
+          <i class="fa-solid fa-copy"></i> Sao Chép Toàn Bộ Mã
+        </button>
+        <button class="btn-micro" onclick="closeExcelGuideModal()" style="padding: 8px 16px;">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Hub -->
+  <div id="admin-toast">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="admin-toast-text">Thông báo</span>
   </div>
 
   <script src="js/analytics.js"></script>

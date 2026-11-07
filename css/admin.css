@@ -556,3 +556,222 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   Excel & Google Sheets Database Integration Styles
+   ========================================================================== */
+.btn-excel-download {
+  background: #107c41 !important;
+  color: #ffffff !important;
+  border: 1px solid #0b5c30 !important;
+  transition: all 0.2s ease;
+}
+
+.btn-excel-download:hover {
+  background: #0b5c30 !important;
+  box-shadow: 0 2px 6px rgba(16, 124, 65, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-excel-sync {
+  background: #0284c7 !important;
+  color: #ffffff !important;
+  border: 1px solid #0369a1 !important;
+  transition: all 0.2s ease;
+}
+
+.btn-excel-sync:hover {
+  background: #0369a1 !important;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);
+  transform: translateY(-1px);
+}
+
+.excel-status-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--admin-border);
+}
+
+.status-indicator-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #94a3b8;
+  display: inline-block;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.status-indicator-dot.connected {
+  background: #10b981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+.status-indicator-dot.local-only {
+  background: #f59e0b;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+}
+
+.excel-url-input-group input:focus {
+  outline: none;
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 3px rgba(44, 82, 157, 0.15);
+}
+
+/* Modal Guide Popup */
+.admin-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.admin-modal-content {
+  background: #ffffff;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalFadeIn 0.25s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.admin-modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+}
+
+.admin-modal-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--admin-muted);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.admin-modal-close:hover {
+  color: #0f172a;
+}
+
+.admin-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  font-size: 0.88rem;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.admin-modal-footer {
+  padding: 14px 24px;
+  border-top: 1px solid var(--admin-border);
+  background: #f8fafc;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.guide-step {
+  margin-bottom: 20px;
+  background: #f8fafc;
+  border-left: 3px solid var(--brand-blue);
+  padding: 12px 16px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.guide-step strong {
+  color: #0f172a;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.code-snippet-box {
+  position: relative;
+  margin-top: 8px;
+}
+
+.code-snippet-box pre {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.76rem;
+  max-height: 180px;
+  overflow-y: auto;
+  font-family: Consolas, Monaco, monospace;
+}
+
+.code-snippet-box .btn-copy-code {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.code-snippet-box .btn-copy-code:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Admin Toast */
+#admin-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #1e293b;
+  color: white;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 10000;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+#admin-toast.active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}

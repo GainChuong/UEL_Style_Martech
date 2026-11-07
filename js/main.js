@@ -160,7 +160,7 @@ window.handleInitialFormSubmit = function(event) {
   // Regex kiểm tra email chuẩn
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !emailRegex.test(email)) {
-    errorEmail.textContent = 'Email chưa đúng định dạng (Ví dụ: student@st.uel.edu.vn).';
+    errorEmail.textContent = 'Email chưa đúng định dạng (Ví dụ: yourname@gmail.com hoặc student@st.uel.edu.vn).';
     if (isValid) emailInput.focus();
     isValid = false;
   }
@@ -197,6 +197,21 @@ window.handleInitialFormSubmit = function(event) {
   // Kích hoạt cổng gửi OTP thực tế (Real Email / Sandbox)
   if (typeof sendRealEmailOtp === 'function') {
     sendRealEmailOtp(email, simulatedOTP, name);
+  }
+
+  // Tự động lưu ngay thông tin khách vào Google Sheet / Excel (Stage 1 - Đang gửi OTP)
+  if (typeof syncLeadToExcel === 'function') {
+    syncLeadToExcel({
+      lead_id: 'lead-uel-' + Math.random().toString(36).substr(2, 8),
+      display_name: name,
+      normalized_email: email,
+      relation_to_uel: relation,
+      marketing_email_opt_in: optIn,
+      profile_stage: 'stage_0_pending',
+      email_verified_at: null,
+      source_placement: 'lead_section_form',
+      created_at: new Date().toISOString()
+    });
   }
 
   // Chuyển sang màn hình xác minh OTP
@@ -290,6 +305,11 @@ window.handleVerifyOtp = function() {
     verified_at: nowIso
   }));
 
+  // Tự động ghi nhận và đồng bộ Lead vào Database Excel / Google Sheets
+  if (typeof syncLeadToExcel === 'function') {
+    syncLeadToExcel(finalLeadRecord);
+  }
+
   trackLeadEvent('lead_verification_success', {
     stage: 'stage_1_verified'
   });
@@ -361,6 +381,11 @@ window.handleEnrichmentSubmit = function(event) {
     leads[idx].profile_stage = 'stage_2_enriched';
     leads[idx].updated_at = new Date().toISOString();
     localStorage.setItem(STORAGE_KEYS.LEADS_DB, JSON.stringify(leads));
+
+    // Cập nhật lại dữ liệu sở thích trên Database Excel / Google Sheets
+    if (typeof syncLeadToExcel === 'function') {
+      syncLeadToExcel(leads[idx]);
+    }
   }
 
   trackLeadEvent('lead_profile_enriched', {

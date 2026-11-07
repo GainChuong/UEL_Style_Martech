@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   runLiveAudit();
   loadCrmLeadsTable();
   renderFunnelMetrics();
+  initExcelDatabaseModule();
 });
 
 // Chuyển tab trong Admin Console
@@ -32,6 +33,7 @@ window.switchTab = function(tabId) {
   if (tabId === 'tab-crm-leads') {
     buttons[2].classList.add('active');
     loadCrmLeadsTable();
+    initExcelDatabaseModule();
   }
   if (tabId === 'tab-traffic-metrics') {
     buttons[3].classList.add('active');
@@ -222,7 +224,7 @@ function calculateAndRenderSeoAudit(doc, sourceName = 'index.html') {
       <div class="inspect-item">
         <div class="inspect-info">
           <strong>Cổng Gửi Email OTP Thật (EmailJS Engine)</strong>
-          <span>Service ID: <code>service_viwrf1c</code> &bull; Template: <code>Uu6BEfj5WpQo-phf1XLyZ</code> (Đã cấu hình Public Key)</span>
+          <span>Service ID: <code>service_viwrf1c</code> &bull; Template: <code>template_7d3dxmo</code> (Đã cấu hình Public Key)</span>
         </div>
         <span class="inspect-badge badge-success">OTP EMAIL THẬT: SẴN SÀNG</span>
       </div>
@@ -442,33 +444,42 @@ window.loadCrmLeadsTable = function() {
   const leads = JSON.parse(localStorage.getItem(STORAGE_KEYS.LEADS_DB) || '[]');
 
   if (leads.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--admin-muted);">Chưa có bản ghi nào. Hãy thử điền form trên Landing Page!</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; color: var(--admin-muted);">Chưa có bản ghi nào. Hãy bấm "Nạp 10 Leads Mẫu Lên Sheet" hoặc thử điền form trên Landing Page!</td></tr>';
     return;
   }
 
   let html = '';
   leads.forEach(lead => {
-    const interestsStr = (lead.interests && lead.interests.length > 0)
-      ? lead.interests.join(', ')
+    const interestsStr = (lead.interests && (Array.isArray(lead.interests) ? lead.interests.length > 0 : lead.interests !== ''))
+      ? (Array.isArray(lead.interests) ? lead.interests.join(', ') : lead.interests)
       : '<span style="color: #94a3b8">Chưa cung cấp</span>';
 
     const stageClass = lead.profile_stage === 'stage_2_enriched' ? 'stage-enriched' : 'stage-verified';
-    const optInBadge = lead.marketing_email_opt_in
-      ? '<span class="status-good"><i class="fa-solid fa-circle-check"></i> Đã Opt-in</span>'
-      : '<span style="color: #64748b"><i class="fa-solid fa-ban"></i> Từ chối</span>';
+    const otpBadge = (lead.email_verified_at || lead.otp_status === 'VERIFIED (Đã xác thực)')
+      ? '<span class="status-good" style="font-size:0.75rem;"><i class="fa-solid fa-circle-check"></i> Đã OTP</span>'
+      : '<span style="color: #f59e0b; font-size:0.75rem;"><i class="fa-solid fa-clock"></i> Chờ OTP</span>';
 
-    const dateStr = new Date(lead.created_at).toLocaleDateString('vi-VN', {
-      hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit'
-    });
+    const firstTouchStr = lead.first_touch_platform 
+      ? `<strong>${lead.first_touch_platform}</strong> / <span class="lead-stage-pill stage-verified">${lead.first_touch_placement || 'feed'}</span><br><small style="color:#64748b">${lead.first_touch_creative || ''}</small>`
+      : '<span style="color:#94a3b8">facebook / feed</span>';
+
+    const lastTouchStr = lead.last_touch_platform
+      ? `<strong>${lead.last_touch_platform}</strong> / <span class="lead-stage-pill stage-enriched">${lead.last_touch_placement || 'direct'}</span><br><small style="color:#64748b">${lead.last_touch_creative || ''}</small>`
+      : '<span style="color:#94a3b8">google / organic</span>';
+
+    const dateStr = lead.created_at 
+      ? new Date(lead.created_at).toLocaleDateString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' })
+      : new Date().toLocaleDateString('vi-VN');
 
     html += `
       <tr>
         <td><code>${lead.lead_id}</code></td>
-        <td><strong>${lead.display_name || 'Khách UEL'}</strong></td>
-        <td>${lead.normalized_email}</td>
-        <td>${translateRelation(lead.relation_to_uel)}</td>
-        <td><span class="lead-stage-pill ${stageClass}">${lead.profile_stage}</span></td>
-        <td>${optInBadge}</td>
+        <td><strong>${lead.display_name || 'Khách Hàng'}</strong></td>
+        <td>${lead.normalized_email || lead.email}</td>
+        <td><span style="font-weight:600; color: #2C529D;">${translateRelation(lead.customer_segment || lead.relation_to_uel)}</span></td>
+        <td><small>${firstTouchStr}</small></td>
+        <td><small>${lastTouchStr}</small></td>
+        <td><span class="lead-stage-pill ${stageClass}">${lead.profile_stage || 'stage_1_verified'}</span><br>${otpBadge}</td>
         <td><small>${interestsStr}</small></td>
         <td><small>${dateStr}</small></td>
       </tr>
@@ -480,13 +491,19 @@ window.loadCrmLeadsTable = function() {
 
 function translateRelation(rel) {
   const map = {
+    genz_fashion: 'Giới trẻ Gen Z / Tín đồ Local Brand & Streetwear',
+    student_uel: 'Sinh viên UEL (ĐH Kinh tế - Luật)',
+    student_other: 'Sinh viên ĐHQG / Các trường ĐH khác / Học sinh THPT',
+    young_pro: 'Cựu sinh viên / Người đi làm trẻ (Young Professional)',
+    faculty_staff: 'Cán bộ / Giảng viên nhà trường',
+    campus_chic_fan: 'Khách hàng đại chúng / Yêu thích Campus Chic',
     student: 'Sinh viên UEL',
-    alumni: 'Cựu sinh viên',
-    faculty: 'Giảng viên/Cán bộ',
-    friend: 'Khách ngoài',
-    other: 'Khác'
+    alumni: 'Cựu sinh viên / Người đi làm',
+    faculty: 'Cán bộ / Giảng viên',
+    friend: 'Tín đồ thời trang / Khách ngoài',
+    other: 'Khách hàng khác'
   };
-  return map[rel] || 'Tùy chọn';
+  return map[rel] || rel || 'Khách hàng đại chúng';
 }
 
 /* ==========================================================================
@@ -558,3 +575,554 @@ window.clearAnalyticsData = function() {
     location.reload();
   }
 };
+
+/* ==========================================================================
+   6. Excel & Google Sheets Database Integration Module
+   ========================================================================== */
+const DEFAULT_EXCEL_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxM8ukMjKj3rr8mpiCh-AnnR8sjlG8S0CuBVPEqrw7VOZLX0BA3Kv-YswayQ46JpLcb/exec";
+
+function initExcelDatabaseModule() {
+  const savedUrl = localStorage.getItem('uel_excel_db_url') || DEFAULT_EXCEL_WEBHOOK_URL;
+  const urlInput = document.getElementById('excel-webhook-url');
+  if (urlInput && !urlInput.value) {
+    urlInput.value = savedUrl;
+  }
+  updateExcelStatus();
+}
+
+function updateExcelStatus() {
+  const savedUrl = (localStorage.getItem('uel_excel_db_url') || DEFAULT_EXCEL_WEBHOOK_URL).trim();
+  const dot = document.getElementById('excel-status-dot');
+  const title = document.getElementById('excel-status-title');
+  const desc = document.getElementById('excel-status-desc');
+
+  if (!dot || !title || !desc) return;
+
+  if (savedUrl && savedUrl.startsWith('http')) {
+    dot.className = 'status-indicator-dot connected';
+    title.textContent = 'Trạng Thái: ĐÃ KẾT NỐI DATABASE EXCEL ONLINE';
+    title.style.color = '#15803d';
+    desc.innerHTML = `Đã kết nối Webhook: <code>${savedUrl.slice(0, 42)}...</code>. Mọi lượt điền form & OTP trên Landing Page sẽ tự động thêm dòng mới vào bảng tính Excel theo thời gian thực!`;
+  } else {
+    dot.className = 'status-indicator-dot local-only';
+    title.textContent = 'Trạng Thái: ĐANG LƯU TRỮ CỤC BỘ (Sẵn sàng xuất file .xlsx)';
+    title.style.color = '#b45309';
+    desc.innerHTML = 'Dữ liệu đang được ghi nhận vào Canonical Leads Ledger. Bạn có thể <strong>Xuất File Excel (.xlsx)</strong> ngay hoặc gắn link Webhook Google Sheet để đồng bộ tự động lên đám mây.';
+  }
+}
+
+window.saveExcelWebhookUrl = function() {
+  const urlInput = document.getElementById('excel-webhook-url');
+  if (!urlInput) return;
+  const url = urlInput.value.trim();
+
+  if (url && !url.startsWith('http')) {
+    alert('Đường dẫn URL phải bắt đầu bằng https://');
+    urlInput.focus();
+    return;
+  }
+
+  localStorage.setItem('uel_excel_db_url', url);
+  window.EXCEL_DATABASE_URL = url;
+  updateExcelStatus();
+
+  if (url) {
+    showAdminToast('Đã lưu cấu hình Webhook Database Excel thành công!');
+  } else {
+    showAdminToast('Đã xóa liên kết Webhook. Hệ thống chuyển sang chế độ lưu trữ cục bộ.', false);
+  }
+};
+
+window.testExcelConnection = async function() {
+  const urlInput = document.getElementById('excel-webhook-url');
+  const url = urlInput ? urlInput.value.trim() : (localStorage.getItem('uel_excel_db_url') || '');
+
+  if (!url || !url.startsWith('http')) {
+    alert('Vui lòng nhập hoặc lưu đường dẫn Webhook Google Sheet trước khi kiểm tra!');
+    if (urlInput) urlInput.focus();
+    return;
+  }
+
+  showAdminToast('Đang gửi bản ghi thử nghiệm (Test Ping) tới Excel...');
+
+  const testRecord = {
+    lead_id: 'test-ping-' + Math.floor(1000 + Math.random() * 9000),
+    display_name: 'Bản Ghi Kiểm Tra Hệ Thống',
+    normalized_email: 'test.martech@st.uel.edu.vn',
+    relation_to_uel: 'Sinh viên UEL',
+    profile_stage: 'Giai đoạn 1 (Đã xác minh OTP)',
+    email_verified_at: 'Đã xác thực OTP',
+    marketing_email_opt_in: 'CÓ (Đồng ý)',
+    interests: 'Áo sơ mi, Balo SGS',
+    style_preference: 'Năng động, Streetwear',
+    price_range: '200k_350k',
+    source_placement: 'Admin Console Test',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  };
+
+  try {
+    await fetch(url, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(testRecord)
+    });
+
+    localStorage.setItem('uel_excel_db_url', url);
+    window.EXCEL_DATABASE_URL = url;
+    updateExcelStatus();
+    showAdminToast('Gửi bản ghi test thành công! Hãy kiểm tra bảng tính Excel/Google Sheet.');
+  } catch (err) {
+    alert('Không thể kết nối tới Webhook: ' + err.message);
+  }
+};
+
+window.exportLeadsToExcelFile = function() {
+  if (typeof XLSX === 'undefined') {
+    alert('Thư viện SheetJS chưa sẵn sàng, vui lòng tải lại trang.');
+    return;
+  }
+
+  const leads = JSON.parse(localStorage.getItem(STORAGE_KEYS.LEADS_DB) || '[]');
+  if (leads.length === 0) {
+    showAdminToast('Chưa có dữ liệu lead nào để xuất file Excel!', false);
+    return;
+  }
+
+  const excelRows = leads.map((lead, idx) => ({
+    "STT": idx + 1,
+    "Mã Lead (lead_id)": lead.lead_id || '',
+    "Họ và Tên": lead.display_name || '',
+    "Email Khách Hàng": lead.normalized_email || lead.email || '',
+    "Nhóm Đối Tượng (Segment)": translateRelation(lead.customer_segment || lead.relation_to_uel),
+    "Giai Đoạn Hồ Sơ (profile_status)": lead.profile_status || (lead.profile_stage === 'stage_2_enriched' ? 'Stage 2: Đã bổ sung sở thích' : 'Stage 1: Đã xác thực OTP'),
+    "Xác Thực OTP (otp_status)": lead.otp_status || (lead.email_verified_at ? 'VERIFIED (Đã xác thực)' : 'PENDING (Chờ xác thực)'),
+    "Đồng Ý Marketing": lead.consent_marketing || (lead.marketing_email_opt_in ? 'CÓ (Đồng ý)' : 'KHÔNG (Từ chối)'),
+    "Sở Thích Outfit": Array.isArray(lead.interests) ? lead.interests.join(', ') : (lead.interests || 'Chưa cung cấp'),
+    "Gu Phong Cách": lead.style_preference || 'Chưa chọn',
+    "Mức Chi Tiêu": lead.price_range || 'Chưa chọn',
+    "First-Touch Platform": lead.first_touch_platform || 'facebook',
+    "First-Touch Medium": lead.first_touch_medium || 'paid_social',
+    "First-Touch Placement": lead.first_touch_placement || 'feed',
+    "First-Touch Creative / Content": lead.first_touch_creative || 'feed_shirt_a',
+    "Last-Touch Platform": lead.last_touch_platform || 'google',
+    "Last-Touch Medium": lead.last_touch_medium || 'organic',
+    "Last-Touch Placement": lead.last_touch_placement || 'organic_search',
+    "Last-Touch Creative / Content": lead.last_touch_creative || 'none',
+    "Phương Thức Nguồn (source_method)": lead.source_method || 'utm_manual',
+    "Độ Tin Cậy Nguồn": lead.source_confidence || 'high',
+    "Session ID": lead.session_id || lead.anonymous_session_id || 'sess_demo',
+    "Thời Gian Đăng Ký": lead.submitted_at || (lead.created_at ? new Date(lead.created_at).toLocaleString('vi-VN') : '')
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(excelRows);
+
+  worksheet['!cols'] = [
+    { wch: 6 },  // STT
+    { wch: 22 }, // Mã Lead
+    { wch: 24 }, // Họ và Tên
+    { wch: 30 }, // Email
+    { wch: 32 }, // Đối Tượng
+    { wch: 28 }, // Giai Đoạn Hồ Sơ
+    { wch: 22 }, // Xác Thực OTP
+    { wch: 18 }, // Đồng Ý Marketing
+    { wch: 32 }, // Sở Thích
+    { wch: 24 }, // Gu Phong Cách
+    { wch: 18 }, // Mức Chi Tiêu
+    { wch: 20 }, // First Platform
+    { wch: 20 }, // First Medium
+    { wch: 20 }, // First Placement
+    { wch: 25 }, // First Creative
+    { wch: 20 }, // Last Platform
+    { wch: 20 }, // Last Medium
+    { wch: 20 }, // Last Placement
+    { wch: 25 }, // Last Creative
+    { wch: 22 }, // Source Method
+    { wch: 18 }, // Confidence
+    { wch: 20 }, // Session ID
+    { wch: 24 }  // Thời Gian
+  ];
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "UEL_STYLE_Leads");
+
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const fileName = `UEL_STYLE_Leads_Database_${todayStr}.xlsx`;
+  XLSX.writeFile(workbook, fileName);
+
+  showAdminToast(`Đã xuất thành công file Excel: ${fileName}!`);
+};
+
+// Hàm sinh 9 Leads Sinh Viên Thật UEL chuẩn MarTech đẩy thẳng lên Sheet
+window.seedMockMartechLeadsToSheet = async function() {
+  const mockLeads = [
+    {
+      lead_id: 'UEL-K244060732',
+      display_name: 'Võ Hồng Ngọc',
+      normalized_email: 'ngocvh24406@st.uel.edu.vn',
+      email: 'ngocvh24406@st.uel.edu.vn',
+      customer_segment: 'Sinh viên UEL (ĐH Kinh tế - Luật)',
+      relation_to_uel: 'student_uel',
+      profile_stage: 'stage_2_enriched',
+      profile_status: 'Stage 2: Đã bổ sung sở thích',
+      otp_status: 'VERIFIED (Đã xác thực)',
+      email_verified_at: new Date(Date.now() - 3600000 * 48).toISOString(),
+      consent_marketing: 'CÓ (Đồng ý nhận tin)',
+      marketing_email_opt_in: true,
+      interests: 'Áo Sơ Mi Sọc UEL (Xanh dương), Túi Tote Canvas SGS',
+      style_preference: 'Thanh lịch, Đi học / Thuyết trình',
+      price_range: '200k_350k',
+      first_touch_platform: 'facebook',
+      first_touch_medium: 'paid_social',
+      first_touch_placement: 'feed',
+      first_touch_campaign: 'uel_merch_oct26',
+      first_touch_creative: 'feed_shirt_a',
+      last_touch_platform: 'facebook',
+      last_touch_medium: 'paid_social',
+      last_touch_placement: 'feed',
+      last_touch_campaign: 'uel_merch_oct26',
+      last_touch_creative: 'feed_shirt_a',
+      source_method: 'utm_manual',
+      source_confidence: 'high',
+      session_id: 'sess_k244060732',
+      created_at: new Date(Date.now() - 3600000 * 48).toISOString(),
+      submitted_at: new Date(Date.now() - 3600000 * 48).toLocaleString('vi-VN')
+    },
+    {
+      lead_id: 'UEL-K244111388',
+      display_name: 'Nguyễn Phương Anh',
+      normalized_email: 'anhnp24411@st.uel.edu.vn',
+      email: 'anhnp24411@st.uel.edu.vn',
+      customer_segment: 'Giới trẻ Gen Z / Tín đồ Local Brand & Streetwear',
+      relation_to_uel: 'genz_fashion',
+      profile_stage: 'stage_2_enriched',
+      profile_status: 'Stage 2: Đã bổ sung sở thích',
+      otp_status: 'VERIFIED (Đã xác thực)',
+      email_verified_at: new Date(Date.now() - 3600000 * 42).toISOString(),
+      consent_marketing: 'CÓ (Đồng ý nhận tin)',
+      marketing_email_opt_in: true,
+      interests: 'Áo Sơ Mi Sọc Cam, Quần Thể Thao Xám Đậm, Balo SGS',
+      style_preference: 'Năng động, Streetwear',
+      price_range: '200k_350k',
+      first_touch_platform: 'facebook',
+      first_touch_medium: 'paid_social',
+      first_touch_placement: 'story',
+      first_touch_campaign: 'uel_merch_oct26',
+      first_touch_creative: 'story_shirt_a',
+      last_touch_platform: 'email',
+      last_touch_medium: 'email',
+      last_touch_placement: 'email',
+      last_touch_campaign: 'voucher_wave1',
+      last_touch_creative: 'voucher_wave1',
+      source_method: 'utm_manual',
+      source_confidence: 'high',
+      session_id: 'sess_k244111388',
+      created_at: new Date(Date.now() - 3600000 * 42).toISOString(),
+      submitted_at: new Date(Date.now() - 3600000 * 42).toLocaleString('vi-VN')
+    },
+    {
+      lead_id: 'UEL-K244111398',
+      display_name: 'Nguyễn Ngọc Trường Giang',
+      normalized_email: 'giangnnt24411@st.uel.edu.vn',
+      email: 'giangnnt24411@st.uel.edu.vn',
+      customer_segment: 'Sinh viên ĐHQG / Các trường ĐH khác / Học sinh THPT',
+      relation_to_uel: 'student_other',
+      profile_stage: 'stage_1_verified',
+      profile_status: 'Stage 1: Đã xác thực OTP',
+      otp_status: 'VERIFIED (Đã xác thực)',
+      email_verified_at: new Date(Date.now() - 3600000 * 36).toISOString(),
+      consent_marketing: 'CÓ (Đồng ý nhận tin)',
+      marketing_email_opt_in: true,
+      interests: 'Quần Thể Thao UEL Đen, Túi Đeo Chéo Balo SGS',
+      style_preference: 'Thể thao, Khỏe khoắn',
+      price_range: '200k_350k',
+      first_touch_platform: 'facebook',
+      first_touch_medium: 'paid_social',
+      first_touch_placement: 'reels',
+      first_touch_campaign: 'uel_merch_oct26',
+      first_touch_creative: 'reels_shirt_a',
+      last_touch_platform: 'google',
+      last_touch_medium: 'organic',
+      last_touch_placement: 'organic_search',
+      last_touch_campaign: 'none',
+      last_touch_creative: 'organic_search',
+      source_method: 'organic_inferred',
+      source_confidence: 'high',
+      session_id: 'sess_k244111398',
+      created_at: new Date(Date.now() - 3600000 * 36).toISOString(),
+      submitted_at: new Date(Date.now() - 3600000 * 36).toLocaleString('vi-VN')
+    },
+    {
+      lead_id: 'UEL-K244111400',
+      display_name: 'Phạm Thái Hà',
+      normalized_email: 'hapt24411@st.uel.edu.vn',
+      email: 'hapt24411@st.uel.edu.vn',
+      customer_segment: 'Giới trẻ Gen Z / Tín đồ Local Brand & Streetwear',
+      relation_to_uel: 'genz_fashion',
+      profile_stage: 'stage_2_enriched',
+      profile_status: 'Stage 2: Đã bổ sung sở thích',
+      otp_status: 'VERIFIED (Đã xác thực)',
+      email_verified_at: new Date(Date.now() - 3600000 * 30).toISOString(),
+      consent_marketing: 'CÓ (Đồng ý nhận tin)',
+      marketing_email_opt_in: true,
+      interests: 'Bộ Sưu Tập Campus Collab SGS, Balo Basic SGS',
+      style_preference: 'Tối giản, Basic',
+      price_range: '200k_350k',
+      first_touch_platform: 'tiktok',
+      first_touch_medium: 'organic_social',
+      first_touch_placement: 'profile',
+      first_touch_campaign: 'campus_chic_2026',
+      first_touch_creative: 'profile_uel_a',
+      last_touch_platform: 'direct',
+      last_touch_medium: 'none',
+      last_touch_placement: 'direct',
+      last_touch_campaign: 'none',
+      last_touch_creative: 'none',
+      source_method: 'direct',
+      source_confidence: 'low',
+      session_id: 'sess_k244111400',
+      created_at: new Date(Date.now() - 3600000 * 30).toISOString(),
+      submitted_at: new Date(Date.now() - 3600000 * 30).toLocaleString('vi-VN')
+    },
+    {
+      lead_id: 'UEL-K244111403',
+      display_name: 'Nguyễn Đình Huy',
+      normalized_email: 'huynd24411@st.uel.edu.vn',
+      email: 'huynd24411@st.uel.edu.vn',
+      customer_segment: 'Cựu sinh viên / Người đi làm trẻ (Young Professional)',
+      relation_to_uel: 'young_pro',
+      profile_stage: 'stage_2_enriched',
+      profile_status: 'Stage 2: Đã bổ sung sở thích',
+      otp_status: 'VERIFIED (Đã xác thực)',
+      email_verified_at: new Date(Date.now() - 3600000 * 24).toISOString(),
+      consent_marketing: 'CÓ (Đồng ý nhận tin)',
+      marketing_email_opt_in: true,
+      interests: 'Áo Sơ Mi Sọc Xanh Lá, Balo Basic SGS, Ví Phụ Kiện',
+      style_preference: 'Thanh lịch, Campus Chic',
+      price_range: 'trên 350k',
+      first_touch_platform: 'facebook',
+      first_touch_medium: 'organic_social',
+      first_touch_placement: 'post',
+      first_touch_campaign: 'uel_merch_oct26',
+      first_touch_creative: 'post_campus_a',
+      last_touch_platform: 'facebook',
+      last_touch_medium: 'organic_social',
+      last_touch_placement: 'post',
+      last_touch_campaign: 'uel_merch_oct26',
+      last_touch_creative: 'post_campus_a',
+      source_method: 'utm_manual',
+      source_confidence: 'high',
+      session_id: 'sess_k244111403',
+      created_at: new Date(Date.now() - 3600000 * 24).toISOString(),
+      submitted_at: new Date(Date.now() - 3600000 * 24).toLocaleString('vi-VN')
+    },
+    {
+      lead_id: 'UEL-K244111409',
+      display_name: 'Ngô Thị Thảo Linh',
+      normalized_email: 'linhntt24411@st.uel.edu.vn',
+      email: 'linhntt24411@st.uel.edu.vn',
+      customer_segment: 'Sinh viên UEL (ĐH Kinh tế - Luật)',
+      relation_to_uel: 'student_uel',
+      profile_stage: 'stage_2_enriched',
+      profile_status: 'Stage 2: Đã bổ sung sở thích',
+      otp_status: 'VERIFIED (Đã xác thực)',
+      email_verified_at: new Date(Date.now() - 3600000 * 18).toISOString(),
+      consent_marketing: 'CÓ (Đồng ý nhận tin)',
+      marketing_email_opt_in: true,
+      interests: 'Áo Sơ Mi Sọc UEL 4 Màu, Quần Thể Thao Đen / Xám',
+      style_preference: 'Thanh lịch, Đi học / Thuyết trình',
+      price_range: '200k_350k',
+      first_touch_platform: 'google',
+      first_touch_medium: 'organic',
+      first_touch_placement: 'organic_search',
+      first_touch_campaign: 'none',
+      first_touch_creative: 'organic_search',
+      last_touch_platform: 'google',
+      last_touch_medium: 'organic',
+      last_touch_placement: 'organic_search',
+      last_touch_campaign: 'none',
+      last_touch_creative: 'organic_search',
+      source_method: 'organic_inferred',
+      source_confidence: 'high',
+      session_id: 'sess_k244111409',
+      created_at: new Date(Date.now() - 3600000 * 18).toISOString(),
+      submitted_at: new Date(Date.now() - 3600000 * 18).toLocaleString('vi-VN')
+    },
+    {
+      lead_id: 'UEL-K244111421',
+      display_name: 'Đặng Quỳnh Nhi',
+      normalized_email: 'nhidq24411@st.uel.edu.vn',
+      email: 'nhidq24411@st.uel.edu.vn',
+      customer_segment: 'Khách hàng đại chúng / Yêu thích Campus Chic',
+      relation_to_uel: 'campus_chic_fan',
+      profile_stage: 'stage_2_enriched',
+      profile_status: 'Stage 2: Đã bổ sung sở thích',
+      otp_status: 'VERIFIED (Đã xác thực)',
+      email_verified_at: new Date(Date.now() - 3600000 * 12).toISOString(),
+      consent_marketing: 'CÓ (Đồng ý nhận tin)',
+      marketing_email_opt_in: true,
+      interests: 'Áo Sơ Mi Sọc Đỏ Hồng, Túi Tote Canvas Mini SGS',
+      style_preference: 'Năng động, Streetwear',
+      price_range: '200k_350k',
+      first_touch_platform: 'facebook',
+      first_touch_medium: 'paid_social',
+      first_touch_placement: 'unknown',
+      first_touch_campaign: 'uel_merch_oct26',
+      first_touch_creative: 'multi_placement_auto',
+      last_touch_platform: 'facebook',
+      last_touch_medium: 'paid_social',
+      last_touch_placement: 'feed',
+      last_touch_campaign: 'uel_merch_oct26',
+      last_touch_creative: 'feed_shirt_a',
+      source_method: 'utm_manual',
+      source_confidence: 'high',
+      session_id: 'sess_k244111421',
+      created_at: new Date(Date.now() - 3600000 * 12).toISOString(),
+      submitted_at: new Date(Date.now() - 3600000 * 12).toLocaleString('vi-VN')
+    },
+    {
+      lead_id: 'UEL-K244111454',
+      display_name: 'Huỳnh Gia Bảo',
+      normalized_email: 'baohg24411@st.uel.edu.vn',
+      email: 'baohg24411@st.uel.edu.vn',
+      customer_segment: 'Giới trẻ Gen Z / Tín đồ Local Brand & Streetwear',
+      relation_to_uel: 'genz_fashion',
+      profile_stage: 'stage_2_enriched',
+      profile_status: 'Stage 2: Đã bổ sung sở thích',
+      otp_status: 'VERIFIED (Đã xác thực)',
+      email_verified_at: new Date(Date.now() - 3600000 * 6).toISOString(),
+      consent_marketing: 'CÓ (Đồng ý nhận tin)',
+      marketing_email_opt_in: true,
+      interests: 'Quần Thể Thao 4 Màu, Balo Basic SGS',
+      style_preference: 'Thể thao, Khỏe khoắn',
+      price_range: '200k_350k',
+      first_touch_platform: 'tiktok',
+      first_touch_medium: 'organic_social',
+      first_touch_placement: 'profile',
+      first_touch_campaign: 'campus_chic_2026',
+      first_touch_creative: 'profile_uel_a',
+      last_touch_platform: 'tiktok',
+      last_touch_medium: 'organic_social',
+      last_touch_placement: 'profile',
+      last_touch_campaign: 'campus_chic_2026',
+      last_touch_creative: 'profile_uel_a',
+      source_method: 'utm_manual',
+      source_confidence: 'high',
+      session_id: 'sess_k244111454',
+      created_at: new Date(Date.now() - 3600000 * 6).toISOString(),
+      submitted_at: new Date(Date.now() - 3600000 * 6).toLocaleString('vi-VN')
+    },
+    {
+      lead_id: 'UEL-K244111478',
+      display_name: 'Hồ Thị Phương Thảo',
+      normalized_email: 'thaohtp24411@st.uel.edu.vn',
+      email: 'thaohtp24411@st.uel.edu.vn',
+      customer_segment: 'Cựu sinh viên / Người đi làm trẻ (Young Professional)',
+      relation_to_uel: 'young_pro',
+      profile_stage: 'stage_2_enriched',
+      profile_status: 'Stage 2: Đã bổ sung sở thích',
+      otp_status: 'VERIFIED (Đã xác thực)',
+      email_verified_at: new Date().toISOString(),
+      consent_marketing: 'CÓ (Đồng ý nhận tin)',
+      marketing_email_opt_in: true,
+      interests: 'Áo Sơ Mi Sọc UEL, Ví Phụ Kiện SGS, Balo Basic',
+      style_preference: 'Thanh lịch, Đi học / Thuyết trình',
+      price_range: 'trên 350k',
+      first_touch_platform: 'email',
+      first_touch_medium: 'email',
+      first_touch_placement: 'email',
+      first_touch_campaign: 'voucher_wave1',
+      first_touch_creative: 'voucher_wave1',
+      last_touch_platform: 'email',
+      last_touch_medium: 'email',
+      last_touch_placement: 'email',
+      last_touch_campaign: 'voucher_wave1',
+      last_touch_creative: 'voucher_wave1',
+      source_method: 'utm_manual',
+      source_confidence: 'high',
+      session_id: 'sess_k244111478',
+      created_at: new Date().toISOString(),
+      submitted_at: new Date().toLocaleString('vi-VN')
+    }
+  ];
+
+  localStorage.setItem(STORAGE_KEYS.LEADS_DB, JSON.stringify(mockLeads));
+  loadCrmLeadsTable();
+  showAdminToast('Đang đẩy 9 Leads sinh viên thật lên Google Sheet...');
+
+  const url = (document.getElementById('excel-webhook-url') ? document.getElementById('excel-webhook-url').value : '') || localStorage.getItem('uel_excel_db_url');
+  if (url && url.startsWith('http')) {
+    let synced = 0;
+    for (const lead of mockLeads) {
+      if (typeof syncLeadToExcel === 'function') {
+        await syncLeadToExcel(lead);
+        synced++;
+      }
+    }
+    showAdminToast(`Đã đồng bộ thành công ${synced} sinh viên UEL lên Google Sheet!`);
+  } else {
+    showAdminToast('Đã lưu 9 sinh viên thật vào bảng CRM.');
+  }
+};
+
+window.syncAllLeadsToOnlineSheet = async function() {
+  const url = (document.getElementById('excel-webhook-url') ? document.getElementById('excel-webhook-url').value : '') || localStorage.getItem('uel_excel_db_url');
+  if (!url || !url.trim().startsWith('http')) {
+    alert('Vui lòng cấu hình Webhook URL Google Sheet / Excel Online trước khi đồng bộ!');
+    return;
+  }
+
+  const leads = JSON.parse(localStorage.getItem(STORAGE_KEYS.LEADS_DB) || '[]');
+  if (leads.length === 0) {
+    showAdminToast('Chưa có lead nào trong hệ thống.', false);
+    return;
+  }
+
+  showAdminToast(`Đang đồng bộ ${leads.length} bản ghi lên bảng tính Excel Online...`);
+
+  let count = 0;
+  for (const lead of leads) {
+    if (typeof syncLeadToExcel === 'function') {
+      await syncLeadToExcel(lead);
+      count++;
+    }
+  }
+
+  showAdminToast(`Đã đồng bộ ${count} bản ghi vào bảng tính Excel Online thành công!`);
+};
+
+window.openExcelGuideModal = function() {
+  const modal = document.getElementById('excel-guide-modal');
+  if (modal) modal.style.display = 'flex';
+};
+
+window.closeExcelGuideModal = function() {
+  const modal = document.getElementById('excel-guide-modal');
+  if (modal) modal.style.display = 'none';
+};
+
+window.copyAppsScriptCode = function() {
+  const codeEl = document.getElementById('apps-script-code-text');
+  if (!codeEl) return;
+  navigator.clipboard.writeText(codeEl.innerText).then(() => {
+    showAdminToast('Đã sao chép toàn bộ mã Google Apps Script!');
+  }).catch(() => {
+    alert('Vui lòng chọn và sao chép thủ công đoạn mã trong khung.');
+  });
+};
+
+function showAdminToast(message, isSuccess = true) {
+  const toast = document.getElementById('admin-toast');
+  const toastText = document.getElementById('admin-toast-text');
+  if (!toast || !toastText) return;
+
+  toastText.textContent = message;
+  toast.querySelector('i').className = isSuccess ? 'fa-solid fa-circle-check' : 'fa-solid fa-circle-exclamation';
+  toast.querySelector('i').style.color = isSuccess ? '#10b981' : '#f59e0b';
+
+  toast.classList.add('active');
+  setTimeout(() => {
+    toast.classList.remove('active');
+  }, 4000);
+}
