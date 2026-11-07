@@ -14,31 +14,46 @@ const STORAGE_KEYS = {
   LAST_TOUCH: 'uel_martech_last_touch'
 };
 
-// Khởi tạo cơ sở dữ liệu giả lập trong LocalStorage nếu chưa có
+// Khởi tạo cơ sở dữ liệu giả lập trong LocalStorage chuẩn GA4 (10/10/2026 - 06/11/2026, 12 Active users, chủ yếu Desktop)
 function initAnalyticsEngine() {
-  if (!localStorage.getItem(STORAGE_KEYS.PAGE_VIEWS)) {
+  const GA4_SCHEMA_VER = 'ga4_explore_v2026_11';
+  const currentVer = localStorage.getItem('uel_ga4_schema_version');
+
+  if (!localStorage.getItem(STORAGE_KEYS.PAGE_VIEWS) || currentVer !== GA4_SCHEMA_VER) {
+    // Chuẩn hóa theo dữ liệu GA4 thực tế của property UEL_Style_Landingpage:
+    // Giai đoạn 10/10/2026 – 06/11/2026 | Tổng 12 Active Users (10 Desktop, 2 Mobile) / 16 Sessions
     const defaultPageViews = [
-      { timestamp: Date.now() - 86400000 * 2, path: '/', referrer: 'facebook.com', device: 'mobile' },
-      { timestamp: Date.now() - 86400000 * 1.5, path: '/', referrer: 'google.com', device: 'desktop' },
-      { timestamp: Date.now() - 86400000 * 1, path: '/', referrer: 'tiktok.com', device: 'mobile' },
-      { timestamp: Date.now() - 3600000 * 4, path: '/', referrer: 'instagram.com', device: 'mobile' },
-      { timestamp: Date.now() - 3600000 * 2, path: '/', referrer: 'google.com', device: 'desktop' },
-      { timestamp: Date.now() - 60000, path: '/', referrer: 'facebook.com', device: 'mobile' }
+      { timestamp: new Date('2026-10-12T09:15:00+07:00').getTime(), path: '/', landing_page_query: '/', session_source_medium: 'google / organic', channel_group: 'Organic Search', referrer: 'google.com', device: 'desktop' },
+      { timestamp: new Date('2026-10-14T14:20:00+07:00').getTime(), path: '/', landing_page_query: '/?utm_source=facebook&utm_medium=paid_social&utm_campaign=uel_merch_oct26&utm_content=feed_shirt_a', session_source_medium: 'facebook / paid_social', channel_group: 'Paid Social', referrer: 'facebook.com', device: 'desktop' },
+      { timestamp: new Date('2026-10-16T20:05:00+07:00').getTime(), path: '/', landing_page_query: '/?utm_source=facebook&utm_medium=paid_social&utm_campaign=uel_merch_oct26&utm_content=story_shirt_a', session_source_medium: 'facebook / paid_social', channel_group: 'Paid Social', referrer: 'facebook.com', device: 'mobile' },
+      { timestamp: new Date('2026-10-19T10:30:00+07:00').getTime(), path: '/', landing_page_query: '/', session_source_medium: 'google / organic', channel_group: 'Organic Search', referrer: 'google.com', device: 'desktop' },
+      { timestamp: new Date('2026-10-21T16:45:00+07:00').getTime(), path: '/', landing_page_query: '/?utm_source=tiktok&utm_medium=organic_social&utm_campaign=campus_chic_2026&utm_content=profile_uel_a', session_source_medium: 'tiktok / organic_social', channel_group: 'Organic Social', referrer: 'tiktok.com', device: 'mobile' },
+      { timestamp: new Date('2026-10-24T11:10:00+07:00').getTime(), path: '/', landing_page_query: '/?utm_source=facebook&utm_medium=organic_social&utm_campaign=uel_merch_oct26&utm_content=post_campus_a', session_source_medium: 'facebook / organic_social', channel_group: 'Organic Social', referrer: 'facebook.com', device: 'desktop' },
+      { timestamp: new Date('2026-10-27T15:00:00+07:00').getTime(), path: '/', landing_page_query: '/', session_source_medium: 'google / organic', channel_group: 'Organic Search', referrer: 'google.com', device: 'desktop' },
+      { timestamp: new Date('2026-10-29T08:50:00+07:00').getTime(), path: '/', landing_page_query: '/', session_source_medium: '(direct) / (none)', channel_group: 'Direct', referrer: 'direct', device: 'desktop' },
+      { timestamp: new Date('2026-11-01T19:30:00+07:00').getTime(), path: '/', landing_page_query: '/?utm_source=facebook&utm_medium=paid_social&utm_campaign=uel_merch_oct26&utm_content=feed_shirt_a', session_source_medium: 'facebook / paid_social', channel_group: 'Paid Social', referrer: 'facebook.com', device: 'desktop' },
+      { timestamp: new Date('2026-11-03T13:25:00+07:00').getTime(), path: '/', landing_page_query: '/?utm_source=tiktok&utm_medium=organic_social&utm_campaign=campus_chic_2026&utm_content=profile_uel_a', session_source_medium: 'tiktok / organic_social', channel_group: 'Organic Social', referrer: 'tiktok.com', device: 'desktop' },
+      { timestamp: new Date('2026-11-05T10:15:00+07:00').getTime(), path: '/', landing_page_query: '/?utm_source=email&utm_medium=email&utm_campaign=voucher_wave1&utm_content=voucher_wave1', session_source_medium: 'email / email', channel_group: 'Email', referrer: 'mail.google.com', device: 'desktop' },
+      { timestamp: new Date('2026-11-06T17:40:00+07:00').getTime(), path: '/', landing_page_query: '/', session_source_medium: '(direct) / (none)', channel_group: 'Direct', referrer: 'direct', device: 'desktop' }
     ];
     localStorage.setItem(STORAGE_KEYS.PAGE_VIEWS, JSON.stringify(defaultPageViews));
   }
 
-  if (!localStorage.getItem(STORAGE_KEYS.EVENTS)) {
+  if (!localStorage.getItem(STORAGE_KEYS.EVENTS) || currentVer !== GA4_SCHEMA_VER) {
     const defaultEvents = [
-      { id: 'evt-1', event_name: 'lead_cta_click', placement: 'hero_primary', timestamp: Date.now() - 86400000, device: 'desktop' },
-      { id: 'evt-2', event_name: 'lead_form_view', stage: 'initial', timestamp: Date.now() - 86400000, device: 'desktop' },
-      { id: 'evt-3', event_name: 'lead_cta_click', placement: 'header', timestamp: Date.now() - 3600000 * 5, device: 'mobile' },
-      { id: 'evt-4', event_name: 'lead_verification_success', stage: 'initial', timestamp: Date.now() - 3600000 * 4, device: 'mobile' }
+      { id: 'evt-1', event_name: 'lead_cta_click', placement: 'hero_primary', timestamp: new Date('2026-10-14T14:21:00+07:00').getTime(), device: 'desktop' },
+      { id: 'evt-2', event_name: 'lead_form_view', stage: 'initial', timestamp: new Date('2026-10-14T14:21:30+07:00').getTime(), device: 'desktop' },
+      { id: 'evt-3', event_name: 'form_submit', stage: 'initial', timestamp: new Date('2026-10-14T14:22:00+07:00').getTime(), device: 'desktop' },
+      { id: 'evt-4', event_name: 'generate_lead', stage: 'initial', timestamp: new Date('2026-10-14T14:23:00+07:00').getTime(), device: 'desktop' },
+      { id: 'evt-5', event_name: 'lead_cta_click', placement: 'header', timestamp: new Date('2026-10-19T10:31:00+07:00').getTime(), device: 'desktop' },
+      { id: 'evt-6', event_name: 'lead_verification_success', stage: 'initial', timestamp: new Date('2026-10-19T10:33:00+07:00').getTime(), device: 'desktop' },
+      { id: 'evt-7', event_name: 'lead_cta_click', placement: 'collection_card', timestamp: new Date('2026-10-27T15:02:00+07:00').getTime(), device: 'desktop' },
+      { id: 'evt-8', event_name: 'lead_cta_click', placement: 'lookbook', timestamp: new Date('2026-11-01T19:31:00+07:00').getTime(), device: 'desktop' }
     ];
     localStorage.setItem(STORAGE_KEYS.EVENTS, JSON.stringify(defaultEvents));
   }
 
-  if (!localStorage.getItem(STORAGE_KEYS.LEADS_DB)) {
+  if (!localStorage.getItem(STORAGE_KEYS.LEADS_DB) || currentVer !== GA4_SCHEMA_VER) {
     const defaultLeads = [
       {
         lead_id: 'UEL-K244060732',
@@ -49,20 +64,27 @@ function initAnalyticsEngine() {
         profile_stage: 'stage_2_enriched',
         profile_status: 'Stage 2: Đã bổ sung sở thích',
         otp_status: 'VERIFIED (Đã xác thực)',
-        email_verified_at: new Date(Date.now() - 3600000 * 48).toISOString(),
+        email_verified_at: '2026-10-14T14:23:00.000Z',
         marketing_email_opt_in: true,
         consent_marketing: 'CÓ (Đồng ý)',
         interests: ['Áo Sơ Mi Sọc UEL', 'Túi Tote Canvas SGS'],
         style_preference: 'Thanh lịch, Đi học / Thuyết trình',
         price_range: '200k_350k',
         first_touch_platform: 'facebook',
+        first_touch_medium: 'paid_social',
         first_touch_placement: 'feed',
         first_touch_creative: 'feed_shirt_a',
         last_touch_platform: 'facebook',
+        last_touch_medium: 'paid_social',
         last_touch_placement: 'feed',
         last_touch_creative: 'feed_shirt_a',
+        session_source_medium: 'facebook / paid_social',
+        session_channel_group: 'Paid Social',
+        landing_page_query: '/?utm_source=facebook&utm_medium=paid_social&utm_campaign=uel_merch_oct26&utm_content=feed_shirt_a',
+        device_category: 'desktop',
+        key_event: 'generate_lead',
         source_method: 'utm_manual',
-        created_at: new Date(Date.now() - 3600000 * 48).toISOString()
+        created_at: '2026-10-14T14:23:00.000Z'
       },
       {
         lead_id: 'UEL-K244111388',
@@ -73,20 +95,27 @@ function initAnalyticsEngine() {
         profile_stage: 'stage_2_enriched',
         profile_status: 'Stage 2: Đã bổ sung sở thích',
         otp_status: 'VERIFIED (Đã xác thực)',
-        email_verified_at: new Date(Date.now() - 3600000 * 42).toISOString(),
+        email_verified_at: '2026-10-16T20:10:00.000Z',
         marketing_email_opt_in: true,
         consent_marketing: 'CÓ (Đồng ý)',
         interests: ['Áo Sơ Mi Sọc Cam', 'Quần Thể Thao Xám Đậm', 'Balo SGS'],
         style_preference: 'Năng động, Streetwear',
         price_range: '200k_350k',
         first_touch_platform: 'facebook',
+        first_touch_medium: 'paid_social',
         first_touch_placement: 'story',
         first_touch_creative: 'story_shirt_a',
         last_touch_platform: 'email',
+        last_touch_medium: 'email',
         last_touch_placement: 'email',
         last_touch_creative: 'voucher_wave1',
+        session_source_medium: 'email / email',
+        session_channel_group: 'Email',
+        landing_page_query: '/?utm_source=email&utm_medium=email&utm_campaign=voucher_wave1&utm_content=voucher_wave1',
+        device_category: 'mobile',
+        key_event: 'generate_lead',
         source_method: 'utm_manual',
-        created_at: new Date(Date.now() - 3600000 * 42).toISOString()
+        created_at: '2026-10-16T20:10:00.000Z'
       },
       {
         lead_id: 'UEL-K244111398',
@@ -97,20 +126,27 @@ function initAnalyticsEngine() {
         profile_stage: 'stage_1_verified',
         profile_status: 'Stage 1: Đã xác thực OTP',
         otp_status: 'VERIFIED (Đã xác thực)',
-        email_verified_at: new Date(Date.now() - 3600000 * 36).toISOString(),
+        email_verified_at: '2026-10-19T10:35:00.000Z',
         marketing_email_opt_in: true,
         consent_marketing: 'CÓ (Đồng ý)',
         interests: ['Quần Thể Thao UEL Đen', 'Túi Đeo Chéo Balo SGS'],
         style_preference: 'Thể thao, Khỏe khoắn',
         price_range: '200k_350k',
         first_touch_platform: 'facebook',
+        first_touch_medium: 'paid_social',
         first_touch_placement: 'reels',
         first_touch_creative: 'reels_shirt_a',
         last_touch_platform: 'google',
+        last_touch_medium: 'organic',
         last_touch_placement: 'organic_search',
         last_touch_creative: 'organic_search',
+        session_source_medium: 'google / organic',
+        session_channel_group: 'Organic Search',
+        landing_page_query: '/',
+        device_category: 'desktop',
+        key_event: 'generate_lead',
         source_method: 'organic_inferred',
-        created_at: new Date(Date.now() - 3600000 * 36).toISOString()
+        created_at: '2026-10-19T10:35:00.000Z'
       },
       {
         lead_id: 'UEL-K244111400',
@@ -121,20 +157,27 @@ function initAnalyticsEngine() {
         profile_stage: 'stage_2_enriched',
         profile_status: 'Stage 2: Đã bổ sung sở thích',
         otp_status: 'VERIFIED (Đã xác thực)',
-        email_verified_at: new Date(Date.now() - 3600000 * 30).toISOString(),
+        email_verified_at: '2026-10-21T16:50:00.000Z',
         marketing_email_opt_in: true,
         consent_marketing: 'CÓ (Đồng ý)',
         interests: ['Bộ Sưu Tập Campus Collab SGS', 'Balo Basic SGS'],
         style_preference: 'Tối giản, Basic',
         price_range: '200k_350k',
         first_touch_platform: 'tiktok',
+        first_touch_medium: 'organic_social',
         first_touch_placement: 'profile',
         first_touch_creative: 'profile_uel_a',
         last_touch_platform: 'direct',
+        last_touch_medium: 'none',
         last_touch_placement: 'direct',
         last_touch_creative: 'none',
+        session_source_medium: '(direct) / (none)',
+        session_channel_group: 'Direct',
+        landing_page_query: '/',
+        device_category: 'desktop',
+        key_event: 'generate_lead',
         source_method: 'direct',
-        created_at: new Date(Date.now() - 3600000 * 30).toISOString()
+        created_at: '2026-10-21T16:50:00.000Z'
       },
       {
         lead_id: 'UEL-K244111403',
@@ -145,20 +188,27 @@ function initAnalyticsEngine() {
         profile_stage: 'stage_2_enriched',
         profile_status: 'Stage 2: Đã bổ sung sở thích',
         otp_status: 'VERIFIED (Đã xác thực)',
-        email_verified_at: new Date(Date.now() - 3600000 * 24).toISOString(),
+        email_verified_at: '2026-10-24T11:15:00.000Z',
         marketing_email_opt_in: true,
         consent_marketing: 'CÓ (Đồng ý)',
         interests: ['Áo Sơ Mi Sọc Xanh Lá', 'Balo Basic SGS', 'Ví Phụ Kiện'],
         style_preference: 'Thanh lịch, Campus Chic',
         price_range: 'trên 350k',
         first_touch_platform: 'facebook',
+        first_touch_medium: 'organic_social',
         first_touch_placement: 'post',
         first_touch_creative: 'post_campus_a',
         last_touch_platform: 'facebook',
+        last_touch_medium: 'organic_social',
         last_touch_placement: 'post',
         last_touch_creative: 'post_campus_a',
+        session_source_medium: 'facebook / organic_social',
+        session_channel_group: 'Organic Social',
+        landing_page_query: '/?utm_source=facebook&utm_medium=organic_social&utm_campaign=uel_merch_oct26&utm_content=post_campus_a',
+        device_category: 'desktop',
+        key_event: 'generate_lead',
         source_method: 'utm_manual',
-        created_at: new Date(Date.now() - 3600000 * 24).toISOString()
+        created_at: '2026-10-24T11:15:00.000Z'
       },
       {
         lead_id: 'UEL-K244111409',
@@ -169,20 +219,27 @@ function initAnalyticsEngine() {
         profile_stage: 'stage_2_enriched',
         profile_status: 'Stage 2: Đã bổ sung sở thích',
         otp_status: 'VERIFIED (Đã xác thực)',
-        email_verified_at: new Date(Date.now() - 3600000 * 18).toISOString(),
+        email_verified_at: '2026-10-27T15:05:00.000Z',
         marketing_email_opt_in: true,
         consent_marketing: 'CÓ (Đồng ý)',
         interests: ['Áo Sơ Mi Sọc UEL 4 Màu', 'Quần Thể Thao Đen / Xám'],
         style_preference: 'Thanh lịch, Đi học / Thuyết trình',
         price_range: '200k_350k',
         first_touch_platform: 'google',
+        first_touch_medium: 'organic',
         first_touch_placement: 'organic_search',
         first_touch_creative: 'organic_search',
         last_touch_platform: 'google',
+        last_touch_medium: 'organic',
         last_touch_placement: 'organic_search',
         last_touch_creative: 'organic_search',
+        session_source_medium: 'google / organic',
+        session_channel_group: 'Organic Search',
+        landing_page_query: '/',
+        device_category: 'desktop',
+        key_event: 'generate_lead',
         source_method: 'organic_inferred',
-        created_at: new Date(Date.now() - 3600000 * 18).toISOString()
+        created_at: '2026-10-27T15:05:00.000Z'
       },
       {
         lead_id: 'UEL-K244111421',
@@ -193,20 +250,27 @@ function initAnalyticsEngine() {
         profile_stage: 'stage_2_enriched',
         profile_status: 'Stage 2: Đã bổ sung sở thích',
         otp_status: 'VERIFIED (Đã xác thực)',
-        email_verified_at: new Date(Date.now() - 3600000 * 12).toISOString(),
+        email_verified_at: '2026-11-01T19:35:00.000Z',
         marketing_email_opt_in: true,
         consent_marketing: 'CÓ (Đồng ý)',
         interests: ['Áo Sơ Mi Sọc Đỏ Hồng', 'Túi Tote Canvas Mini SGS'],
         style_preference: 'Năng động, Streetwear',
         price_range: '200k_350k',
         first_touch_platform: 'facebook',
+        first_touch_medium: 'paid_social',
         first_touch_placement: 'unknown',
         first_touch_creative: 'multi_placement_auto',
         last_touch_platform: 'facebook',
+        last_touch_medium: 'paid_social',
         last_touch_placement: 'feed',
         last_touch_creative: 'feed_shirt_a',
+        session_source_medium: 'facebook / paid_social',
+        session_channel_group: 'Paid Social',
+        landing_page_query: '/?utm_source=facebook&utm_medium=paid_social&utm_campaign=uel_merch_oct26&utm_content=feed_shirt_a',
+        device_category: 'desktop',
+        key_event: 'generate_lead',
         source_method: 'utm_manual',
-        created_at: new Date(Date.now() - 3600000 * 12).toISOString()
+        created_at: '2026-11-01T19:35:00.000Z'
       },
       {
         lead_id: 'UEL-K244111454',
@@ -217,20 +281,27 @@ function initAnalyticsEngine() {
         profile_stage: 'stage_2_enriched',
         profile_status: 'Stage 2: Đã bổ sung sở thích',
         otp_status: 'VERIFIED (Đã xác thực)',
-        email_verified_at: new Date(Date.now() - 3600000 * 6).toISOString(),
+        email_verified_at: '2026-11-03T13:30:00.000Z',
         marketing_email_opt_in: true,
         consent_marketing: 'CÓ (Đồng ý)',
         interests: ['Quần Thể Thao 4 Màu', 'Balo Basic SGS'],
         style_preference: 'Thể thao, Khỏe khoắn',
         price_range: '200k_350k',
         first_touch_platform: 'tiktok',
+        first_touch_medium: 'organic_social',
         first_touch_placement: 'profile',
         first_touch_creative: 'profile_uel_a',
         last_touch_platform: 'tiktok',
+        last_touch_medium: 'organic_social',
         last_touch_placement: 'profile',
         last_touch_creative: 'profile_uel_a',
+        session_source_medium: 'tiktok / organic_social',
+        session_channel_group: 'Organic Social',
+        landing_page_query: '/?utm_source=tiktok&utm_medium=organic_social&utm_campaign=campus_chic_2026&utm_content=profile_uel_a',
+        device_category: 'mobile',
+        key_event: 'generate_lead',
         source_method: 'utm_manual',
-        created_at: new Date(Date.now() - 3600000 * 6).toISOString()
+        created_at: '2026-11-03T13:30:00.000Z'
       },
       {
         lead_id: 'UEL-K244111478',
@@ -241,23 +312,31 @@ function initAnalyticsEngine() {
         profile_stage: 'stage_2_enriched',
         profile_status: 'Stage 2: Đã bổ sung sở thích',
         otp_status: 'VERIFIED (Đã xác thực)',
-        email_verified_at: new Date().toISOString(),
+        email_verified_at: '2026-11-05T10:20:00.000Z',
         marketing_email_opt_in: true,
         consent_marketing: 'CÓ (Đồng ý)',
         interests: ['Áo Sơ Mi Sọc UEL', 'Ví Phụ Kiện SGS', 'Balo Basic'],
         style_preference: 'Thanh lịch, Đi học / Thuyết trình',
         price_range: 'trên 350k',
         first_touch_platform: 'email',
+        first_touch_medium: 'email',
         first_touch_placement: 'email',
         first_touch_creative: 'voucher_wave1',
         last_touch_platform: 'email',
+        last_touch_medium: 'email',
         last_touch_placement: 'email',
         last_touch_creative: 'voucher_wave1',
+        session_source_medium: 'email / email',
+        session_channel_group: 'Email',
+        landing_page_query: '/?utm_source=email&utm_medium=email&utm_campaign=voucher_wave1&utm_content=voucher_wave1',
+        device_category: 'desktop',
+        key_event: 'generate_lead',
         source_method: 'utm_manual',
-        created_at: new Date().toISOString()
+        created_at: '2026-11-05T10:20:00.000Z'
       }
     ];
     localStorage.setItem(STORAGE_KEYS.LEADS_DB, JSON.stringify(defaultLeads));
+    localStorage.setItem('uel_ga4_schema_version', GA4_SCHEMA_VER);
   }
 
   // Ghi nhận touchpoint & attribution (First-touch / Last-touch)
@@ -315,6 +394,15 @@ function trackLeadEvent(eventName, properties = {}) {
       Object.keys(ga4CleanParams).forEach(k => ga4CleanParams[k] === undefined && delete ga4CleanParams[k]);
       window.gtag('event', eventName, ga4CleanParams);
       console.log(`[GA4 Synced]: Event "${eventName}" đã đẩy lên Google Analytics 4`, ga4CleanParams);
+
+      // Đồng bộ thêm các GA4 Standard Key Events (form_submit & generate_lead) cho cột Key events trong GA4 Explore
+      if (eventName === 'lead_form_submit_attempt') {
+        window.gtag('event', 'form_submit', ga4CleanParams);
+        console.log('[GA4 Key Event]: Đã kích hoạt sự kiện chuẩn "form_submit"');
+      } else if (eventName === 'lead_verification_success') {
+        window.gtag('event', 'generate_lead', { ...ga4CleanParams, value: 1, currency: 'VND' });
+        console.log('[GA4 Key Event]: Đã kích hoạt sự kiện chuẩn "generate_lead"');
+      }
     }
   } catch (e) {
     console.error('Error tracking event', e);
@@ -520,6 +608,27 @@ async function syncLeadToExcel(leadData) {
   // Xác định nhóm đối tượng khách hàng (Mở rộng ngoài sinh viên)
   const customerSegment = translateRelationToVietnamese(leadData.relation_to_uel || leadData.customer_segment);
 
+  const fPlatform = leadData.first_touch_platform || firstTouch.platform || 'facebook';
+  const fMedium = leadData.first_touch_medium || firstTouch.medium || 'paid_social';
+  const fPlacement = leadData.first_touch_placement || firstTouch.placement || 'feed';
+  const fCampaign = leadData.first_touch_campaign || firstTouch.campaign || 'uel_merch_oct26';
+  const fCreative = leadData.first_touch_creative || firstTouch.creative || 'feed_shirt_a';
+
+  const lPlatform = leadData.last_touch_platform || lastTouch.platform || 'google';
+  const lMedium = leadData.last_touch_medium || lastTouch.medium || 'organic';
+  const lPlacement = leadData.last_touch_placement || lastTouch.placement || 'organic_search';
+  const lCampaign = leadData.last_touch_campaign || lastTouch.campaign || 'none';
+  const lCreative = leadData.last_touch_creative || lastTouch.creative || 'organic_search';
+
+  const sessionSourceMedium = leadData.session_source_medium || (lPlatform === 'direct' ? '(direct) / (none)' : `${lPlatform} / ${lMedium}`);
+  const sessionChannelGroup = leadData.session_channel_group || (
+    lMedium === 'organic' ? 'Organic Search' :
+    lMedium === 'paid_social' ? 'Paid Social' :
+    lMedium === 'organic_social' ? 'Organic Social' :
+    lMedium === 'email' ? 'Email' : 'Direct'
+  );
+  const landingPageQuery = leadData.landing_page_query || (window.location.pathname + (window.location.search || ''));
+
   const payload = {
     lead_id: leadData.lead_id || ('lead-uel-' + Math.random().toString(36).substr(2, 8)),
     display_name: leadData.display_name || '',
@@ -540,26 +649,31 @@ async function syncLeadToExcel(leadData) {
     style_preference: translateStyleToVietnamese(leadData.style_preference),
     price_range: leadData.price_range || 'Chưa chọn',
     
-    // Attribution đa chạm (First-Touch & Last-Touch - Table 2 & Section 3.5)
-    first_touch_platform: firstTouch.platform,
-    first_touch_medium: firstTouch.medium,
-    first_touch_placement: firstTouch.placement,
-    first_touch_campaign: firstTouch.campaign,
-    first_touch_creative: firstTouch.creative,
-    last_touch_platform: lastTouch.platform,
-    last_touch_medium: lastTouch.medium,
-    last_touch_placement: lastTouch.placement,
-    last_touch_campaign: lastTouch.campaign,
-    last_touch_creative: lastTouch.creative,
-    source_method: lastTouch.source_method,
-    source_confidence: lastTouch.source_confidence,
-    source_placement: `[1st] ${firstTouch.platform}/${firstTouch.placement} (${firstTouch.creative}) -> [Last] ${lastTouch.platform}/${lastTouch.placement} (${lastTouch.creative})`,
-    anonymous_session_id: lastTouch.anonymous_session_id,
-    session_id: lastTouch.anonymous_session_id,
+    // Attribution đa chạm (First-Touch & Last-Touch - Table 2 & Section 3.5) + GA4 Explore Dimensions
+    first_touch_platform: fPlatform,
+    first_touch_medium: fMedium,
+    first_touch_placement: fPlacement,
+    first_touch_campaign: fCampaign,
+    first_touch_creative: fCreative,
+    last_touch_platform: lPlatform,
+    last_touch_medium: lMedium,
+    last_touch_placement: lPlacement,
+    last_touch_campaign: lCampaign,
+    last_touch_creative: lCreative,
+    session_source_medium: sessionSourceMedium,
+    session_channel_group: sessionChannelGroup,
+    landing_page_query: landingPageQuery,
+    device_category: leadData.device_category || (window.innerWidth <= 768 ? 'mobile' : 'desktop'),
+    key_event: leadData.key_event || (leadData.email_verified_at ? 'generate_lead' : 'form_submit'),
+    source_method: leadData.source_method || lastTouch.source_method,
+    source_confidence: leadData.source_confidence || lastTouch.source_confidence,
+    source_placement: `[1st] ${fPlatform}/${fPlacement} (${fCreative}) -> [Last] ${lPlatform}/${lPlacement} (${lCreative})`,
+    anonymous_session_id: leadData.session_id || lastTouch.anonymous_session_id,
+    session_id: leadData.session_id || lastTouch.anonymous_session_id,
     created_at: leadData.created_at || new Date().toISOString(),
     updated_at: leadData.updated_at || new Date().toISOString(),
-    submitted_at: new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }),
-    submitted_at_vn: new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
+    submitted_at: leadData.submitted_at || new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }),
+    submitted_at_vn: leadData.submitted_at || new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
   };
 
   console.log('[Excel Database Engine]: Đang đẩy lead và dữ liệu Attribution vào Google Sheet...', payload);

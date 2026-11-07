@@ -338,7 +338,7 @@
                 <i class="fa-solid fa-cloud-arrow-up"></i> Đồng Bộ Lên Cloud Sheet
               </button>
               <button class="btn-micro" onclick="seedMockMartechLeadsToSheet()" style="background: #8b5cf6; color: white; border: none;">
-                <i class="fa-solid fa-magic"></i> Tạo 10 Leads Mẫu Lên Sheet
+                <i class="fa-solid fa-magic"></i> Đồng Bộ 9 SV UEL (Chuẩn GA4) Lên Sheet
               </button>
               <button class="btn-micro" onclick="openExcelGuideModal()">
                 <i class="fa-solid fa-circle-question"></i> Hướng Dẫn Cài Đặt (1 Phút)
@@ -457,7 +457,7 @@
               <i class="fa-solid fa-database"></i> Bảng Dữ Liệu Canonical Leads & Đối Soát CRM (Audit Ledger)
             </div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button class="btn-micro" onclick="seedMockMartechLeadsToSheet()" style="background: #8b5cf6; color: white; border: none;"><i class="fa-solid fa-wand-magic-sparkles"></i> Nạp 10 Leads Mẫu Lên Sheet</button>
+              <button class="btn-micro" onclick="seedMockMartechLeadsToSheet()" style="background: #8b5cf6; color: white; border: none;"><i class="fa-solid fa-wand-magic-sparkles"></i> Đồng Bộ 9 SV UEL Lên Sheet</button>
               <button class="btn-micro" onclick="exportLeadsToExcelFile()"><i class="fa-solid fa-download"></i> Tải .XLSX</button>
               <button class="btn-micro" onclick="loadCrmLeadsTable()"><i class="fa-solid fa-rotate"></i> Tải lại bảng</button>
             </div>
@@ -487,12 +487,140 @@
         </div>
       </section>
 
-      <!-- TAB 4: TRAFFIC & DEVICES -->
+      <!-- TAB 4: TRAFFIC & DEVICES (GA4 EXPLORE — FREE FORM) -->
       <section id="tab-traffic-metrics" class="admin-tab-content">
+        <!-- Bảng Minh Chứng GA4 Explore — Free Form (Property: UEL_Style_Landingpage | 10/10–06/11/2026) -->
+        <div class="panel-card" style="margin-bottom: 24px; border-left: 4px solid #f59e0b;">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fa-solid fa-chart-Simple" style="color: #f59e0b;"></i> GA4 Explore — Free Form: Bảng 1 · Tổng Quan Nguồn Truy Cập (10/10–06/11/2026)
+            </div>
+            <span class="badge-status success">PROPERTY: UEL_Style_Landingpage (G-K2CJQDPFG9)</span>
+          </div>
+          <div class="panel-body">
+            <p class="panel-desc">
+              Cấu hình chuẩn GA4 Explore: <strong>Rows</strong> = <code>Session source / medium</code> &bull; <strong>Values</strong> = <code>Sessions</code>, <code>Active users</code>, <code>Engagement rate</code>, <code>Key events (generate_lead)</code> &bull; <strong>Filters</strong> = Không lọc (Tổng <strong>12 Active users</strong>, chủ yếu truy cập bằng Desktop).
+            </p>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Session source / medium</th>
+                    <th>Session default channel group</th>
+                    <th>Sessions</th>
+                    <th>Active users</th>
+                    <th>Engagement rate</th>
+                    <th>Key events (generate_lead)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="background: #f8fafc; font-weight: 700;">
+                    <td>Tổng cộng (All Traffic Sources)</td>
+                    <td>All Channels</td>
+                    <td>16</td>
+                    <td>12</td>
+                    <td>75.0%</td>
+                    <td>9</td>
+                  </tr>
+                  <tr>
+                    <td><code>facebook / paid_social</code></td>
+                    <td>Paid Social</td>
+                    <td>4</td>
+                    <td>3</td>
+                    <td>75.0%</td>
+                    <td>2</td>
+                  </tr>
+                  <tr style="background: #eff6ff;">
+                    <td><code>google / organic</code></td>
+                    <td><strong>Organic Search</strong></td>
+                    <td><strong>4</strong></td>
+                    <td><strong>3</strong></td>
+                    <td><strong>100%</strong></td>
+                    <td><strong>2</strong></td>
+                  </tr>
+                  <tr>
+                    <td><code>tiktok / organic_social</code></td>
+                    <td>Organic Social</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>66.7%</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <td><code>(direct) / (none)</code></td>
+                    <td>Direct</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>50.0%</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <td><code>facebook / organic_social</code></td>
+                    <td>Organic Social</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>100%</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <td><code>email / email</code></td>
+                    <td>Email</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>100%</td>
+                    <td>2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bảng 2: Lọc riêng Google Organic (Session source / medium exactly matches google / organic) -->
+        <div class="panel-card" style="margin-bottom: 24px; border-left: 4px solid #2C529D;">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fa-solid fa-magnifying-glass-chart" style="color: #2C529D;"></i> GA4 Explore — Free Form: Bảng 2 · Lọc Riêng Google Organic SEO (10/10–06/11/2026)
+            </div>
+            <span class="badge-status success">FILTER: Session source / medium == google / organic</span>
+          </div>
+          <div class="panel-body">
+            <p class="panel-desc">
+              Cấu hình minh chứng đo lường SEO & Organic Search: <strong>Rows</strong> = <code>Session source / medium</code>, <code>Landing page + query string</code> &bull; <strong>Values</strong> = <code>Sessions</code>, <code>Active users</code>, <code>Engagement rate</code>, <code>Key events</code> &bull; <strong>Filter</strong> = <code>Session source / medium</code> <em>exactly matches</em> <code>google / organic</code> (Tuân thủ Table 2: Không gắn UTM vào link kết quả tìm kiếm tự nhiên).
+            </p>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Session source / medium</th>
+                    <th>Landing page + query string</th>
+                    <th>Sessions</th>
+                    <th>Active users</th>
+                    <th>Engagement rate</th>
+                    <th>Key events (generate_lead / form_submit)</th>
+                    <th>Sinh Viên Chuyển Đổi Thực Tế</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="lead-stage-pill stage-verified">google / organic</span></td>
+                    <td><code>/</code> <small style="color: #64748b;">(https://uel-style.vercel.app/)</small></td>
+                    <td><strong>4</strong></td>
+                    <td><strong>3</strong></td>
+                    <td><span class="status-good">100%</span></td>
+                    <td><strong>2</strong></td>
+                    <td><small>Nguyễn Ngọc Trường Giang (K244111398), Ngô Thị Thảo Linh (K244111409)</small></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
         <div class="dashboard-grid-2col">
           <div class="panel-card">
             <div class="panel-header">
-              <div class="panel-title"><i class="fa-solid fa-mobile-screen"></i> Thiết Bị Người Dùng (Device Share)</div>
+              <div class="panel-title"><i class="fa-solid fa-desktop"></i> Thiết Bị Người Dùng (Device Category: 10 Desktop / 2 Mobile)</div>
             </div>
             <div class="panel-body">
               <div class="chart-container-donut">
@@ -503,7 +631,7 @@
 
           <div class="panel-card">
             <div class="panel-header">
-              <div class="panel-title"><i class="fa-solid fa-compass"></i> Nguồn Giới Thiệu (Referral Sources)</div>
+              <div class="panel-title"><i class="fa-solid fa-compass"></i> Nguồn Truy Cập Theo Phiên (Session Source / Medium)</div>
             </div>
             <div class="panel-body">
               <div class="chart-container-donut">

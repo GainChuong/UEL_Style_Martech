@@ -507,45 +507,55 @@ function translateRelation(rel) {
 }
 
 /* ==========================================================================
-   4. Traffic & Devices Share Charts
+   4. Traffic & Devices Share Charts (Chuẩn GA4: 12 Active Users, 10 Desktop / 2 Mobile)
    ========================================================================== */
 function renderTrafficCharts() {
   const pageViews = JSON.parse(localStorage.getItem(STORAGE_KEYS.PAGE_VIEWS) || '[]');
 
   let mobileCount = 0;
   let desktopCount = 0;
-  const referrers = { 'Google': 0, 'Facebook': 0, 'TikTok': 0, 'Instagram': 0, 'Trực tiếp (Direct)': 0 };
+  const referrers = {
+    'google / organic': 0,
+    'facebook / paid_social': 0,
+    'tiktok / organic_social': 0,
+    'facebook / organic_social': 0,
+    'email / email': 0,
+    '(direct) / (none)': 0
+  };
 
   pageViews.forEach(v => {
     if (v.device === 'mobile') mobileCount++;
     else desktopCount++;
 
+    const srcMed = (v.session_source_medium || '').toLowerCase();
     const ref = (v.referrer || '').toLowerCase();
-    if (ref.includes('google')) referrers['Google']++;
-    else if (ref.includes('facebook')) referrers['Facebook']++;
-    else if (ref.includes('tiktok')) referrers['TikTok']++;
-    else if (ref.includes('instagram')) referrers['Instagram']++;
-    else referrers['Trực tiếp (Direct)']++;
+
+    if (srcMed === 'google / organic' || ref.includes('google')) referrers['google / organic']++;
+    else if (srcMed === 'facebook / paid_social') referrers['facebook / paid_social']++;
+    else if (srcMed === 'facebook / organic_social' || ref.includes('facebook')) referrers['facebook / organic_social']++;
+    else if (srcMed.includes('tiktok') || ref.includes('tiktok')) referrers['tiktok / organic_social']++;
+    else if (srcMed.includes('email') || ref.includes('mail')) referrers['email / email']++;
+    else referrers['(direct) / (none)']++;
   });
 
-  // Device Share Chart
+  // Device Share Chart (Chủ yếu Desktop: 10 Desktop, 2 Mobile theo đúng GA4)
   const ctxDevice = document.getElementById('chart-device-share');
   if (ctxDevice) {
     if (deviceChart) deviceChart.destroy();
     deviceChart = new Chart(ctxDevice, {
       type: 'doughnut',
       data: {
-        labels: ['Mobile (Điện thoại)', 'Desktop (Máy tính)'],
+        labels: ['Desktop (Máy tính - 83.3%)', 'Mobile (Điện thoại - 16.7%)'],
         datasets: [{
-          data: [mobileCount || 6, desktopCount || 4],
-          backgroundColor: ['#F0B746', '#2C529D']
+          data: [desktopCount || 10, mobileCount || 2],
+          backgroundColor: ['#2C529D', '#F0B746']
         }]
       },
       options: { responsive: true, maintainAspectRatio: false }
     });
   }
 
-  // Referrers Chart
+  // Session Source / Medium Chart
   const ctxRef = document.getElementById('chart-referrers');
   if (ctxRef) {
     if (referrerChart) referrerChart.destroy();
@@ -554,8 +564,15 @@ function renderTrafficCharts() {
       data: {
         labels: Object.keys(referrers),
         datasets: [{
-          data: Object.values(referrers).map(v => v || 2),
-          backgroundColor: ['#3b82f6', '#1877f2', '#111827', '#ec4899', '#64748b']
+          data: [
+            referrers['google / organic'] || 3,
+            referrers['facebook / paid_social'] || 3,
+            referrers['tiktok / organic_social'] || 2,
+            referrers['facebook / organic_social'] || 1,
+            referrers['email / email'] || 1,
+            referrers['(direct) / (none)'] || 2
+          ],
+          backgroundColor: ['#10b981', '#1877f2', '#111827', '#3b82f6', '#f59e0b', '#64748b']
         }]
       },
       options: { responsive: true, maintainAspectRatio: false }
@@ -696,6 +713,11 @@ window.exportLeadsToExcelFile = function() {
     "Họ và Tên": lead.display_name || '',
     "Email Khách Hàng": lead.normalized_email || lead.email || '',
     "Nhóm Đối Tượng (Segment)": translateRelation(lead.customer_segment || lead.relation_to_uel),
+    "Session source / medium (GA4)": lead.session_source_medium || `${lead.last_touch_platform || 'google'} / ${lead.last_touch_medium || 'organic'}`,
+    "Session default channel group (GA4)": lead.session_channel_group || 'Organic Search',
+    "Landing page + query string (GA4)": lead.landing_page_query || '/',
+    "Key event (GA4)": lead.key_event || 'generate_lead',
+    "Device category (GA4)": lead.device_category || 'desktop',
     "Giai Đoạn Hồ Sơ (profile_status)": lead.profile_status || (lead.profile_stage === 'stage_2_enriched' ? 'Stage 2: Đã bổ sung sở thích' : 'Stage 1: Đã xác thực OTP'),
     "Xác Thực OTP (otp_status)": lead.otp_status || (lead.email_verified_at ? 'VERIFIED (Đã xác thực)' : 'PENDING (Chờ xác thực)'),
     "Đồng Ý Marketing": lead.consent_marketing || (lead.marketing_email_opt_in ? 'CÓ (Đồng ý)' : 'KHÔNG (Từ chối)'),
@@ -713,34 +735,39 @@ window.exportLeadsToExcelFile = function() {
     "Phương Thức Nguồn (source_method)": lead.source_method || 'utm_manual',
     "Độ Tin Cậy Nguồn": lead.source_confidence || 'high',
     "Session ID": lead.session_id || lead.anonymous_session_id || 'sess_demo',
-    "Thời Gian Đăng Ký": lead.submitted_at || (lead.created_at ? new Date(lead.created_at).toLocaleString('vi-VN') : '')
+    "Thời Gian Đăng Ký (10/10-06/11/2026)": lead.submitted_at || (lead.created_at ? new Date(lead.created_at).toLocaleString('vi-VN') : '')
   }));
 
   const worksheet = XLSX.utils.json_to_sheet(excelRows);
 
   worksheet['!cols'] = [
     { wch: 6 },  // STT
-    { wch: 22 }, // Mã Lead
+    { wch: 20 }, // Mã Lead
     { wch: 24 }, // Họ và Tên
-    { wch: 30 }, // Email
+    { wch: 28 }, // Email
     { wch: 32 }, // Đối Tượng
+    { wch: 26 }, // Session source / medium
+    { wch: 24 }, // Channel group
+    { wch: 45 }, // Landing page + query string
+    { wch: 18 }, // Key event
+    { wch: 16 }, // Device
     { wch: 28 }, // Giai Đoạn Hồ Sơ
     { wch: 22 }, // Xác Thực OTP
     { wch: 18 }, // Đồng Ý Marketing
     { wch: 32 }, // Sở Thích
     { wch: 24 }, // Gu Phong Cách
     { wch: 18 }, // Mức Chi Tiêu
-    { wch: 20 }, // First Platform
-    { wch: 20 }, // First Medium
-    { wch: 20 }, // First Placement
-    { wch: 25 }, // First Creative
-    { wch: 20 }, // Last Platform
-    { wch: 20 }, // Last Medium
-    { wch: 20 }, // Last Placement
-    { wch: 25 }, // Last Creative
-    { wch: 22 }, // Source Method
-    { wch: 18 }, // Confidence
-    { wch: 20 }, // Session ID
+    { wch: 18 }, // First Platform
+    { wch: 18 }, // First Medium
+    { wch: 18 }, // First Placement
+    { wch: 24 }, // First Creative
+    { wch: 18 }, // Last Platform
+    { wch: 18 }, // Last Medium
+    { wch: 18 }, // Last Placement
+    { wch: 24 }, // Last Creative
+    { wch: 20 }, // Source Method
+    { wch: 16 }, // Confidence
+    { wch: 18 }, // Session ID
     { wch: 24 }  // Thời Gian
   ];
 
@@ -754,7 +781,7 @@ window.exportLeadsToExcelFile = function() {
   showAdminToast(`Đã xuất thành công file Excel: ${fileName}!`);
 };
 
-// Hàm sinh 9 Leads Sinh Viên Thật UEL chuẩn MarTech đẩy thẳng lên Sheet
+// Hàm sinh 9 Leads Sinh Viên Thật UEL chuẩn MarTech & GA4 (10/10–06/11/2026) đẩy thẳng lên Sheet
 window.seedMockMartechLeadsToSheet = async function() {
   const mockLeads = [
     {
@@ -767,7 +794,7 @@ window.seedMockMartechLeadsToSheet = async function() {
       profile_stage: 'stage_2_enriched',
       profile_status: 'Stage 2: Đã bổ sung sở thích',
       otp_status: 'VERIFIED (Đã xác thực)',
-      email_verified_at: new Date(Date.now() - 3600000 * 48).toISOString(),
+      email_verified_at: '2026-10-14T14:23:00.000Z',
       consent_marketing: 'CÓ (Đồng ý nhận tin)',
       marketing_email_opt_in: true,
       interests: 'Áo Sơ Mi Sọc UEL (Xanh dương), Túi Tote Canvas SGS',
@@ -783,11 +810,16 @@ window.seedMockMartechLeadsToSheet = async function() {
       last_touch_placement: 'feed',
       last_touch_campaign: 'uel_merch_oct26',
       last_touch_creative: 'feed_shirt_a',
+      session_source_medium: 'facebook / paid_social',
+      session_channel_group: 'Paid Social',
+      landing_page_query: '/?utm_source=facebook&utm_medium=paid_social&utm_campaign=uel_merch_oct26&utm_content=feed_shirt_a',
+      device_category: 'desktop',
+      key_event: 'generate_lead',
       source_method: 'utm_manual',
       source_confidence: 'high',
       session_id: 'sess_k244060732',
-      created_at: new Date(Date.now() - 3600000 * 48).toISOString(),
-      submitted_at: new Date(Date.now() - 3600000 * 48).toLocaleString('vi-VN')
+      created_at: '2026-10-14T14:23:00.000Z',
+      submitted_at: '14:23:00 14/10/2026'
     },
     {
       lead_id: 'UEL-K244111388',
@@ -799,7 +831,7 @@ window.seedMockMartechLeadsToSheet = async function() {
       profile_stage: 'stage_2_enriched',
       profile_status: 'Stage 2: Đã bổ sung sở thích',
       otp_status: 'VERIFIED (Đã xác thực)',
-      email_verified_at: new Date(Date.now() - 3600000 * 42).toISOString(),
+      email_verified_at: '2026-10-16T20:10:00.000Z',
       consent_marketing: 'CÓ (Đồng ý nhận tin)',
       marketing_email_opt_in: true,
       interests: 'Áo Sơ Mi Sọc Cam, Quần Thể Thao Xám Đậm, Balo SGS',
@@ -815,11 +847,16 @@ window.seedMockMartechLeadsToSheet = async function() {
       last_touch_placement: 'email',
       last_touch_campaign: 'voucher_wave1',
       last_touch_creative: 'voucher_wave1',
+      session_source_medium: 'email / email',
+      session_channel_group: 'Email',
+      landing_page_query: '/?utm_source=email&utm_medium=email&utm_campaign=voucher_wave1&utm_content=voucher_wave1',
+      device_category: 'mobile',
+      key_event: 'generate_lead',
       source_method: 'utm_manual',
       source_confidence: 'high',
       session_id: 'sess_k244111388',
-      created_at: new Date(Date.now() - 3600000 * 42).toISOString(),
-      submitted_at: new Date(Date.now() - 3600000 * 42).toLocaleString('vi-VN')
+      created_at: '2026-10-16T20:10:00.000Z',
+      submitted_at: '20:10:00 16/10/2026'
     },
     {
       lead_id: 'UEL-K244111398',
@@ -831,7 +868,7 @@ window.seedMockMartechLeadsToSheet = async function() {
       profile_stage: 'stage_1_verified',
       profile_status: 'Stage 1: Đã xác thực OTP',
       otp_status: 'VERIFIED (Đã xác thực)',
-      email_verified_at: new Date(Date.now() - 3600000 * 36).toISOString(),
+      email_verified_at: '2026-10-19T10:35:00.000Z',
       consent_marketing: 'CÓ (Đồng ý nhận tin)',
       marketing_email_opt_in: true,
       interests: 'Quần Thể Thao UEL Đen, Túi Đeo Chéo Balo SGS',
@@ -847,11 +884,16 @@ window.seedMockMartechLeadsToSheet = async function() {
       last_touch_placement: 'organic_search',
       last_touch_campaign: 'none',
       last_touch_creative: 'organic_search',
+      session_source_medium: 'google / organic',
+      session_channel_group: 'Organic Search',
+      landing_page_query: '/',
+      device_category: 'desktop',
+      key_event: 'generate_lead',
       source_method: 'organic_inferred',
       source_confidence: 'high',
       session_id: 'sess_k244111398',
-      created_at: new Date(Date.now() - 3600000 * 36).toISOString(),
-      submitted_at: new Date(Date.now() - 3600000 * 36).toLocaleString('vi-VN')
+      created_at: '2026-10-19T10:35:00.000Z',
+      submitted_at: '10:35:00 19/10/2026'
     },
     {
       lead_id: 'UEL-K244111400',
@@ -863,7 +905,7 @@ window.seedMockMartechLeadsToSheet = async function() {
       profile_stage: 'stage_2_enriched',
       profile_status: 'Stage 2: Đã bổ sung sở thích',
       otp_status: 'VERIFIED (Đã xác thực)',
-      email_verified_at: new Date(Date.now() - 3600000 * 30).toISOString(),
+      email_verified_at: '2026-10-21T16:50:00.000Z',
       consent_marketing: 'CÓ (Đồng ý nhận tin)',
       marketing_email_opt_in: true,
       interests: 'Bộ Sưu Tập Campus Collab SGS, Balo Basic SGS',
@@ -879,11 +921,16 @@ window.seedMockMartechLeadsToSheet = async function() {
       last_touch_placement: 'direct',
       last_touch_campaign: 'none',
       last_touch_creative: 'none',
+      session_source_medium: '(direct) / (none)',
+      session_channel_group: 'Direct',
+      landing_page_query: '/',
+      device_category: 'desktop',
+      key_event: 'generate_lead',
       source_method: 'direct',
       source_confidence: 'low',
       session_id: 'sess_k244111400',
-      created_at: new Date(Date.now() - 3600000 * 30).toISOString(),
-      submitted_at: new Date(Date.now() - 3600000 * 30).toLocaleString('vi-VN')
+      created_at: '2026-10-21T16:50:00.000Z',
+      submitted_at: '16:50:00 21/10/2026'
     },
     {
       lead_id: 'UEL-K244111403',
@@ -895,7 +942,7 @@ window.seedMockMartechLeadsToSheet = async function() {
       profile_stage: 'stage_2_enriched',
       profile_status: 'Stage 2: Đã bổ sung sở thích',
       otp_status: 'VERIFIED (Đã xác thực)',
-      email_verified_at: new Date(Date.now() - 3600000 * 24).toISOString(),
+      email_verified_at: '2026-10-24T11:15:00.000Z',
       consent_marketing: 'CÓ (Đồng ý nhận tin)',
       marketing_email_opt_in: true,
       interests: 'Áo Sơ Mi Sọc Xanh Lá, Balo Basic SGS, Ví Phụ Kiện',
@@ -911,11 +958,16 @@ window.seedMockMartechLeadsToSheet = async function() {
       last_touch_placement: 'post',
       last_touch_campaign: 'uel_merch_oct26',
       last_touch_creative: 'post_campus_a',
+      session_source_medium: 'facebook / organic_social',
+      session_channel_group: 'Organic Social',
+      landing_page_query: '/?utm_source=facebook&utm_medium=organic_social&utm_campaign=uel_merch_oct26&utm_content=post_campus_a',
+      device_category: 'desktop',
+      key_event: 'generate_lead',
       source_method: 'utm_manual',
       source_confidence: 'high',
       session_id: 'sess_k244111403',
-      created_at: new Date(Date.now() - 3600000 * 24).toISOString(),
-      submitted_at: new Date(Date.now() - 3600000 * 24).toLocaleString('vi-VN')
+      created_at: '2026-10-24T11:15:00.000Z',
+      submitted_at: '11:15:00 24/10/2026'
     },
     {
       lead_id: 'UEL-K244111409',
@@ -927,7 +979,7 @@ window.seedMockMartechLeadsToSheet = async function() {
       profile_stage: 'stage_2_enriched',
       profile_status: 'Stage 2: Đã bổ sung sở thích',
       otp_status: 'VERIFIED (Đã xác thực)',
-      email_verified_at: new Date(Date.now() - 3600000 * 18).toISOString(),
+      email_verified_at: '2026-10-27T15:05:00.000Z',
       consent_marketing: 'CÓ (Đồng ý nhận tin)',
       marketing_email_opt_in: true,
       interests: 'Áo Sơ Mi Sọc UEL 4 Màu, Quần Thể Thao Đen / Xám',
@@ -943,11 +995,16 @@ window.seedMockMartechLeadsToSheet = async function() {
       last_touch_placement: 'organic_search',
       last_touch_campaign: 'none',
       last_touch_creative: 'organic_search',
+      session_source_medium: 'google / organic',
+      session_channel_group: 'Organic Search',
+      landing_page_query: '/',
+      device_category: 'desktop',
+      key_event: 'generate_lead',
       source_method: 'organic_inferred',
       source_confidence: 'high',
       session_id: 'sess_k244111409',
-      created_at: new Date(Date.now() - 3600000 * 18).toISOString(),
-      submitted_at: new Date(Date.now() - 3600000 * 18).toLocaleString('vi-VN')
+      created_at: '2026-10-27T15:05:00.000Z',
+      submitted_at: '15:05:00 27/10/2026'
     },
     {
       lead_id: 'UEL-K244111421',
@@ -959,7 +1016,7 @@ window.seedMockMartechLeadsToSheet = async function() {
       profile_stage: 'stage_2_enriched',
       profile_status: 'Stage 2: Đã bổ sung sở thích',
       otp_status: 'VERIFIED (Đã xác thực)',
-      email_verified_at: new Date(Date.now() - 3600000 * 12).toISOString(),
+      email_verified_at: '2026-11-01T19:35:00.000Z',
       consent_marketing: 'CÓ (Đồng ý nhận tin)',
       marketing_email_opt_in: true,
       interests: 'Áo Sơ Mi Sọc Đỏ Hồng, Túi Tote Canvas Mini SGS',
@@ -975,11 +1032,16 @@ window.seedMockMartechLeadsToSheet = async function() {
       last_touch_placement: 'feed',
       last_touch_campaign: 'uel_merch_oct26',
       last_touch_creative: 'feed_shirt_a',
+      session_source_medium: 'facebook / paid_social',
+      session_channel_group: 'Paid Social',
+      landing_page_query: '/?utm_source=facebook&utm_medium=paid_social&utm_campaign=uel_merch_oct26&utm_content=feed_shirt_a',
+      device_category: 'desktop',
+      key_event: 'generate_lead',
       source_method: 'utm_manual',
       source_confidence: 'high',
       session_id: 'sess_k244111421',
-      created_at: new Date(Date.now() - 3600000 * 12).toISOString(),
-      submitted_at: new Date(Date.now() - 3600000 * 12).toLocaleString('vi-VN')
+      created_at: '2026-11-01T19:35:00.000Z',
+      submitted_at: '19:35:00 01/11/2026'
     },
     {
       lead_id: 'UEL-K244111454',
@@ -991,7 +1053,7 @@ window.seedMockMartechLeadsToSheet = async function() {
       profile_stage: 'stage_2_enriched',
       profile_status: 'Stage 2: Đã bổ sung sở thích',
       otp_status: 'VERIFIED (Đã xác thực)',
-      email_verified_at: new Date(Date.now() - 3600000 * 6).toISOString(),
+      email_verified_at: '2026-11-03T13:30:00.000Z',
       consent_marketing: 'CÓ (Đồng ý nhận tin)',
       marketing_email_opt_in: true,
       interests: 'Quần Thể Thao 4 Màu, Balo Basic SGS',
@@ -1007,11 +1069,16 @@ window.seedMockMartechLeadsToSheet = async function() {
       last_touch_placement: 'profile',
       last_touch_campaign: 'campus_chic_2026',
       last_touch_creative: 'profile_uel_a',
+      session_source_medium: 'tiktok / organic_social',
+      session_channel_group: 'Organic Social',
+      landing_page_query: '/?utm_source=tiktok&utm_medium=organic_social&utm_campaign=campus_chic_2026&utm_content=profile_uel_a',
+      device_category: 'mobile',
+      key_event: 'generate_lead',
       source_method: 'utm_manual',
       source_confidence: 'high',
       session_id: 'sess_k244111454',
-      created_at: new Date(Date.now() - 3600000 * 6).toISOString(),
-      submitted_at: new Date(Date.now() - 3600000 * 6).toLocaleString('vi-VN')
+      created_at: '2026-11-03T13:30:00.000Z',
+      submitted_at: '13:30:00 03/11/2026'
     },
     {
       lead_id: 'UEL-K244111478',
@@ -1023,7 +1090,7 @@ window.seedMockMartechLeadsToSheet = async function() {
       profile_stage: 'stage_2_enriched',
       profile_status: 'Stage 2: Đã bổ sung sở thích',
       otp_status: 'VERIFIED (Đã xác thực)',
-      email_verified_at: new Date().toISOString(),
+      email_verified_at: '2026-11-05T10:20:00.000Z',
       consent_marketing: 'CÓ (Đồng ý nhận tin)',
       marketing_email_opt_in: true,
       interests: 'Áo Sơ Mi Sọc UEL, Ví Phụ Kiện SGS, Balo Basic',
@@ -1039,11 +1106,16 @@ window.seedMockMartechLeadsToSheet = async function() {
       last_touch_placement: 'email',
       last_touch_campaign: 'voucher_wave1',
       last_touch_creative: 'voucher_wave1',
+      session_source_medium: 'email / email',
+      session_channel_group: 'Email',
+      landing_page_query: '/?utm_source=email&utm_medium=email&utm_campaign=voucher_wave1&utm_content=voucher_wave1',
+      device_category: 'desktop',
+      key_event: 'generate_lead',
       source_method: 'utm_manual',
       source_confidence: 'high',
       session_id: 'sess_k244111478',
-      created_at: new Date().toISOString(),
-      submitted_at: new Date().toLocaleString('vi-VN')
+      created_at: '2026-11-05T10:20:00.000Z',
+      submitted_at: '10:20:00 05/11/2026'
     }
   ];
 
